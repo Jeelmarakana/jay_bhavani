@@ -59,7 +59,7 @@
       "categoryName": "Bangles & Bracelets",
       "metal": "Gold",
       "purity": "22K",
-      "weight": 38.0,
+      "weight": 38,
       "makingCharges": 10,
       "description": "A set of four beautifully matched gold bangles with embossed floral motifs. Perfect for bridal styling or festive celebrations.",
       "image": "/images/products/gold-bangles.jpg",
@@ -111,7 +111,7 @@
       "categoryName": "Bangles & Bracelets",
       "metal": "Gold",
       "purity": "22K",
-      "weight": 22.0,
+      "weight": 22,
       "makingCharges": 9,
       "description": "A bold and heavy single kada bracelet featuring traditional hand-engraved motifs and a secure side clasp. Designed for both grandeur and comfort.",
       "image": "/images/products/kada-bracelet.jpg",
@@ -131,7 +131,19 @@
       "featured": false
     }
   ],
-  "inquiries": [],
+  "inquiries": [
+    {
+      "id": "1783146784033",
+      "name": "test",
+      "email": "america@gmail.com",
+      "phone": "9054049570",
+      "productId": null,
+      "productName": null,
+      "message": "TEST",
+      "status": "Pending",
+      "createdAt": "2026-07-04T06:33:04.033Z"
+    }
+  ],
   "rates": {
     "gold24k": 7250,
     "gold22k": 6650,

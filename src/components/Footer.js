@@ -43,10 +43,10 @@ export default function Footer() {
           <div className={styles.contact}>
             <h3 className={styles.title}>Our Boutique</h3>
             <p className={styles.contactItem}>
-              <strong>Address:</strong> Jay Bhavani Ornaments, Soni Bazar, Rajkot, Gujarat, India.
+              <strong>Address:</strong> Jay Bhavani Ornaments, Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat. <a href="https://maps.google.com/?q=Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>Map</a>
             </p>
             <p className={styles.contactItem}>
-              <strong>Phone:</strong> +91 98765 43210
+              <strong>Phone:</strong> <a href="tel:+919898426635">📞 98984 26635</a> · <a href="https://wa.me/919898426635" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>WhatsApp</a>
             </p>
             <p className={styles.contactItem}>
               <strong>Email:</strong> info@jaybhavaniornaments.com
