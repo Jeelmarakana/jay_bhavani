@@ -1,0 +1,141 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Classic Gold Engagement Ring",
+      "category": "rings",
+      "categoryName": "Rings",
+      "metal": "Gold",
+      "purity": "22K",
+      "weight": 5.4,
+      "makingCharges": 12,
+      "description": "Crafted in pure 22K yellow gold, this classic engagement ring features an elegant braided band design and a polished finish. A timeless symbol of love.",
+      "image": "/images/products/gold-ring.jpg",
+      "featured": true
+    },
+    {
+      "id": "2",
+      "name": "Royal Diamond Solitaire Ring",
+      "category": "rings",
+      "categoryName": "Rings",
+      "metal": "Diamond",
+      "purity": "18K",
+      "weight": 4.2,
+      "makingCharges": 15,
+      "description": "An exquisite 18K white gold ring featuring a brilliant-cut center solitaire diamond, flanked by micro-paved diamonds along the band for maximum sparkle.",
+      "image": "/images/products/diamond-ring.jpg",
+      "featured": true
+    },
+    {
+      "id": "3",
+      "name": "Antique Kundan Gold Necklace",
+      "category": "necklaces",
+      "categoryName": "Necklaces & Har",
+      "metal": "Gold",
+      "purity": "22K",
+      "weight": 24.8,
+      "makingCharges": 14,
+      "description": "A magnificent antique kundan necklace set in 22K gold, decorated with intricate floral carvings, gemstone embellishments, and dangling seed pearls.",
+      "image": "/images/products/antique-necklace.jpg",
+      "featured": true
+    },
+    {
+      "id": "4",
+      "name": "Maharani Gold Jhumka Earrings",
+      "category": "earrings",
+      "categoryName": "Earrings",
+      "metal": "Gold",
+      "purity": "22K",
+      "weight": 12.5,
+      "makingCharges": 12,
+      "description": "Traditional gold jhumkas featuring delicate filigree patterns, miniature gold beads, and a stunning bell-shaped dangle that sways with grace.",
+      "image": "/images/products/royal-earrings.jpg",
+      "featured": true
+    },
+    {
+      "id": "5",
+      "name": "Floral Design Gold Bangles (Set of 4)",
+      "category": "bangles",
+      "categoryName": "Bangles & Bracelets",
+      "metal": "Gold",
+      "purity": "22K",
+      "weight": 38.0,
+      "makingCharges": 10,
+      "description": "A set of four beautifully matched gold bangles with embossed floral motifs. Perfect for bridal styling or festive celebrations.",
+      "image": "/images/products/gold-bangles.jpg",
+      "featured": true
+    },
+    {
+      "id": "6",
+      "name": "Traditional Gold Mangalsutra",
+      "category": "mangalsutra",
+      "categoryName": "Mangalsutra",
+      "metal": "Gold",
+      "purity": "22K",
+      "weight": 15.2,
+      "makingCharges": 11,
+      "description": "A modern yet sacred design featuring double black bead chains connected to a stunning gold pendant with floral and geometric engravings.",
+      "image": "/images/products/designer-mangalsutra.jpg",
+      "featured": false
+    },
+    {
+      "id": "7",
+      "name": "Royal Imperial Bridal Wedding Set",
+      "category": "bridal-sets",
+      "categoryName": "Bridal Sets",
+      "metal": "Gold & Precious Stones",
+      "purity": "22K",
+      "weight": 92.5,
+      "makingCharges": 18,
+      "description": "An opulent bridal masterpiece featuring a heavy choker necklace, a long rani haar, matching jhumkas, maang tikka, and a nose ring, detailed with rubies and emeralds.",
+      "image": "/images/products/bridal-set.jpg",
+      "featured": true
+    },
+    {
+      "id": "8",
+      "name": "Luxury Pearl & Gold Choker",
+      "category": "necklaces",
+      "categoryName": "Necklaces & Har",
+      "metal": "Gold & Pearl",
+      "purity": "18K",
+      "weight": 18.2,
+      "makingCharges": 16,
+      "description": "A high-fashion choker necklace blending rows of premium freshwater cultured pearls with a hand-designed 18K yellow gold floral center clasp.",
+      "image": "/images/products/pearl-choker.jpg",
+      "featured": false
+    },
+    {
+      "id": "9",
+      "name": "Engraved Royal Gold Kada",
+      "category": "bangles",
+      "categoryName": "Bangles & Bracelets",
+      "metal": "Gold",
+      "purity": "22K",
+      "weight": 22.0,
+      "makingCharges": 9,
+      "description": "A bold and heavy single kada bracelet featuring traditional hand-engraved motifs and a secure side clasp. Designed for both grandeur and comfort.",
+      "image": "/images/products/kada-bracelet.jpg",
+      "featured": false
+    },
+    {
+      "id": "10",
+      "name": "Temple Style Ruby Studs",
+      "category": "earrings",
+      "categoryName": "Earrings",
+      "metal": "Gold",
+      "purity": "22K",
+      "weight": 8.6,
+      "makingCharges": 13,
+      "description": "Exquisite temple jewellery studs depicting the goddess Lakshmi, seated in a lotus, surrounded by rubies and high-purity gold filigree work.",
+      "image": "/images/products/temple-earrings.jpg",
+      "featured": false
+    }
+  ],
+  "inquiries": [],
+  "rates": {
+    "gold24k": 7250,
+    "gold22k": 6650,
+    "gold18k": 5440,
+    "silver": 88
+  }
+}
