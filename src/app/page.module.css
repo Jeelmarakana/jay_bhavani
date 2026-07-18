@@ -199,6 +199,11 @@
 .categoryCard:hover .categoryName {
   color: var(--accent-gold);
   background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #C5A02B 100%);
+
+  /* Standard Property */
+  background-clip: text;
+
+  /* Webkit Support */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -257,11 +262,17 @@
   color: var(--text-primary);
   margin-bottom: 1rem;
   line-height: 1.4;
-  height: 2.8rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  max-height: calc(1.4em * 2);
+
   overflow: hidden;
+  display: -webkit-box;
+  display: box;
+
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .productFooter {
