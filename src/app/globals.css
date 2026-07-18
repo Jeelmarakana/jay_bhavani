@@ -1,22 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Colors */
-  --bg-primary: #0A0A0B;
-  --bg-secondary: #121214;
-  --bg-tertiary: #1A1A1F;
-  --accent-gold: #D4AF37;
-  --accent-gold-hover: #C5A02B;
-  --accent-gold-light: #F3E5AB;
-  --text-primary: #FFFFFF;
-  --text-secondary: #A0A0AB;
-  --text-muted: #71717A;
-  --border-color: rgba(212, 175, 55, 0.15);
-  --border-focus: rgba(212, 175, 55, 0.5);
-  --gold-glow: 0 0 15px rgba(212, 175, 55, 0.2);
-  --gold-glow-hover: 0 0 25px rgba(212, 175, 55, 0.45);
-  --success: #10B981;
-  --error: #EF4444;
+  /* Colors - White and Premium Yellow/Gold Theme */
+  --bg-primary: #FCFCFA;
+  --bg-secondary: #FAF8F2;
+  --bg-tertiary: #F3EFE6;
+  --accent-gold: #E2AD1B;
+  --accent-gold-hover: #C59300;
+  --accent-gold-light: #FFF9E6;
+  --text-primary: #1C1B17;
+  --text-secondary: #5C584E;
+  --text-muted: #8F8B80;
+  --border-color: rgba(226, 173, 27, 0.22);
+  --border-focus: rgba(226, 173, 27, 0.6);
+  --gold-glow: 0 4px 15px rgba(226, 173, 27, 0.08);
+  --gold-glow-hover: 0 8px 25px rgba(226, 173, 27, 0.2);
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 16px 40px rgba(226, 173, 27, 0.12);
+  --success: #059669;
+  --error: #DC2626;
 
   /* Typography */
   --font-serif: 'Cinzel', Georgia, serif;
@@ -50,6 +52,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 main {
@@ -74,10 +77,36 @@ input, select, textarea, button {
   color: inherit;
 }
 
-/* Animations */
+/* --- Rich Animations System --- */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
 }
 
 @keyframes goldShimmer {
@@ -85,10 +114,41 @@ input, select, textarea, button {
   100% { background-position: 200% 0; }
 }
 
-@keyframes ratePulse {
-  0% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.05); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.8; }
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(226, 173, 27, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(226, 173, 27, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(226, 173, 27, 0); }
+}
+
+@keyframes borderShimmer {
+  0% { border-color: var(--border-color); }
+  50% { border-color: var(--accent-gold); }
+  100% { border-color: var(--border-color); }
+}
+
+/* Animations Utility Classes */
+.animate-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-slide-left {
+  animation: slideInLeft 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-slide-right {
+  animation: slideInRight 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
 
 /* Utility Classes */
@@ -108,13 +168,14 @@ input, select, textarea, button {
 
 .gold-text {
   color: var(--accent-gold);
-  background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #C5A02B 100%);
+  background: linear-gradient(135deg, #FAD64B 0%, #E2AD1B 50%, #C59300 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .gold-gradient-bg {
-  background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #C5A02B 100%);
+  background: linear-gradient(135deg, #FAD64B 0%, #E2AD1B 50%, #C59300 100%);
   color: #000000;
 }
 
@@ -122,74 +183,77 @@ input, select, textarea, button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem 2rem;
-  border-radius: 4px;
+  padding: 0.8rem 2.2rem;
+  border-radius: 6px;
   font-family: var(--font-serif);
   font-weight: 600;
   font-size: 0.9rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #C5A02B 100%);
-  color: #000000;
+  background: linear-gradient(135deg, #FAD64B 0%, #E2AD1B 50%, #C59300 100%);
+  color: #121212;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: var(--gold-glow);
 }
 
 .gold-btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--gold-glow-hover);
   filter: brightness(1.05);
 }
 
 .gold-btn:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
 }
 
 .outline-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem 2rem;
-  border-radius: 4px;
+  padding: 0.8rem 2.2rem;
+  border-radius: 6px;
   font-family: var(--font-serif);
   font-weight: 600;
   font-size: 0.9rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   background: transparent;
-  color: var(--accent-gold);
+  color: var(--accent-gold-hover);
   border: 1px solid var(--accent-gold);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .outline-btn:hover {
-  background: rgba(212, 175, 55, 0.1);
+  background: rgba(226, 173, 27, 0.08);
   box-shadow: var(--gold-glow);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  border-color: var(--accent-gold-hover);
 }
 
 .card {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: var(--card-shadow);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-10px);
   border-color: var(--accent-gold);
-  box-shadow: var(--gold-glow);
+  box-shadow: var(--card-shadow-hover);
 }
 
 .glassmorphism {
-  background: rgba(18, 18, 20, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(250, 248, 242, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px rgba(226, 173, 27, 0.04);
 }
 
 /* Form Styles */
@@ -204,14 +268,15 @@ input, select, textarea, button {
   letter-spacing: 0.1em;
   margin-bottom: 0.5rem;
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .form-control {
   width: 100%;
   padding: 0.9rem 1.2rem;
-  background-color: var(--bg-tertiary);
+  background-color: #FFFFFF;
   border: 1px solid var(--border-color);
-  border-radius: 4px;
+  border-radius: 6px;
   color: var(--text-primary);
   font-size: 0.95rem;
   transition: all 0.3s ease;
@@ -220,36 +285,31 @@ input, select, textarea, button {
 .form-control:focus {
   outline: none;
   border-color: var(--accent-gold);
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+  box-shadow: 0 0 0 3px rgba(226, 173, 27, 0.12);
 }
 
 /* Responsive Grid/Flex Utilities */
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .grid-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-}
-
-/* Animations Trigger */
-.animate-fade-in {
-  animation: fadeIn 0.8s ease forwards;
+  gap: 2.5rem;
 }
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -258,8 +318,8 @@ input, select, textarea, button {
 
 ::-webkit-scrollbar-thumb {
   background: var(--bg-tertiary);
-  border-radius: 4px;
-  border: 2px solid var(--bg-primary);
+  border-radius: 5px;
+  border: 3px solid var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {

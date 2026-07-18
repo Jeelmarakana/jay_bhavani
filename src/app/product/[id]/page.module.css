@@ -57,7 +57,7 @@
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  background-color: #17171C;
+  background-color: var(--bg-tertiary);
   border: 1px solid var(--border-color);
 }
 
@@ -136,7 +136,7 @@
 .specTable td {
   padding: 0.6rem 0;
   font-size: 0.9rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   color: var(--text-secondary);
 }
 
@@ -156,7 +156,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding-bottom: 0.8rem;
   margin-bottom: 1rem;
 }
@@ -191,7 +191,7 @@
 }
 
 .totalRow {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   padding-top: 0.8rem;
   margin-top: 0.5rem;
   font-weight: 600;

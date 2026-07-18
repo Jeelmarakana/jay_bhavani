@@ -77,6 +77,9 @@ export default function ProductDetail() {
       else ratePerGram = rates.gold24k;
       
       baseMetalValue = product.weight * ratePerGram;
+    } else if (product.metal.toLowerCase().includes('silver')) {
+      ratePerGram = rates.silver;
+      baseMetalValue = product.weight * ratePerGram;
     } else if (product.metal.toLowerCase().includes('diamond')) {
       // 18k gold is used as base for diamond settings
       ratePerGram = rates.gold18k;

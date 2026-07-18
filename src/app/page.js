@@ -114,7 +114,7 @@ export default function Home() {
           <div className={styles.ratesCard}>
             <div className={styles.ratesHeader}>
               <span className={styles.pulseDot}></span>
-              <h2 className="serif-title" style={{ fontSize: '1.2rem', letterSpacing: '0.05em' }}>Live Metal Estimator (Soni Bazar, Rajkot)</h2>
+              <h2 className="serif-title" style={{ fontSize: '1.2rem', letterSpacing: '0.05em' }}>Live Metal Estimator (Kamrej, Surat)</h2>
             </div>
             <div className={styles.ratesGrid}>
               <div className={styles.rateBox}>
@@ -190,12 +190,12 @@ export default function Home() {
       </section>
 
       {/* Heritage / Story */}
-      <section className={styles.heritageSection} style={{ backgroundImage: `linear-gradient(to right, rgba(18,18,20,0.95), rgba(18,18,20,0.7)), url('/images/hero-banner.jpg')` }}>
+      <section className={styles.heritageSection} style={{ backgroundImage: `linear-gradient(to right, rgba(252,252,250,0.95), rgba(252,252,250,0.85)), url('/images/hero-banner.jpg')` }}>
         <div className="container">
           <div className={styles.heritageContent}>
             <h2 className="serif-title gold-text" style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>Our Heritage & Legacy</h2>
             <p>
-              Located in the heart of Soni Bazar in Rajkot, **Jay Bhavani Ornaments** stands as an emblem of purity, trust, and intricate artistry. For decades, our master artisans have breathed life into precious metals, creating heirloom ornaments that stay passed down through generations.
+              Located in the heart of Kamrej in Surat, **Jay Bhavani Ornaments** stands as an emblem of purity, trust, and intricate artistry. For decades, our master artisans have breathed life into precious metals, creating heirloom ornaments that stay passed down through generations.
             </p>
             <p style={{ marginTop: '1rem' }}>
               We specialize in custom bridal designs, antique Kundan masterpieces, and lightweight contemporary gold jewellery, ensuring that every customer experiences perfection in design and transparency in pricing.

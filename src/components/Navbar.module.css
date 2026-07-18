@@ -9,15 +9,15 @@
   z-index: 1010;
   transition: all 0.4s ease;
   border-bottom: 1px solid transparent;
-  background-color: rgba(10, 10, 11, 0.4);
+  background-color: rgba(252, 252, 250, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
 .scrolled {
-  background-color: rgba(18, 18, 20, 0.95);
+  background-color: rgba(250, 248, 242, 0.95);
   border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 20px rgba(226, 173, 27, 0.06);
   height: calc(var(--header-height) - 10px);
 }
 
@@ -138,7 +138,7 @@
   padding: 100px 2rem 2rem;
   z-index: 1005;
   transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+  box-shadow: -5px 0 25px rgba(226, 173, 27, 0.06);
 }
 
 .drawerOpen {
@@ -159,7 +159,7 @@
   text-transform: uppercase;
   color: var(--text-secondary);
   padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .mobileNavLink:hover, .mobileActive {

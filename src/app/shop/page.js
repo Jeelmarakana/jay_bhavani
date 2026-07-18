@@ -25,7 +25,8 @@ function ShopContent() {
     { name: 'Earrings', value: 'earrings' },
     { name: 'Bangles & Bracelets', value: 'bangles' },
     { name: 'Mangalsutras', value: 'mangalsutra' },
-    { name: 'Bridal Sets', value: 'bridal-sets' }
+    { name: 'Bridal Sets', value: 'bridal-sets' },
+    { name: 'Silver Jewellery', value: 'silver' }
   ];
 
   // Metals list

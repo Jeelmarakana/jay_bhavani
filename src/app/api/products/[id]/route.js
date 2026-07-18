@@ -3,7 +3,8 @@ import { getProductById } from '@/lib/db';
 
 export async function GET(request, { params }) {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
     const product = await getProductById(id);
 
     if (!product) {

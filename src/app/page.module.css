@@ -91,7 +91,7 @@
   border: 1px solid var(--accent-gold);
   border-radius: 8px;
   padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), var(--gold-glow);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), var(--gold-glow);
 }
 
 .ratesHeader {
@@ -209,7 +209,7 @@
   height: 280px;
   position: relative;
   overflow: hidden;
-  background-color: #17171C;
+  background-color: var(--bg-tertiary);
 }
 
 .productImg {
@@ -227,7 +227,7 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  background-color: rgba(18, 18, 20, 0.85);
+  background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--accent-gold);
   color: var(--accent-gold);
   font-size: 0.7rem;
@@ -268,7 +268,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
   padding-top: 1rem;
 }
 

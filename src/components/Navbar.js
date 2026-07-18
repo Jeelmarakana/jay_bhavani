@@ -38,6 +38,14 @@ export default function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
+  const handleLogoClick = (e) => {
+    closeMenu();
+    if (pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Shop Catalog', path: '/shop' },
@@ -47,7 +55,7 @@ export default function Navbar() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`${styles.container} container`}>
-        <Link href="/" className={styles.logo} onClick={closeMenu}>
+        <Link href="/" className={styles.logo} onClick={handleLogoClick}>
           <span className={styles.logoText}>JAY BHAVANI</span>
           <span className={styles.logoSubtext}>O R N A M E N T S</span>
         </Link>
