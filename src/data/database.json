@@ -189,7 +189,7 @@
       "categoryName": "Silver Jewellery",
       "metal": "Silver",
       "purity": "92.5 Sterling",
-      "weight": 28.0,
+      "weight": 28,
       "makingCharges": 10,
       "description": "A heavy and bold unisex sterling silver kada bracelet with hand-carved spiral motifs. Polished to a mirror shine.",
       "image": "/images/products/kada-bracelet.jpg",
@@ -267,7 +267,7 @@
       "categoryName": "Silver Jewellery",
       "metal": "Silver",
       "purity": "92.5 Sterling",
-      "weight": 34.0,
+      "weight": 34,
       "makingCharges": 16,
       "description": "A magnificent wide collar choker necklace in oxidized silver. Detailed tribal design that pairs beautifully with traditional dresses.",
       "image": "/images/products/silver-necklace.jpg",
@@ -288,6 +288,61 @@
     }
   ],
   "inquiries": [
+    {
+      "id": "1784792772224",
+      "name": "54",
+      "email": "",
+      "phone": "5",
+      "productId": "2",
+      "productName": "Royal Diamond Solitaire Ring",
+      "message": "Hello, I am interested in inquiring about \"Royal Diamond Solitaire Ring\" (Product ID: 2, Weight: 4.2g).",
+      "status": "Pending",
+      "createdAt": "2026-07-23T07:46:12.224Z"
+    },
+    {
+      "id": "1784792771765",
+      "name": "664454",
+      "email": "",
+      "phone": "4",
+      "productId": "2",
+      "productName": "Royal Diamond Solitaire Ring",
+      "message": "Hello, I am interested in inquiring about \"Royal Diamond Solitaire Ring\" (Product ID: 2, Weight: 4.2g). Please provide availability details.",
+      "status": "Pending",
+      "createdAt": "2026-07-23T07:46:11.765Z"
+    },
+    {
+      "id": "1784792751858",
+      "name": "avi",
+      "email": "",
+      "phone": "988948919898164",
+      "productId": "4",
+      "productName": "Maharani Gold Jhumka Earrings",
+      "message": "Hello, I am interested in inquiring about \"Maharani Gold Jhumka Earrings\" (Product ID: 4, Weight: 12.5g). Please provide availability details.",
+      "status": "Pending",
+      "createdAt": "2026-07-23T07:45:51.858Z"
+    },
+    {
+      "id": "1784791941702",
+      "name": "test ",
+      "email": "",
+      "phone": "9054049570",
+      "productId": "1",
+      "productName": "Classic Gold Engagement Ring",
+      "message": "Hello, I am interested in inquiring about \"Classic Gold Engagement Ring\" (Product ID: 1, Weight: 5.4g).",
+      "status": "Pending",
+      "createdAt": "2026-07-23T07:32:21.702Z"
+    },
+    {
+      "id": "1784791931670",
+      "name": "jnndkjfw",
+      "email": "",
+      "phone": "8347070654",
+      "productId": "1",
+      "productName": "Classic Gold Engagement Ring",
+      "message": "Hello, I am interested in inquiring about \"Classic Gold Engagement Ring\" (Product ID: 1, Weight: 5.4g). Please provide availability details.",
+      "status": "Pending",
+      "createdAt": "2026-07-23T07:32:11.670Z"
+    },
     {
       "id": "1783146784033",
       "name": "test",

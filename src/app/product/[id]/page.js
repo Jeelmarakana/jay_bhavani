@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
+import { getClientSession } from '@/lib/auth';
 import styles from './page.module.css';
 
 export default function ProductDetail() {
@@ -13,11 +14,24 @@ export default function ProductDetail() {
   const [rates, setRates] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [clientUser, setClientUser] = useState(null);
 
   // Inquiry Form state
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: null, message: '' });
+
+  useEffect(() => {
+    const session = getClientSession();
+    setClientUser(session);
+    if (session) {
+      setFormData((prev) => ({
+        ...prev,
+        name: session.name || '',
+        email: session.email || '',
+      }));
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -265,78 +279,96 @@ export default function ProductDetail() {
             </div>
           )}
 
-          {/* Action Buttons */}
-          <div className={styles.actionSection}>
-            <a 
-              href={getWhatsAppLink()} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className={`${styles.whatsappBtn} gold-btn`}
-              style={{ display: 'flex', gap: '0.8rem', color: '#000000' }}
-            >
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.431 2.522 1.22 3.52l-.794 2.899 2.966-.777c.955.651 2.09 1.003 3.375 1.004 3.182 0 5.768-2.587 5.769-5.766.002-3.18-2.585-5.766-5.768-5.766zm3.611 8.228c-.206.581-1.028 1.109-1.414 1.144-.386.035-.747.187-2.45-.487-2.179-.865-3.585-3.08-3.694-3.226-.109-.146-.889-1.182-.889-2.254 0-1.072.56-1.599.76-1.815.199-.216.436-.271.581-.271.145 0 .29.002.418.008.136.006.317-.052.496.381.186.449.634 1.547.69 1.658.056.111.093.24.019.387-.074.148-.112.24-.223.369-.111.13-.233.29-.333.389-.111.111-.228.232-.098.455.13.223.578.955 1.24 1.547.854.764 1.571 1.002 1.794 1.113.223.111.353.093.483-.056.13-.149.557-.65.706-.873.149-.223.298-.186.502-.111.204.074 1.293.61 1.516.721.223.111.371.167.427.262.056.096.056.554-.15 1.135zM12 2C6.477 2 2 6.477 2 12c0 2.03.606 3.917 1.647 5.49L2 22l4.653-1.22C8.12 21.353 9.97 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.834 0-3.551-.54-5.002-1.464l-.358-.22-2.753.722.735-2.686-.24-.383C3.473 14.502 3 12.802 3 12c0-4.963 4.037-9 9-9s9 4.037 9 9-4.037 9-9 9z"/>
-              </svg>
-              Enquire on WhatsApp
-            </a>
-          </div>
+          {/* Action Buttons & Inquiry Form (Protected) */}
+          {clientUser ? (
+            <>
+              <div className={styles.actionSection}>
+                <a 
+                  href={getWhatsAppLink()} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className={`${styles.whatsappBtn} gold-btn`}
+                  style={{ display: 'flex', gap: '0.8rem', color: '#000000' }}
+                >
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.431 2.522 1.22 3.52l-.794 2.899 2.966-.777c.955.651 2.09 1.003 3.375 1.004 3.182 0 5.768-2.587 5.769-5.766.002-3.18-2.585-5.766-5.768-5.766zm3.611 8.228c-.206.581-1.028 1.109-1.414 1.144-.386.035-.747.187-2.45-.487-2.179-.865-3.585-3.08-3.694-3.226-.109-.146-.889-1.182-.889-2.254 0-1.072.56-1.599.76-1.815.199-.216.436-.271.581-.271.145 0 .29.002.418.008.136.006.317-.052.496.381.186.449.634 1.547.69 1.658.056.111.093.24.019.387-.074.148-.112.24-.223.369-.111.13-.233.29-.333.389-.111.111-.228.232-.098.455.13.223.578.955 1.24 1.547.854.764 1.571 1.002 1.794 1.113.223.111.353.093.483-.056.13-.149.557-.65.706-.873.149-.223.298-.186.502-.111.204.074 1.293.61 1.516.721.223.111.371.167.427.262.056.096.056.554-.15 1.135zM12 2C6.477 2 2 6.477 2 12c0 2.03.606 3.917 1.647 5.49L2 22l4.653-1.22C8.12 21.353 9.97 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.834 0-3.551-.54-5.002-1.464l-.358-.22-2.753.722.735-2.686-.24-.383C3.473 14.502 3 12.802 3 12c0-4.963 4.037-9 9-9s9 4.037 9 9-4.037 9-9 9z"/>
+                  </svg>
+                  Enquire on WhatsApp
+                </a>
+              </div>
 
-          {/* Inline Product Inquiry Form */}
-          <div className={`${styles.detailInquiryForm} glassmorphism`}>
-            <h3 className="serif-title" style={{ fontSize: '1.1rem', marginBottom: '1.2rem', color: 'var(--accent-gold)' }}>Request Callback / Customise Order</h3>
-            
-            {submitStatus.message && (
-              <div className={`${styles.statusMsg} ${submitStatus.success ? styles.successMsg : styles.errorMsg}`}>
-                {submitStatus.message}
-              </div>
-            )}
+              <div className={`${styles.detailInquiryForm} glassmorphism`}>
+                <h3 className="serif-title" style={{ fontSize: '1.1rem', marginBottom: '1.2rem', color: 'var(--accent-gold)' }}>Request Callback / Customise Order</h3>
+                
+                {submitStatus.message && (
+                  <div className={`${styles.statusMsg} ${submitStatus.success ? styles.successMsg : styles.errorMsg}`}>
+                    {submitStatus.message}
+                  </div>
+                )}
 
-            <form onSubmit={handleFormSubmit}>
-              <div className="grid-2" style={{ gap: '1rem', marginBottom: '0.8rem' }}>
-                <div className="form-group" style={{ marginBottom: '0' }}>
-                  <label className="form-label">Name *</label>
-                  <input 
-                    type="text" 
-                    name="name" 
-                    value={formData.name} 
-                    onChange={handleInputChange} 
-                    className="form-control" 
-                    placeholder="Your name" 
-                    required 
-                    style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
-                  />
-                </div>
-                <div className="form-group" style={{ marginBottom: '0' }}>
-                  <label className="form-label">Phone *</label>
-                  <input 
-                    type="tel" 
-                    name="phone" 
-                    value={formData.phone} 
-                    onChange={handleInputChange} 
-                    className="form-control" 
-                    placeholder="Mobile number" 
-                    required 
-                    style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
-                  />
-                </div>
+                <form onSubmit={handleFormSubmit}>
+                  <div className="grid-2" style={{ gap: '1rem', marginBottom: '0.8rem' }}>
+                    <div className="form-group" style={{ marginBottom: '0' }}>
+                      <label className="form-label">Name *</label>
+                      <input 
+                        type="text" 
+                        name="name" 
+                        value={formData.name} 
+                        onChange={handleInputChange} 
+                        className="form-control" 
+                        placeholder="Your name" 
+                        required 
+                        style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                      />
+                    </div>
+                    <div className="form-group" style={{ marginBottom: '0' }}>
+                      <label className="form-label">Phone *</label>
+                      <input 
+                        type="tel" 
+                        name="phone" 
+                        value={formData.phone} 
+                        onChange={handleInputChange} 
+                        className="form-control" 
+                        placeholder="Mobile number" 
+                        required 
+                        style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group" style={{ marginBottom: '0.8rem' }}>
+                    <label className="form-label">Inquiry Message *</label>
+                    <textarea 
+                      name="message" 
+                      value={formData.message} 
+                      onChange={handleInputChange} 
+                      rows="3" 
+                      className="form-control" 
+                      required
+                      style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                    ></textarea>
+                  </div>
+                  <button type="submit" className="outline-btn" style={{ width: '100%', padding: '0.6rem', fontSize: '0.8rem' }} disabled={isSubmitting}>
+                    {isSubmitting ? 'Sending Request...' : 'Submit Callback Request'}
+                  </button>
+                </form>
               </div>
-              <div className="form-group" style={{ marginBottom: '0.8rem' }}>
-                <label className="form-label">Inquiry Message *</label>
-                <textarea 
-                  name="message" 
-                  value={formData.message} 
-                  onChange={handleInputChange} 
-                  rows="3" 
-                  className="form-control" 
-                  required
-                  style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
-                ></textarea>
+            </>
+          ) : (
+            <div className={`${styles.detailInquiryForm} glassmorphism`} style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
+              <h3 className="serif-title" style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--accent-gold)' }}>Request Callback / Order</h3>
+              <p style={{ marginBottom: '1.5rem', color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: '1.6' }}>
+                Please login or register to request a callback, customise this order, or enquire via WhatsApp.
+              </p>
+              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', maxWidth: '320px', margin: '0 auto' }}>
+                <Link href="/auth/login" className="gold-btn" style={{ flex: 1, padding: '0.6rem', fontSize: '0.85rem', textAlign: 'center' }}>
+                  Login
+                </Link>
+                <Link href="/auth/register" className="outline-btn" style={{ flex: 1, padding: '0.6rem', fontSize: '0.85rem', textAlign: 'center' }}>
+                  Register
+                </Link>
               </div>
-              <button type="submit" className="outline-btn" style={{ width: '100%', padding: '0.6rem', fontSize: '0.8rem' }} disabled={isSubmitting}>
-                {isSubmitting ? 'Sending Request...' : 'Submit Callback Request'}
-              </button>
-            </form>
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

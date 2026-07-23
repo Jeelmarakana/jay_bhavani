@@ -2,15 +2,50 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { getAdminSession, loginAdmin, clearAdminSession, ADMIN_CREDENTIALS } from '@/lib/auth';
 import styles from './page.module.css';
 
 export default function AdminDashboard() {
   const [inquiries, setInquiries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [authLoading, setAuthLoading] = useState(true);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [adminForm, setAdminForm] = useState({ username: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
+  const [authStatus, setAuthStatus] = useState({ success: null, message: '' });
 
-  // Fetch inquiries on mount
   useEffect(() => {
+    if (!authStatus.message) {
+      return undefined;
+    }
+
+    const timer = setTimeout(() => {
+      setAuthStatus({ success: null, message: '' });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [authStatus.message]);
+
+  useEffect(() => {
+    const session = getAdminSession();
+    const hasSession = Boolean(session?.username);
+    setIsAdminLoggedIn(hasSession);
+    setAuthLoading(false);
+
+    if (typeof window !== 'undefined') {
+      const msg = sessionStorage.getItem('admin_login_toast');
+      if (msg) {
+        setAuthStatus({ success: true, message: msg });
+        sessionStorage.removeItem('admin_login_toast');
+      }
+    }
+
+    if (!hasSession) {
+      setLoading(false);
+      return;
+    }
+
     const fetchInquiries = async () => {
       try {
         const res = await fetch('/api/inquiries');
@@ -28,7 +63,28 @@ export default function AdminDashboard() {
     fetchInquiries();
   }, []);
 
-  // Filter inquiries based on search term (name, phone, product)
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+    const result = loginAdmin(adminForm);
+
+    if (!result.success) {
+      setAuthStatus({ success: false, message: result.message });
+      return;
+    }
+
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('admin_login_toast', result.message || 'Admin login successful.');
+    }
+    setIsAdminLoggedIn(true);
+    window.location.reload();
+  };
+
+  const handleLogout = () => {
+    clearAdminSession();
+    setIsAdminLoggedIn(false);
+    setAuthStatus({ success: true, message: 'Logged out successfully.' });
+  };
+
   const filteredInquiries = inquiries.filter((inq) => {
     const term = searchTerm.toLowerCase();
     return (
@@ -40,17 +96,91 @@ export default function AdminDashboard() {
     );
   });
 
+  if (authLoading) {
+    return (
+      <div className="container" style={{ padding: '3rem 2rem 5rem' }}>
+        <div className={styles.statusBox}>
+          <div className={styles.spinner}></div>
+          <p>Checking admin access...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAdminLoggedIn) {
+    return (
+      <div className="container" style={{ padding: '4rem 2rem 5rem' }}>
+        {authStatus.message ? (
+          <div className={`${styles.toast} ${authStatus.success ? styles.success : styles.error}`}>
+            <div className={styles.toastIcon}>
+              {authStatus.success ? (
+                <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 00-1.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+              )}
+            </div>
+            <span className={styles.toastMessage}>{authStatus.message}</span>
+          </div>
+        ) : null}
+
+        <div className={styles.authCard}>
+          <span className={styles.adminSubtitle}>Restricted Access</span>
+          <h1 className="serif-title" style={{ fontSize: '2.1rem', marginBottom: '0.8rem' }}>Admin Login</h1>
+          <p className={styles.adminDesc}>Use the protected admin account to launch the control dashboard.</p>
+
+          <form onSubmit={handleAdminLogin} className={styles.loginForm}>
+            <div className="form-group">
+              <label className="form-label">Username</label>
+              <input
+                className="form-control"
+                type="text"
+                value={adminForm.username}
+                onChange={(e) => setAdminForm((prev) => ({ ...prev, username: e.target.value }))}
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Password</label>
+              <div className={styles.passwordWrap}>
+                <input
+                  className="form-control"
+                  type={showPassword ? 'text' : 'password'}
+                  value={adminForm.password}
+                  onChange={(e) => setAdminForm((prev) => ({ ...prev, password: e.target.value }))}
+                />
+                <button type="button" className={styles.eyeButton} onClick={() => setShowPassword((prev) => !prev)}>
+                  {showPassword ? '🙈' : '👁️'}
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" className="gold-btn" style={{ width: '100%' }}>
+              Login as Admin
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container" style={{ padding: '3rem 2rem 5rem' }}>
+    <>
+      <div className="container" style={{ padding: '3rem 2rem 5rem' }}>
       <div className={styles.adminHeader}>
         <div>
           <span className={styles.adminSubtitle}>Jay Bhavani Administration</span>
           <h1 className="serif-title" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Customer Inquiries</h1>
           <p className={styles.adminDesc}>Manage, check, and follow up on customer product callback requests and web forms.</p>
         </div>
+        <button className="outline-btn" onClick={handleLogout} style={{ padding: '0.55rem 1.2rem', fontSize: '0.72rem' }}>
+          Logout Admin
+        </button>
       </div>
 
-      {/* Control panel */}
       <div className={`${styles.controlPanel} glassmorphism`}>
         <div style={{ flex: 1 }}>
           <label className="form-label">Search Submissions</label>
@@ -69,7 +199,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Inquiry List */}
       {loading ? (
         <div className={styles.statusBox}>
           <div className={styles.spinner}></div>
@@ -135,5 +264,23 @@ export default function AdminDashboard() {
         </div>
       )}
     </div>
+
+    {authStatus.message ? (
+      <div className={`${styles.toast} ${authStatus.success ? styles.success : styles.error}`}>
+        <div className={styles.toastIcon}>
+          {authStatus.success ? (
+            <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 00-1.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+            </svg>
+          )}
+        </div>
+        <span className={styles.toastMessage}>{authStatus.message}</span>
+      </div>
+    ) : null}
+    </>
   );
 }

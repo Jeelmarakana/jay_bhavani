@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { getClientSession } from '@/lib/auth';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -10,6 +11,19 @@ export default function Home() {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: null, message: '' });
+  const [clientUser, setClientUser] = useState(null);
+
+  useEffect(() => {
+    const session = getClientSession();
+    setClientUser(session);
+    if (session) {
+      setFormData((prev) => ({
+        ...prev,
+        name: session.name || '',
+        email: session.email || '',
+      }));
+    }
+  }, []);
 
   // Fetch Gold Rates
   useEffect(() => {
@@ -94,8 +108,8 @@ export default function Home() {
   return (
     <div className={styles.homeContainer}>
       {/* Hero Section */}
-      <section className={styles.hero} style={{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.2) 100%), url('/images/hero-banner.jpg')` }}>
-        <div className={`${styles.heroContent} container animate-fade-in`}>
+      <section className={styles.hero} style={{ '--bg-image': "url('/images/hero-banner.jpg')" }}>
+        <div className={`${styles.heroContent} container`}>
           <span className={styles.heroSubtitle}>Welcome to Jay Bhavani Ornaments</span>
           <h1 className={`${styles.heroTitle} serif-title`}>Crafting Pure Elegance</h1>
           <p className={styles.heroText}>
@@ -232,66 +246,84 @@ export default function Home() {
             <div className={`${styles.inquiryFormWrapper} glassmorphism`}>
               <h3 className="serif-title" style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: 'var(--accent-gold)' }}>Send Online Inquiry</h3>
               
-              {submitStatus.message && (
-                <div className={`${styles.statusMsg} ${submitStatus.success ? styles.successMsg : styles.errorMsg}`}>
-                  {submitStatus.message}
+              {clientUser ? (
+                <>
+                  {submitStatus.message && (
+                    <div className={`${styles.statusMsg} ${submitStatus.success ? styles.successMsg : styles.errorMsg}`}>
+                      {submitStatus.message}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleFormSubmit}>
+                    <div className="form-group">
+                      <label className="form-label">Full Name *</label>
+                      <input 
+                        type="text" 
+                        name="name" 
+                        value={formData.name} 
+                        onChange={handleInputChange} 
+                        className="form-control" 
+                        placeholder="Enter your name" 
+                        required 
+                      />
+                    </div>
+                    <div className="grid-2" style={{ gap: '1rem', marginBottom: '0' }}>
+                      <div className="form-group">
+                        <label className="form-label">Phone Number *</label>
+                        <input 
+                          type="tel" 
+                          name="phone" 
+                          value={formData.phone} 
+                          onChange={handleInputChange} 
+                          className="form-control" 
+                          placeholder="Your mobile number" 
+                          required 
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label">Email Address</label>
+                        <input 
+                          type="email" 
+                          name="email" 
+                          value={formData.email} 
+                          onChange={handleInputChange} 
+                          className="form-control" 
+                          placeholder="Optional" 
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Message / Inquiry *</label>
+                      <textarea 
+                        name="message" 
+                        value={formData.message} 
+                        onChange={handleInputChange} 
+                        rows="4" 
+                        className="form-control" 
+                        placeholder="What style or item are you looking for?" 
+                        required
+                      ></textarea>
+                    </div>
+                    <button type="submit" className="gold-btn" style={{ width: '100%' }} disabled={isSubmitting}>
+                      {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
+                  <p style={{ marginBottom: '1.5rem', color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: '1.6' }}>
+                    Please login or register to send an online inquiry or request a design consultation.
+                  </p>
+                  <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', maxWidth: '300px', margin: '0 auto' }}>
+                    <Link href="/auth/login" className="gold-btn" style={{ flex: 1, padding: '0.6rem', fontSize: '0.85rem', textAlign: 'center' }}>
+                      Login
+                    </Link>
+                    <Link href="/auth/register" className="outline-btn" style={{ flex: 1, padding: '0.6rem', fontSize: '0.85rem', textAlign: 'center' }}>
+                      Register
+                    </Link>
+                  </div>
                 </div>
               )}
-
-              <form onSubmit={handleFormSubmit}>
-                <div className="form-group">
-                  <label className="form-label">Full Name *</label>
-                  <input 
-                    type="text" 
-                    name="name" 
-                    value={formData.name} 
-                    onChange={handleInputChange} 
-                    className="form-control" 
-                    placeholder="Enter your name" 
-                    required 
-                  />
-                </div>
-                <div className="grid-2" style={{ gap: '1rem', marginBottom: '0' }}>
-                  <div className="form-group">
-                    <label className="form-label">Phone Number *</label>
-                    <input 
-                      type="tel" 
-                      name="phone" 
-                      value={formData.phone} 
-                      onChange={handleInputChange} 
-                      className="form-control" 
-                      placeholder="Your mobile number" 
-                      required 
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Email Address</label>
-                    <input 
-                      type="email" 
-                      name="email" 
-                      value={formData.email} 
-                      onChange={handleInputChange} 
-                      className="form-control" 
-                      placeholder="Optional" 
-                    />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Message / Inquiry *</label>
-                  <textarea 
-                    name="message" 
-                    value={formData.message} 
-                    onChange={handleInputChange} 
-                    rows="4" 
-                    className="form-control" 
-                    placeholder="What style or item are you looking for?" 
-                    required
-                  ></textarea>
-                </div>
-                <button type="submit" className="gold-btn" style={{ width: '100%' }} disabled={isSubmitting}>
-                  {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
-                </button>
-              </form>
             </div>
           </div>
         </div>
