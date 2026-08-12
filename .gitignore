@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# writable local database (seed lives in src/data/)
+/.data/
+
 # production
 /build
 

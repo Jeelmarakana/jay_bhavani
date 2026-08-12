@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { getWishlist } from '@/lib/wishlist';
+import { DEFAULT_WHATSAPP_URL } from '@/lib/config';
 import styles from './Navbar.module.css';
 
 const navLinks = [

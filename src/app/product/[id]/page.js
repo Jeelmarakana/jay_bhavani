@@ -125,20 +125,24 @@ export default function ProductDetail() {
     setSubmitStatus({ success: null, message: '' });
 
     try {
-      const res = await fetch('/api/inquiries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          productId: product.id,
-          productName: product.name
-        }),
+      const { data } = await submitInquiry({
+        ...formData,
+        productId: product.id,
+        productName: product.name,
       });
-      const data = await res.json();
 
       if (data.success) {
-        setSubmitStatus({ success: true, message: 'Thank you! Your product enquiry has been sent. We will call you back.' });
-        setFormData({ name: '', phone: '', email: '', message: `Hello, I am interested in inquiring about "${product.name}" (Product ID: ${product.id}, Weight: ${product.weight}g).` });
+        setSubmitStatus({
+          success: true,
+          message: 'Thank you! Your product enquiry has been sent. We will call you back on 9054049570.',
+        });
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          message: `Hello, I am interested in inquiring about "${product.name}" (Product ID: ${product.id}, Weight: ${product.weight}g).`,
+        });
+        if (data.notifyUrl) openOwnerWhatsAppNotify(data.notifyUrl);
       } else {
         setSubmitStatus({ success: false, message: data.error || 'Failed to submit enquiry.' });
       }

@@ -2,6 +2,8 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import JsonLd from '@/components/JsonLd';
+import Page3D from '@/components/Page3D';
+import { DEFAULT_WHATSAPP_URL } from '@/lib/config';
 
 export const metadata = {
   title: 'Jay Bhavani Ornaments | 22K Gold & Bridal Jewellery in Kamrej, Surat',
@@ -21,12 +23,14 @@ export default function RootLayout({ children }) {
       <body>
         <JsonLd />
         <Navbar />
-        <main style={{ marginTop: 'var(--header-height)' }}>
-          {children}
-        </main>
+        <Page3D>
+          <main style={{ marginTop: 'var(--header-height)' }}>
+            {children}
+          </main>
+        </Page3D>
         <Footer />
         <a
-          href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20would%20like%20to%20enquire%20about%20your%20collection."
+          href={DEFAULT_WHATSAPP_URL}
           className="floating-whatsapp"
           target="_blank"
           rel="noreferrer"

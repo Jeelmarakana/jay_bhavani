@@ -127,6 +127,60 @@ input, select, textarea, button {
   100% { border-color: var(--border-color); }
 }
 
+/* --- 3D Animation System --- */
+@keyframes reveal3d {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateX(18deg) translateY(50px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(900px) rotateX(0deg) translateY(0) scale(1);
+  }
+}
+
+@keyframes float3d {
+  0%, 100% { transform: translate3d(0, 0, 0) rotateX(0deg); }
+  50% { transform: translate3d(0, -12px, 20px) rotateX(4deg); }
+}
+
+@keyframes spin3d {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+@keyframes shimmer3d {
+  0% { transform: translateX(-120%) rotateY(0deg); }
+  100% { transform: translateX(220%) rotateY(15deg); }
+}
+
+[data-3d-reveal] {
+  opacity: 0;
+  transform: perspective(900px) rotateX(14deg) translateY(40px);
+  transform-style: preserve-3d;
+  transition: none;
+}
+
+[data-3d-reveal].is-visible {
+  animation: reveal3d 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+[data-3d-tilt] {
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  will-change: transform;
+}
+
+[data-3d-tilt]:hover {
+  box-shadow: 0 24px 50px rgba(184, 134, 11, 0.18), 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.animate-3d-float {
+  animation: float3d 5s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
 /* Animations Utility Classes */
 .animate-fade-in {
   animation: fadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
@@ -239,10 +293,11 @@ input, select, textarea, button {
   overflow: hidden;
   box-shadow: var(--card-shadow);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
 }
 
 .card:hover {
-  transform: translateY(-10px);
+  transform: perspective(800px) translateY(-10px) rotateX(2deg) rotateY(-2deg);
   border-color: var(--accent-gold);
   box-shadow: var(--card-shadow-hover);
 }
@@ -253,6 +308,7 @@ input, select, textarea, button {
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--border-color);
   box-shadow: 0 8px 32px rgba(226, 173, 27, 0.04);
+  transform-style: preserve-3d;
 }
 
 /* Form Styles */
@@ -379,6 +435,8 @@ input, select, textarea, button {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   box-shadow: 0 12px 25px rgba(37, 211, 102, 0.35);
+  animation: float3d 4s ease-in-out infinite;
+  transform-style: preserve-3d;
 }
 
 .floating-whatsapp:hover {

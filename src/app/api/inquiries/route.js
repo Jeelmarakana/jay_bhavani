@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { addInquiry, getInquiries } from '@/lib/db';
+import { getOwnerNotifyUrl, pushOwnerWhatsAppNotification } from '@/lib/whatsapp';
 
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { name, email, phone, productId, productName, message } = body;
+    const { name, email, phone, productId, productName, interestedIn, message } = body;
 
-    // Validation
     if (!name || !phone || !message) {
       return NextResponse.json(
         { success: false, error: 'Name, Phone number, and Message are required.' },
@@ -20,17 +20,24 @@ export async function POST(request) {
       phone,
       productId,
       productName,
-      message
+      interestedIn,
+      message,
     });
 
     if (!newInquiry) {
       return NextResponse.json(
-        { success: false, error: 'Failed to save inquiry to database.' },
+        { success: false, error: 'Failed to save enquiry. Please WhatsApp us directly at 9054049570.' },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ success: true, inquiry: newInquiry }, { status: 201 });
+    const notifyUrl = getOwnerNotifyUrl(newInquiry);
+    await pushOwnerWhatsAppNotification(newInquiry);
+
+    return NextResponse.json(
+      { success: true, inquiry: newInquiry, notifyUrl },
+      { status: 201 }
+    );
   } catch (error) {
     console.error('API Error in POST /api/inquiries:', error);
     return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });

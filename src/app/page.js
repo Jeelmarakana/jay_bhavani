@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { buildWhatsAppUrl, DEFAULT_WHATSAPP_URL } from '@/lib/config';
+import { submitInquiry, openOwnerWhatsAppNotify } from '@/lib/inquiry';
 import styles from './page.module.css';
 
 const categories = [
@@ -97,16 +99,15 @@ export default function Home() {
     setSubmitStatus({ success: null, message: '' });
 
     try {
-      const res = await fetch('/api/inquiries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
+      const { data } = await submitInquiry(formData);
 
       if (data.success) {
-        setSubmitStatus({ success: true, message: 'Thank you! Your enquiry has been sent. Our team will contact you shortly.' });
+        setSubmitStatus({
+          success: true,
+          message: 'Thank you! Your enquiry has been sent. Our team at 9054049570 will contact you shortly.',
+        });
         setFormData({ name: '', phone: '', interestedIn: 'Rings', message: '' });
+        if (data.notifyUrl) openOwnerWhatsAppNotify(data.notifyUrl);
       } else {
         setSubmitStatus({ success: false, message: data.error || 'Failed to send enquiry.' });
       }
@@ -145,12 +146,12 @@ export default function Home() {
           </p>
           <div className={styles.heroBtns}>
             <Link href="#shop-by-category" className="gold-btn">Explore Collection</Link>
-            <a href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20would%20like%20to%20enquire%20about%20your%20collection." className="outline-btn" target="_blank" rel="noreferrer">WhatsApp Us</a>
+            <a href={DEFAULT_WHATSAPP_URL} className="outline-btn" target="_blank" rel="noreferrer">WhatsApp Us</a>
           </div>
         </div>
       </section>
 
-      <section id="rates-section" className={styles.ratesSection}>
+      <section id="rates-section" className={styles.ratesSection} data-3d-reveal>
         <div className="container">
           <div className={styles.ratesCard}>
             <div className={styles.ratesHeader}>
@@ -182,7 +183,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="shop-by-category" className={styles.section}>
+      <section id="shop-by-category" className={styles.section} data-3d-reveal>
         <div className="container">
           <div className={styles.sectionHeader}>
             <h2 className={`${styles.sectionTitle} serif-title`}>Shop by Category</h2>
@@ -193,7 +194,8 @@ export default function Home() {
               <Link
                 key={category.slug}
                 href={`/shop?category=${category.slug}`}
-                className={styles.categoryCard}
+                className={`${styles.categoryCard} animate-3d-float`}
+                data-3d-tilt
                 style={{ backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.1) 80%), url('${category.image}')` }}
               >
                 <span className={`${styles.categoryName} serif-title`}>{category.name}</span>
@@ -203,7 +205,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.darkBg}`}>
+      <section className={`${styles.section} ${styles.darkBg}`} data-3d-reveal>
         <div className="container">
           <div className={styles.sectionHeader}>
             <h2 className={`${styles.sectionTitle} serif-title`}>Our Signature Collection</h2>
@@ -211,7 +213,7 @@ export default function Home() {
           </div>
           <div className="grid-4">
             {featuredProducts.map((product) => (
-              <div key={product.id} className="card">
+              <div key={product.id} className="card" data-3d-tilt>
                 <div className={styles.productImgWrapper}>
                   <img src={product.image} alt={product.name} className={styles.productImg} />
                   <span className={styles.metalTag}>{product.metal}</span>
@@ -241,7 +243,7 @@ export default function Home() {
               </p>
               <div className={styles.heroBtns}>
                 <Link href="/shop?category=bridal-sets" className="gold-btn">Explore Bridal Collection</Link>
-                <a href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20would%20like%20to%20book%20a%20bridal%20consultation." className="outline-btn" target="_blank" rel="noreferrer">Book Bridal Consultation</a>
+                <a href={buildWhatsAppUrl('Hi Jay Bhavani Ornaments, I would like to book a bridal consultation.')} className="outline-btn" target="_blank" rel="noreferrer">Book Bridal Consultation</a>
               </div>
             </div>
           </div>
@@ -286,7 +288,7 @@ export default function Home() {
               <span className={styles.kicker}>Custom Jewellery</span>
               <h3 className="serif-title" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Have a design in mind?</h3>
             </div>
-            <a href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20have%20a%20design%20in%20mind.%20Please%20share%20details." className="gold-btn" target="_blank" rel="noreferrer">Send Your Design on WhatsApp</a>
+            <a href={buildWhatsAppUrl('Hi Jay Bhavani Ornaments, I have a design in mind. Please share details.')} className="gold-btn" target="_blank" rel="noreferrer">Send Your Design on WhatsApp</a>
           </div>
         </div>
       </section>
@@ -333,7 +335,7 @@ export default function Home() {
               <p>🕐 Mon–Sat: 11:00 AM – 8:30 PM</p>
               <div className={styles.heroBtns}>
                 <a href="https://maps.google.com/?q=Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat" className="gold-btn" target="_blank" rel="noreferrer">Get Directions</a>
-                <a href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20would%20like%20to%20visit%20the%20showroom." className="outline-btn" target="_blank" rel="noreferrer">WhatsApp for Visit</a>
+                <a href={buildWhatsAppUrl('Hi Jay Bhavani Ornaments, I would like to visit the showroom.')} className="outline-btn" target="_blank" rel="noreferrer">WhatsApp for Visit</a>
               </div>
             </div>
             <div className={styles.mapWrap}>
@@ -352,12 +354,12 @@ export default function Home() {
         <div className="container">
           <div className={styles.finalCTA}>
             <h3 className="serif-title" style={{ fontSize: '2.1rem', marginBottom: '1rem' }}>Your perfect ornament is waiting.</h3>
-            <a href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20am%20interested%20in%20your%20jewellery%20collection." className="gold-btn" target="_blank" rel="noreferrer">WhatsApp Us</a>
+            <a href={buildWhatsAppUrl('Hi Jay Bhavani Ornaments, I am interested in your jewellery collection.')} className="gold-btn" target="_blank" rel="noreferrer">WhatsApp Us</a>
           </div>
         </div>
       </section>
 
-      <section className={styles.section}>
+      <section className={styles.section} data-3d-reveal>
         <div className="container">
           <div className={styles.enquiryGrid}>
             <div className={styles.enquiryInfo}>
@@ -366,7 +368,7 @@ export default function Home() {
               <p>Choose a category, share your preferred design type, and our team will guide you with the right options and latest pricing.</p>
               <p className={styles.optionalText}>Login to save your enquiries and wishlist. Login is optional and never required for a quote.</p>
             </div>
-            <div className={`${styles.enquiryFormWrap} glassmorphism`}>
+            <div className={`${styles.enquiryFormWrap} glassmorphism`} data-3d-tilt>
               {submitStatus.message && (
                 <div className={`${styles.statusMsg} ${submitStatus.success ? styles.successMsg : styles.errorMsg}`}>
                   {submitStatus.message}

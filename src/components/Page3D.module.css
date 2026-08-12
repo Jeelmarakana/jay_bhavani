@@ -1,0 +1,73 @@
+.scene {
+  position: relative;
+  perspective: 1400px;
+  perspective-origin: 50% 20%;
+  overflow-x: clip;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  transform-style: preserve-3d;
+}
+
+.orbLayer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  animation: orbFloat3d 14s ease-in-out infinite;
+}
+
+.orb:nth-child(1) {
+  width: 320px;
+  height: 320px;
+  top: 8%;
+  left: -4%;
+  background: radial-gradient(circle, rgba(226, 173, 27, 0.55), transparent 70%);
+  animation-delay: 0s;
+}
+
+.orb:nth-child(2) {
+  width: 260px;
+  height: 260px;
+  top: 42%;
+  right: -6%;
+  background: radial-gradient(circle, rgba(184, 134, 11, 0.45), transparent 70%);
+  animation-delay: -4s;
+}
+
+.orb:nth-child(3) {
+  width: 200px;
+  height: 200px;
+  bottom: 10%;
+  left: 35%;
+  background: radial-gradient(circle, rgba(233, 216, 199, 0.7), transparent 70%);
+  animation-delay: -8s;
+}
+
+@keyframes orbFloat3d {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(30px, -40px, 60px) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-20px, 25px, -30px) scale(0.95);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    animation: none;
+  }
+}
