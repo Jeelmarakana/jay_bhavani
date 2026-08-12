@@ -1,0 +1,28 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--text-secondary);
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  line-height: 1;
+}
+
+.btn:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  transform: scale(1.05);
+}
+
+.active {
+  color: #c0392b;
+  border-color: rgba(192, 57, 43, 0.35);
+  background: rgba(255, 240, 240, 0.95);
+}

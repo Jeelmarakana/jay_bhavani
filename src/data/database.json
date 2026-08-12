@@ -289,6 +289,17 @@
   ],
   "inquiries": [
     {
+      "id": "1786540671031",
+      "name": "Jeel Marakana",
+      "email": "",
+      "phone": "8347070654",
+      "productId": null,
+      "productName": null,
+      "message": "test",
+      "status": "Pending",
+      "createdAt": "2026-08-12T13:17:51.031Z"
+    },
+    {
       "id": "1784792772224",
       "name": "54",
       "email": "",

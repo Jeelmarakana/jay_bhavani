@@ -100,7 +100,41 @@
   padding-top: 2rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.social a {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  transition: all 0.25s ease;
+}
+
+.social a:hover {
+  background: var(--accent-gold-light);
+  border-color: var(--accent-gold);
+}
+
+.policies a {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.policies a:hover {
+  color: var(--accent-gold);
 }
 
 .copyright {

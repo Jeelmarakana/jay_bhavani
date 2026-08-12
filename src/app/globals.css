@@ -1,28 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Colors - White and Premium Yellow/Gold Theme */
-  --bg-primary: #FCFCFA;
-  --bg-secondary: #FAF8F2;
-  --bg-tertiary: #F3EFE6;
-  --accent-gold: #E2AD1B;
-  --accent-gold-hover: #C59300;
-  --accent-gold-light: #FFF9E6;
-  --text-primary: #1C1B17;
-  --text-secondary: #5C584E;
-  --text-muted: #8F8B80;
-  --border-color: rgba(226, 173, 27, 0.22);
-  --border-focus: rgba(226, 173, 27, 0.6);
-  --gold-glow: 0 4px 15px rgba(226, 173, 27, 0.08);
-  --gold-glow-hover: 0 8px 25px rgba(226, 173, 27, 0.2);
+  /* Brand palette — Jay Bhavani Ornaments v1.1 */
+  --bg-primary: #FBF7F0;
+  --bg-secondary: #F5F0E8;
+  --bg-tertiary: #EDE6DA;
+  --bg-blush: #E9D8C7;
+  --accent-gold: #B8860B;
+  --accent-gold-hover: #9A7209;
+  --accent-gold-light: #F5EDD8;
+  --text-primary: #3A3A3A;
+  --text-secondary: #5C5C5C;
+  --text-muted: #8A8A8A;
+  --border-color: rgba(184, 134, 11, 0.22);
+  --border-focus: rgba(184, 134, 11, 0.55);
+  --gold-glow: 0 4px 15px rgba(184, 134, 11, 0.1);
+  --gold-glow-hover: 0 8px 25px rgba(184, 134, 11, 0.18);
   --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
-  --card-shadow-hover: 0 16px 40px rgba(226, 173, 27, 0.12);
+  --card-shadow-hover: 0 16px 40px rgba(184, 134, 11, 0.12);
   --success: #059669;
   --error: #DC2626;
 
   /* Typography */
-  --font-serif: 'Cinzel', Georgia, serif;
-  --font-sans: 'Montserrat', sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
 
   /* Dimensions */
   --max-width: 1280px;
@@ -168,30 +169,27 @@ input, select, textarea, button {
 
 .gold-text {
   color: var(--accent-gold);
-  background: linear-gradient(135deg, #FAD64B 0%, #E2AD1B 50%, #C59300 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .gold-gradient-bg {
-  background: linear-gradient(135deg, #FAD64B 0%, #E2AD1B 50%, #C59300 100%);
-  color: #000000;
+  background: linear-gradient(135deg, #D4A843 0%, #B8860B 50%, #9A7209 100%);
+  color: #fff;
 }
 
 .gold-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-height: 44px;
   padding: 0.8rem 2.2rem;
   border-radius: 6px;
   font-family: var(--font-serif);
   font-weight: 600;
   font-size: 0.9rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #FAD64B 0%, #E2AD1B 50%, #C59300 100%);
-  color: #121212;
+  background: var(--accent-gold);
+  color: #fff;
   border: none;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -212,6 +210,7 @@ input, select, textarea, button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-height: 44px;
   padding: 0.8rem 2.2rem;
   border-radius: 6px;
   font-family: var(--font-serif);
@@ -361,4 +360,28 @@ input, select, textarea, button {
   .gold-btn, .outline-btn {
     width: 100%;
   }
+}
+
+.floating-whatsapp {
+  position: fixed;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.8rem 1.2rem;
+  border-radius: 999px;
+  background: #25d366;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 25px rgba(37, 211, 102, 0.35);
+}
+
+.floating-whatsapp:hover {
+  transform: translateY(-2px);
+  background: #20ba5a;
 }

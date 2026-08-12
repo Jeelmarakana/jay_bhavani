@@ -1,0 +1,130 @@
+.header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+}
+
+.kicker {
+  display: inline-block;
+  margin-bottom: 0.8rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+.desc {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  border: 1px dashed var(--border-color);
+  border-radius: 16px;
+  background: var(--bg-secondary);
+}
+
+.empty p {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.imgWrap {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wishBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.details {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.category {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.details h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.details p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.viewLink {
+  margin-top: auto;
+  padding-top: 0.8rem;
+  color: var(--accent-gold);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.loginNote {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.loginNote a {
+  color: var(--accent-gold);
+  text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .actions { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .grid { grid-template-columns: 1fr; }
+}

@@ -2,30 +2,49 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getClientSession } from '@/lib/auth';
 import styles from './page.module.css';
+
+const categories = [
+  { name: 'Rings', slug: 'rings', image: '/images/products/gold-ring.jpg' },
+  { name: 'Necklaces & Har', slug: 'necklaces', image: '/images/products/antique-necklace.jpg' },
+  { name: 'Earrings', slug: 'earrings', image: '/images/products/royal-earrings.jpg' },
+  { name: 'Bangles & Bracelets', slug: 'bangles', image: '/images/products/gold-bangles.jpg' },
+  { name: 'Bridal Sets', slug: 'bridal-sets', image: '/images/products/bridal-set.jpg' },
+];
+
+const trustPoints = [
+  '22K Gold Jewellery',
+  'Transparent Pricing',
+  'Custom Jewellery',
+  'Trusted Craftsmanship',
+  'Purity Check',
+];
+
+const reviews = [
+  { name: 'Aarohi Patel', quote: 'The bridal set was exactly what we wanted. The design felt grand but still elegant and very personal.', rating: 5 },
+  { name: 'Pratik Shah', quote: 'Their pricing transparency and quality gave us total confidence. We felt respected throughout the buying process.', rating: 5 },
+  { name: 'Nisha Desai', quote: 'From quick WhatsApp replies to the final fitting, the experience was smooth and reassuring.', rating: 5 },
+];
+
+const gallery = [
+  '/images/products/diamond-ring.jpg',
+  '/images/products/bridal-set.jpg',
+  '/images/products/temple-earrings.jpg',
+  '/images/products/silver-earrings.jpg',
+  '/images/products/gold-bangles.jpg',
+  '/images/products/antique-necklace.jpg',
+  '/images/products/royal-earrings.jpg',
+  '/images/products/gold-ring.jpg',
+  '/images/products/designer-mangalsutra.jpg',
+];
 
 export default function Home() {
   const [rates, setRates] = useState(null);
   const [featuredProducts, setFeaturedProducts] = useState([]);
-  const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', interestedIn: 'Rings', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: null, message: '' });
-  const [clientUser, setClientUser] = useState(null);
 
-  useEffect(() => {
-    const session = getClientSession();
-    setClientUser(session);
-    if (session) {
-      setFormData((prev) => ({
-        ...prev,
-        name: session.name || '',
-        email: session.email || '',
-      }));
-    }
-  }, []);
-
-  // Fetch Gold Rates
   useEffect(() => {
     const fetchRates = async () => {
       try {
@@ -33,18 +52,20 @@ export default function Home() {
         const data = await res.json();
         if (data.success) {
           setRates(data.rates);
+        } else {
+          setRates({ error: true });
         }
       } catch (err) {
         console.error('Error fetching rates:', err);
+        setRates({ error: true });
       }
     };
 
     fetchRates();
-    const interval = setInterval(fetchRates, 15000); // update every 15s to show dynamic tick
+    const interval = setInterval(fetchRates, 15000);
     return () => clearInterval(interval);
   }, []);
 
-  // Fetch Featured Products
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
@@ -60,16 +81,15 @@ export default function Home() {
     fetchFeatured();
   }, []);
 
-  // Handle Contact Form Submission
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
     if (!formData.name || !formData.phone || !formData.message) {
-      setSubmitStatus({ success: false, message: 'Please fill in all required fields.' });
+      setSubmitStatus({ success: false, message: 'Please fill in your name, mobile number and enquiry message.' });
       return;
     }
 
@@ -85,101 +105,108 @@ export default function Home() {
       const data = await res.json();
 
       if (data.success) {
-        setSubmitStatus({ success: true, message: 'Thank you! Your inquiry has been received. Our team will contact you shortly.' });
-        setFormData({ name: '', phone: '', email: '', message: '' });
+        setSubmitStatus({ success: true, message: 'Thank you! Your enquiry has been sent. Our team will contact you shortly.' });
+        setFormData({ name: '', phone: '', interestedIn: 'Rings', message: '' });
       } else {
-        setSubmitStatus({ success: false, message: data.error || 'Failed to submit enquiry.' });
+        setSubmitStatus({ success: false, message: data.error || 'Failed to send enquiry.' });
       }
-    } catch (err) {
-      setSubmitStatus({ success: false, message: 'An error occurred. Please try again.' });
+    } catch (error) {
+      setSubmitStatus({ success: false, message: 'Something went wrong. Please try again or send us a WhatsApp message.' });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const categories = [
-    { name: 'Rings', slug: 'rings', image: '/images/products/gold-ring.jpg' },
-    { name: 'Necklaces & Har', slug: 'necklaces', image: '/images/products/antique-necklace.jpg' },
-    { name: 'Earrings', slug: 'earrings', image: '/images/products/royal-earrings.jpg' },
-    { name: 'Bangles & Bracelets', slug: 'bangles', image: '/images/products/gold-bangles.jpg' },
-    { name: 'Bridal Sets', slug: 'bridal-sets', image: '/images/products/bridal-set.jpg' },
-  ];
+  const formatRate = (value) => {
+    if (value === undefined || value === null || Number.isNaN(value)) {
+      return '—';
+    }
+    return `₹${Number(value).toLocaleString('en-IN')}`;
+  };
+
+  const rateDateLabel = rates && rates.timestamp ? new Date(rates.timestamp).toLocaleString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }) : 'Today';
 
   return (
     <div className={styles.homeContainer}>
-      {/* Hero Section */}
-      <section className={styles.hero} style={{ '--bg-image': "url('/images/hero-banner.jpg')" }}>
+      <section className={styles.hero} style={{ '--bg-image': "url('/images/products/bridal-set.jpg')" }}>
         <div className={`${styles.heroContent} container`}>
-          <span className={styles.heroSubtitle}>Welcome to Jay Bhavani Ornaments</span>
-          <h1 className={`${styles.heroTitle} serif-title`}>Crafting Pure Elegance</h1>
+          <span className={styles.heroSubtitle}>Digital Showroom + WhatsApp Sales Machine</span>
+          <h1 className={`${styles.heroTitle} serif-title`}>
+            સોનાની સુંદરતા, વિશ્વાસ સાથે.
+          </h1>
           <p className={styles.heroText}>
-            Explore our curated collections of standard 22K Gold, brilliant Diamonds, and traditional Antique bridal jewellery set in unmatched craftsmanship.
+            22K Gold • Diamond • Bridal • Antique Jewellery — Kamrej, Surat માં તમારા પરિવાર માટે વિશ્વાસપાત્ર jewellery collection.
           </p>
           <div className={styles.heroBtns}>
-            <Link href="/shop" className="gold-btn">View Catalog</Link>
-            <a href="#rates-section" className="outline-btn">Live Gold Rates</a>
+            <Link href="#shop-by-category" className="gold-btn">Explore Collection</Link>
+            <a href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20would%20like%20to%20enquire%20about%20your%20collection." className="outline-btn" target="_blank" rel="noreferrer">WhatsApp Us</a>
           </div>
         </div>
       </section>
 
-      {/* Gold Rates Live Ticker */}
       <section id="rates-section" className={styles.ratesSection}>
         <div className="container">
           <div className={styles.ratesCard}>
             <div className={styles.ratesHeader}>
               <span className={styles.pulseDot}></span>
-              <h2 className="serif-title" style={{ fontSize: '1.2rem', letterSpacing: '0.05em' }}>Live Metal Estimator (Kamrej, Surat)</h2>
+              <h2 className="serif-title" style={{ fontSize: '1.2rem', letterSpacing: '0.05em' }}>Today&apos;s Gold Rate — Kamrej, Surat</h2>
             </div>
             <div className={styles.ratesGrid}>
               <div className={styles.rateBox}>
-                <span className={styles.rateLabel}>Gold 24K (Per 10g)</span>
-                <span className={styles.rateVal}>{rates ? `₹${rates.gold24k.toLocaleString('en-IN')}` : 'Loading...'}</span>
+                <span className={styles.rateLabel}>24K Gold / 10g</span>
+                <span className={styles.rateVal}>{rates && !rates.error ? formatRate(rates.gold24k) : 'Rates unavailable'}</span>
               </div>
               <div className={styles.rateBox}>
-                <span className={styles.rateLabel}>Gold 22K (Per 10g)</span>
-                <span className={styles.rateVal}>{rates ? `₹${rates.gold22k.toLocaleString('en-IN')}` : 'Loading...'}</span>
+                <span className={styles.rateLabel}>22K Gold / 10g</span>
+                <span className={styles.rateVal}>{rates && !rates.error ? formatRate(rates.gold22k) : 'Rates unavailable'}</span>
               </div>
               <div className={styles.rateBox}>
-                <span className={styles.rateLabel}>Gold 18K (Per 10g)</span>
-                <span className={styles.rateVal}>{rates ? `₹${rates.gold18k.toLocaleString('en-IN')}` : 'Loading...'}</span>
+                <span className={styles.rateLabel}>18K Gold / 10g</span>
+                <span className={styles.rateVal}>{rates && !rates.error ? formatRate(rates.gold18k) : 'Rates unavailable'}</span>
               </div>
               <div className={styles.rateBox}>
-                <span className={styles.rateLabel}>Silver (Per 100g)</span>
-                <span className={styles.rateVal}>{rates ? `₹${(rates.silver * 10).toLocaleString('en-IN')}` : 'Loading...'}</span>
+                <span className={styles.rateLabel}>Silver / 100g</span>
+                <span className={styles.rateVal}>{rates && !rates.error ? formatRate((rates.silver || 0) * 10) : 'Rates unavailable'}</span>
               </div>
             </div>
-            <p className={styles.ratesDisclaimer}>*Rates fluctuate live. Use as approximate guides. Current time: {rates ? new Date(rates.timestamp).toLocaleTimeString() : '...'}</p>
+            <p className={styles.ratesDisclaimer}>
+              Updated: {rateDateLabel} • Rates are indicative and may vary at store.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Categories Grid */}
-      <section className={styles.section}>
+      <section id="shop-by-category" className={styles.section}>
         <div className="container">
           <div className={styles.sectionHeader}>
-            <h2 className={`${styles.sectionTitle} serif-title`}>Shop By Category</h2>
+            <h2 className={`${styles.sectionTitle} serif-title`}>Shop by Category</h2>
             <div className={styles.titleDivider}></div>
           </div>
           <div className={styles.categoriesGrid}>
-            {categories.map((cat) => (
-              <Link 
-                key={cat.slug} 
-                href={`/shop?category=${cat.slug}`} 
+            {categories.map((category) => (
+              <Link
+                key={category.slug}
+                href={`/shop?category=${category.slug}`}
                 className={styles.categoryCard}
-                style={{ backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.1) 80%), url('${cat.image}')` }}
+                style={{ backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.1) 80%), url('${category.image}')` }}
               >
-                <span className={`${styles.categoryName} serif-title`}>{cat.name}</span>
+                <span className={`${styles.categoryName} serif-title`}>{category.name}</span>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
       <section className={`${styles.section} ${styles.darkBg}`}>
         <div className="container">
           <div className={styles.sectionHeader}>
-            <h2 className={`${styles.sectionTitle} serif-title`}>Signature Masterpieces</h2>
+            <h2 className={`${styles.sectionTitle} serif-title`}>Our Signature Collection</h2>
             <div className={styles.titleDivider}></div>
           </div>
           <div className="grid-4">
@@ -194,7 +221,7 @@ export default function Home() {
                   <h3 className={styles.productName}>{product.name}</h3>
                   <div className={styles.productFooter}>
                     <span className={styles.productWeight}>{product.weight}g | {product.purity}</span>
-                    <Link href={`/product/${product.id}`} className={styles.viewLink}>View Details &rarr;</Link>
+                    <Link href={`/product/${product.id}`} className={styles.viewLink}>View Details →</Link>
                   </div>
                 </div>
               </div>
@@ -203,127 +230,179 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Heritage / Story */}
-      <section className={styles.heritageSection} style={{ backgroundImage: `linear-gradient(to right, rgba(252,252,250,0.95), rgba(252,252,250,0.85)), url('/images/hero-banner.jpg')` }}>
+      <section id="bridal" className={styles.bridalSection}>
         <div className="container">
-          <div className={styles.heritageContent}>
-            <h2 className="serif-title gold-text" style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>Our Heritage & Legacy</h2>
+          <div className={styles.bridalLayout}>
+            <div className={styles.bridalContent}>
+              <span className={styles.kicker}>Bridal Jewellery</span>
+              <h2 className="serif-title" style={{ fontSize: '2.3rem', marginBottom: '1rem' }}>Bridal Jewellery, Made for Your Big Day</h2>
+              <p>
+                Traditional elegance meets modern craftsmanship. From red-carpet-worthy bridal sets to heirloom-worthy family pieces, every design is crafted with a balance of beauty, comfort, and lasting value.
+              </p>
+              <div className={styles.heroBtns}>
+                <Link href="/shop?category=bridal-sets" className="gold-btn">Explore Bridal Collection</Link>
+                <a href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20would%20like%20to%20book%20a%20bridal%20consultation." className="outline-btn" target="_blank" rel="noreferrer">Book Bridal Consultation</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className={styles.section}>
+        <div className="container">
+          <div className={styles.sectionHeader}>
+            <h2 className={`${styles.sectionTitle} serif-title`}>Why Choose Jay Bhavani Ornaments?</h2>
+            <div className={styles.titleDivider}></div>
+          </div>
+          <div className={styles.trustGrid}>
+            {trustPoints.map((item) => (
+              <div key={item} className={styles.trustCard}>
+                <span className={styles.checkmark}>✓</span>
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.storySection}>
+        <div className="container">
+          <div className={styles.storyBox}>
+            <div>
+              <span className={styles.kicker}>Our Story</span>
+              <h3 className="serif-title" style={{ fontSize: '2rem', marginBottom: '1rem' }}>A heritage of trust, detail and craftsmanship.</h3>
+            </div>
             <p>
-              Located in the heart of Kamrej in Surat, **Jay Bhavani Ornaments** stands as an emblem of purity, trust, and intricate artistry. For decades, our master artisans have breathed life into precious metals, creating heirloom ornaments that stay passed down through generations.
-            </p>
-            <p style={{ marginTop: '1rem' }}>
-              We specialize in custom bridal designs, antique Kundan masterpieces, and lightweight contemporary gold jewellery, ensuring that every customer experiences perfection in design and transparency in pricing.
+              Jay Bhavani Ornaments brings together family values, meticulous craftsmanship and a deep understanding of jewellery that is meant to be treasured. Serving families in Kamrej and across Surat, we focus on purity, personalised guidance and pieces that celebrate life&apos;s important moments.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Quick Contact Inquiry */}
       <section className={styles.section}>
         <div className="container">
-          <div className={styles.inquiryGrid}>
-            <div className={styles.inquiryInfo}>
-              <h2 className="serif-title" style={{ marginBottom: '1rem' }}>Visit Or Enquire</h2>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
-                Have questions about custom order designs, rates, or purity checks? Drop us a message, or request a design consultation with our specialists.
-              </p>
-              <div className={styles.infoBlock}>
-                <h4>Boutique Location</h4>
-                <p>Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat. <a href="https://maps.google.com/?q=Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>Map</a></p>
+          <div className={styles.customCTA}>
+            <div>
+              <span className={styles.kicker}>Custom Jewellery</span>
+              <h3 className="serif-title" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Have a design in mind?</h3>
+            </div>
+            <a href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20have%20a%20design%20in%20mind.%20Please%20share%20details." className="gold-btn" target="_blank" rel="noreferrer">Send Your Design on WhatsApp</a>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className="container">
+          <div className={styles.sectionHeader}>
+            <h2 className={`${styles.sectionTitle} serif-title`}>What Our Customers Say</h2>
+            <div className={styles.titleDivider}></div>
+          </div>
+          <div className={styles.reviewGrid}>
+            {reviews.map((review) => (
+              <div key={review.name} className={styles.reviewCard}>
+                <div className={styles.stars}>★★★★★</div>
+                <p>“{review.quote}”</p>
+                <strong>{review.name}</strong>
               </div>
-              <div className={styles.infoBlock}>
-                <h4>Call / WhatsApp</h4>
-                <p>
-                  <a href="tel:+919898426635">📞 98984 26635</a> ·{' '}
-                  <a href="https://wa.me/919898426635" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>WhatsApp</a>
-                </p>
-              </div>
-              <div className={styles.infoBlock}>
-                <h4>Email Support</h4>
-                <p>info@jaybhavaniornaments.com</p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className="container">
+          <div className={styles.sectionHeader}>
+            <h2 className={`${styles.sectionTitle} serif-title`}>Follow Our Latest Designs</h2>
+            <div className={styles.titleDivider}></div>
+          </div>
+          <div className={styles.instagramGrid}>
+            {gallery.map((img, index) => (
+              <img key={`${img}-${index}`} src={img} alt="Latest jewellery design at Jay Bhavani Ornaments" className={styles.instagramImage} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className={styles.section}>
+        <div className="container">
+          <div className={styles.visitCard}>
+            <div className={styles.visitContent}>
+              <span className={styles.kicker}>Visit Our Showroom</span>
+              <h3 className="serif-title" style={{ fontSize: '2rem', marginBottom: '1rem' }}>Visit Our Showroom</h3>
+              <p>📍 Jay Bhavani Ornaments, Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat</p>
+              <p>🕐 Mon–Sat: 11:00 AM – 8:30 PM</p>
+              <div className={styles.heroBtns}>
+                <a href="https://maps.google.com/?q=Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat" className="gold-btn" target="_blank" rel="noreferrer">Get Directions</a>
+                <a href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20would%20like%20to%20visit%20the%20showroom." className="outline-btn" target="_blank" rel="noreferrer">WhatsApp for Visit</a>
               </div>
             </div>
-            <div className={`${styles.inquiryFormWrapper} glassmorphism`}>
-              <h3 className="serif-title" style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: 'var(--accent-gold)' }}>Send Online Inquiry</h3>
-              
-              {clientUser ? (
-                <>
-                  {submitStatus.message && (
-                    <div className={`${styles.statusMsg} ${submitStatus.success ? styles.successMsg : styles.errorMsg}`}>
-                      {submitStatus.message}
-                    </div>
-                  )}
+            <div className={styles.mapWrap}>
+              <iframe
+                title="Jay Bhavani Ornaments location"
+                src="https://maps.google.com/maps?q=shop%20no.%20103%20vasto%20palace-b%20pasodra%20patiya%20kamrej%20surat&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
-                  <form onSubmit={handleFormSubmit}>
-                    <div className="form-group">
-                      <label className="form-label">Full Name *</label>
-                      <input 
-                        type="text" 
-                        name="name" 
-                        value={formData.name} 
-                        onChange={handleInputChange} 
-                        className="form-control" 
-                        placeholder="Enter your name" 
-                        required 
-                      />
-                    </div>
-                    <div className="grid-2" style={{ gap: '1rem', marginBottom: '0' }}>
-                      <div className="form-group">
-                        <label className="form-label">Phone Number *</label>
-                        <input 
-                          type="tel" 
-                          name="phone" 
-                          value={formData.phone} 
-                          onChange={handleInputChange} 
-                          className="form-control" 
-                          placeholder="Your mobile number" 
-                          required 
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label className="form-label">Email Address</label>
-                        <input 
-                          type="email" 
-                          name="email" 
-                          value={formData.email} 
-                          onChange={handleInputChange} 
-                          className="form-control" 
-                          placeholder="Optional" 
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label">Message / Inquiry *</label>
-                      <textarea 
-                        name="message" 
-                        value={formData.message} 
-                        onChange={handleInputChange} 
-                        rows="4" 
-                        className="form-control" 
-                        placeholder="What style or item are you looking for?" 
-                        required
-                      ></textarea>
-                    </div>
-                    <button type="submit" className="gold-btn" style={{ width: '100%' }} disabled={isSubmitting}>
-                      {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
-                    </button>
-                  </form>
-                </>
-              ) : (
-                <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
-                  <p style={{ marginBottom: '1.5rem', color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: '1.6' }}>
-                    Please login or register to send an online inquiry or request a design consultation.
-                  </p>
-                  <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', maxWidth: '300px', margin: '0 auto' }}>
-                    <Link href="/auth/login" className="gold-btn" style={{ flex: 1, padding: '0.6rem', fontSize: '0.85rem', textAlign: 'center' }}>
-                      Login
-                    </Link>
-                    <Link href="/auth/register" className="outline-btn" style={{ flex: 1, padding: '0.6rem', fontSize: '0.85rem', textAlign: 'center' }}>
-                      Register
-                    </Link>
-                  </div>
+      <section className={styles.finalCTASection}>
+        <div className="container">
+          <div className={styles.finalCTA}>
+            <h3 className="serif-title" style={{ fontSize: '2.1rem', marginBottom: '1rem' }}>Your perfect ornament is waiting.</h3>
+            <a href="https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20am%20interested%20in%20your%20jewellery%20collection." className="gold-btn" target="_blank" rel="noreferrer">WhatsApp Us</a>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className="container">
+          <div className={styles.enquiryGrid}>
+            <div className={styles.enquiryInfo}>
+              <span className={styles.kicker}>Quick Enquiry</span>
+              <h3 className="serif-title" style={{ fontSize: '2rem', marginBottom: '0.8rem' }}>Tell us what you are looking for</h3>
+              <p>Choose a category, share your preferred design type, and our team will guide you with the right options and latest pricing.</p>
+              <p className={styles.optionalText}>Login to save your enquiries and wishlist. Login is optional and never required for a quote.</p>
+            </div>
+            <div className={`${styles.enquiryFormWrap} glassmorphism`}>
+              {submitStatus.message && (
+                <div className={`${styles.statusMsg} ${submitStatus.success ? styles.successMsg : styles.errorMsg}`}>
+                  {submitStatus.message}
                 </div>
               )}
+
+              <form onSubmit={handleFormSubmit}>
+                <div className="grid-2" style={{ gap: '1rem', marginBottom: '0.8rem' }}>
+                  <div className="form-group" style={{ marginBottom: 0 }}>
+                    <label className="form-label">Name *</label>
+                    <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="form-control" placeholder="Your name" required />
+                  </div>
+                  <div className="form-group" style={{ marginBottom: 0 }}>
+                    <label className="form-label">Mobile / WhatsApp *</label>
+                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="form-control" placeholder="Mobile number" required />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Interested In</label>
+                  <select name="interestedIn" value={formData.interestedIn} onChange={handleInputChange} className="form-control">
+                    <option>Rings</option>
+                    <option>Necklaces & Har</option>
+                    <option>Earrings</option>
+                    <option>Bangles & Bracelets</option>
+                    <option>Bridal Sets</option>
+                    <option>Custom Design</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Message *</label>
+                  <textarea name="message" value={formData.message} onChange={handleInputChange} rows="4" className="form-control" placeholder="Tell us your preferred style, metal or occasion" required />
+                </div>
+                <button type="submit" className="gold-btn" style={{ width: '100%' }} disabled={isSubmitting}>
+                  {isSubmitting ? 'Sending...' : 'Send Enquiry'}
+                </button>
+              </form>
             </div>
           </div>
         </div>
