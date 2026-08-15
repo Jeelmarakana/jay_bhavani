@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { submitInquiry, openOwnerWhatsAppNotify } from '@/lib/inquiry';
+import WishlistButton from '@/components/WishlistButton';
 import styles from './page.module.css';
 
 export default function ProductDetail() {
@@ -10,6 +12,8 @@ export default function ProductDetail() {
 
   const [product, setProduct] = useState(null);
   const [rates, setRates] = useState(null);
+  const [related, setRelated] = useState([]);
+  const [activeImage, setActiveImage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -31,12 +35,20 @@ export default function ProductDetail() {
           return;
         }
         setProduct(prodData.product);
+        setActiveImage(prodData.product.image);
 
         // Fetch daily rates
         const rateRes = await fetch('/api/gold-rate');
         const rateData = await rateRes.json();
         if (rateData.success) {
           setRates(rateData.rates);
+        }
+
+        // Fetch other pieces from the same category
+        const relatedRes = await fetch(`/api/products?category=${prodData.product.category}`);
+        const relatedData = await relatedRes.json();
+        if (relatedData.success) {
+          setRelated(relatedData.products.filter((item) => item.id !== prodData.product.id).slice(0, 4));
         }
 
         setLoading(false);
@@ -107,6 +119,7 @@ export default function ProductDetail() {
   };
 
   const priceBreakdown = calculatePrice();
+  const galleryImages = product?.gallery?.length ? product.gallery : [product?.image].filter(Boolean);
 
   // Submit Inquiry Form
   const handleInputChange = (e) => {
@@ -188,11 +201,43 @@ export default function ProductDetail() {
       </div>
 
       <div className={styles.detailLayout}>
-        {/* Left Side: Product Image */}
-        <div className={styles.imageGallery}>
-          <div className={`${styles.mainImageWrapper} glassmorphism`}>
-            <img src={product.image} alt={product.name} className={styles.mainImage} />
+        {/* Left Side: Product Gallery */}
+        <div className={styles.imageGallery} data-3d-parallax="26">
+          <div className={`${styles.mainImageWrapper} glassmorphism`} data-3d-tilt="8">
+            <img src={activeImage || product.image} alt={product.name} className={styles.mainImage} />
             <span className={styles.purityBadge}>{product.purity} Purity</span>
+            <WishlistButton product={product} className={styles.wishlistFloating} />
+          </div>
+
+          {galleryImages.length > 1 && (
+            <div className={styles.thumbRow}>
+              {galleryImages.map((image, index) => (
+                <button
+                  key={image}
+                  type="button"
+                  className={`${styles.thumb} ${activeImage === image ? styles.thumbActive : ''}`}
+                  onClick={() => setActiveImage(image)}
+                  aria-label={`View image ${index + 1} of ${product.name}`}
+                >
+                  <img src={image} alt={`${product.name} view ${index + 1}`} loading="lazy" />
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className={`${styles.assuranceRow} glassmorphism`}>
+            <div className={styles.assuranceItem}>
+              <span className={styles.assuranceIcon}>◆</span>
+              <span>{product.hallmark || 'Purity assured'}</span>
+            </div>
+            <div className={styles.assuranceItem}>
+              <span className={styles.assuranceIcon}>⇄</span>
+              <span>Lifetime exchange</span>
+            </div>
+            <div className={styles.assuranceItem}>
+              <span className={styles.assuranceIcon}>✦</span>
+              <span>Free cleaning &amp; polish</span>
+            </div>
           </div>
         </div>
 
@@ -200,38 +245,129 @@ export default function ProductDetail() {
         <div className={styles.infoDetails}>
           <span className={styles.categoryTag}>{product.categoryName}</span>
           <h1 className={`${styles.productName} serif-title`}>{product.name}</h1>
-          
+
+          <div className={styles.quickFacts}>
+            <span className={styles.quickFact}>{product.weight} g</span>
+            <span className={styles.quickFact}>{product.purity}</span>
+            <span className={styles.quickFact}>{product.metal}</span>
+            {product.occasion && <span className={styles.quickFact}>{product.occasion}</span>}
+            <span className={`${styles.quickFact} ${product.inStock === false ? styles.outOfStock : styles.inStock}`}>
+              {product.inStock === false ? 'Made to order' : 'Available in showroom'}
+            </span>
+          </div>
+
+          {product.highlights?.length > 0 && (
+            <ul className={styles.highlightList}>
+              {product.highlights.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          )}
+
           <div className={styles.specificationBox}>
-            <h3 className={styles.specTitle}>Specifications</h3>
+            <h3 className={styles.specTitle}>Full Specifications</h3>
             <table className={styles.specTable}>
               <tbody>
                 <tr>
                   <td>Product ID</td>
                   <td><strong>#{product.id}</strong></td>
                 </tr>
+                {product.sku && (
+                  <tr>
+                    <td>SKU / Design Code</td>
+                    <td><strong>{product.sku}</strong></td>
+                  </tr>
+                )}
                 <tr>
                   <td>Metal Type</td>
                   <td>{product.metal}</td>
                 </tr>
                 <tr>
-                  <td>Gold Purity</td>
-                  <td>{product.purity} (Hallmarked)</td>
+                  <td>Purity</td>
+                  <td>{product.purity} ({product.hallmark || 'Hallmarked'})</td>
                 </tr>
                 <tr>
                   <td>Gross Weight</td>
                   <td><strong>{product.weight} grams</strong></td>
                 </tr>
+                {product.dimensions && (
+                  <tr>
+                    <td>Dimensions</td>
+                    <td>{product.dimensions}</td>
+                  </tr>
+                )}
+                {product.stoneDetails && (
+                  <tr>
+                    <td>Stone Details</td>
+                    <td>{product.stoneDetails}</td>
+                  </tr>
+                )}
+                {product.finish && (
+                  <tr>
+                    <td>Finish</td>
+                    <td>{product.finish}</td>
+                  </tr>
+                )}
+                {product.gender && (
+                  <tr>
+                    <td>Worn By</td>
+                    <td>{product.gender}</td>
+                  </tr>
+                )}
+                {product.occasion && (
+                  <tr>
+                    <td>Best Suited For</td>
+                    <td>{product.occasion}</td>
+                  </tr>
+                )}
                 <tr>
                   <td>Making Charges</td>
                   <td>{product.makingCharges}%</td>
                 </tr>
+                {product.craftingTime && (
+                  <tr>
+                    <td>Delivery Time</td>
+                    <td>{product.craftingTime}</td>
+                  </tr>
+                )}
+                {product.certification && (
+                  <tr>
+                    <td>Certification</td>
+                    <td>{product.certification}</td>
+                  </tr>
+                )}
+                {product.warranty && (
+                  <tr>
+                    <td>Buy-back / Warranty</td>
+                    <td>{product.warranty}</td>
+                  </tr>
+                )}
+                {product.availability && (
+                  <tr>
+                    <td>Availability</td>
+                    <td>{product.availability}</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
 
           <div className={styles.descriptionSection}>
+            <h3 className={styles.specTitle}>Product Description</h3>
             <p>{product.description}</p>
+            {product.detailedDescription && <p>{product.detailedDescription}</p>}
           </div>
+
+          {product.careInstructions?.length > 0 && (
+            <div className={styles.careSection}>
+              <h3 className={styles.specTitle}>Care &amp; Maintenance</h3>
+              <ul className={styles.careList}>
+                {product.careInstructions.map((tip) => (
+                  <li key={tip}>{tip}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Pricing Estimation Section */}
           {priceBreakdown && (
@@ -343,6 +479,31 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+
+      {related.length > 0 && (
+        <section className={styles.relatedSection} data-3d-reveal>
+          <h2 className={`${styles.relatedTitle} serif-title`}>More from {product.categoryName}</h2>
+          <div className={`${styles.relatedGrid} stagger-3d`}>
+            {related.map((item) => (
+              <Link
+                key={item.id}
+                href={`/product/${item.id}`}
+                className={`${styles.relatedCard} card`}
+                data-3d-tilt
+                data-3d-lift
+              >
+                <div className={styles.relatedImgWrap}>
+                  <img src={item.image} alt={item.name} loading="lazy" />
+                </div>
+                <div className={styles.relatedInfo}>
+                  <span className={styles.relatedName}>{item.name}</span>
+                  <span className={styles.relatedMeta}>{item.weight}g | {item.purity}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

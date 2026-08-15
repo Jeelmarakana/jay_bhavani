@@ -127,7 +127,7 @@ export default function AdminDashboard() {
           </div>
         ) : null}
 
-        <div className={styles.authCard}>
+        <div className={styles.authCard} data-3d-reveal>
           <span className={styles.adminSubtitle}>Restricted Access</span>
           <h1 className="serif-title" style={{ fontSize: '2.1rem', marginBottom: '0.8rem' }}>Admin Login</h1>
           <p className={styles.adminDesc}>Use the protected admin account to launch the control dashboard.</p>
@@ -170,7 +170,7 @@ export default function AdminDashboard() {
   return (
     <>
       <div className="container" style={{ padding: '3rem 2rem 5rem' }}>
-      <div className={styles.adminHeader}>
+      <div className={styles.adminHeader} data-3d-reveal>
         <div>
           <span className={styles.adminSubtitle}>Jay Bhavani Administration</span>
           <h1 className="serif-title" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Customer Inquiries</h1>

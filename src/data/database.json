@@ -10,8 +10,38 @@
       "weight": 5.4,
       "makingCharges": 12,
       "description": "Crafted in pure 22K yellow gold, this classic engagement ring features an elegant braided band design and a polished finish. A timeless symbol of love.",
-      "image": "/images/products/gold-ring.jpg",
-      "featured": true
+      "image": "/images/products/gold-engagement-ring.jpg",
+      "featured": true,
+      "gallery": [
+        "/images/products/gold-engagement-ring.jpg",
+        "/images/products/gallery/gold-engagement-ring-2.jpg",
+        "/images/products/gallery/gold-engagement-ring-3.jpg"
+      ],
+      "sku": "JBO-RG-001",
+      "detailedDescription": "Hand-finished in 22K BIS hallmarked yellow gold, this engagement ring carries a softly braided band that catches light from every angle. The inner surface is comfort-fit polished so it sits easy through the day, and the low-profile crown makes it safe for daily wear.",
+      "highlights": [
+        "916 BIS hallmarked 22K gold",
+        "Comfort-fit polished inner band",
+        "Braided hand-finished detailing",
+        "Free resizing within 30 days"
+      ],
+      "dimensions": "Band width 4.2 mm | Standard size 12 (resizable 8-18)",
+      "stoneDetails": "No stone - solid gold design",
+      "finish": "High polish",
+      "occasion": "Engagement & Daily Wear",
+      "gender": "Unisex",
+      "craftingTime": "5-7 days for custom size",
+      "hallmark": "BIS 916 Hallmarked",
+      "certification": "BIS hallmark certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Wear jewellery after applying perfume, lotion or hair spray",
+        "Store each piece separately in the pouch provided to avoid scratches",
+        "Clean with a soft dry cloth; use lukewarm water with mild soap once a month",
+        "Free professional cleaning and polishing at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "2",
@@ -23,8 +53,38 @@
       "weight": 4.2,
       "makingCharges": 15,
       "description": "An exquisite 18K white gold ring featuring a brilliant-cut center solitaire diamond, flanked by micro-paved diamonds along the band for maximum sparkle.",
-      "image": "/images/products/diamond-ring.jpg",
-      "featured": true
+      "image": "/images/products/diamond-solitaire-ring.jpg",
+      "featured": true,
+      "gallery": [
+        "/images/products/diamond-solitaire-ring.jpg",
+        "/images/products/gallery/diamond-solitaire-ring-2.jpg",
+        "/images/products/gallery/diamond-solitaire-ring-3.jpg"
+      ],
+      "sku": "JBO-RG-002",
+      "detailedDescription": "An 18K white gold solitaire built around a brilliant-cut centre stone held in a six-prong crown setting. Micro-pave diamonds run along the shoulders so the band sparkles even at a distance.",
+      "highlights": [
+        "IGI certified centre solitaire",
+        "Six-prong secure crown setting",
+        "Micro-pave diamond shoulders",
+        "Lifetime free cleaning & polishing"
+      ],
+      "dimensions": "Centre stone approx. 0.50 ct | Band width 2.4 mm",
+      "stoneDetails": "1 brilliant-cut solitaire (VS clarity, F-G colour) + 18 micro-pave diamonds",
+      "finish": "Rhodium polished white gold",
+      "occasion": "Engagement & Anniversary",
+      "gender": "Women",
+      "craftingTime": "10-12 days made to order",
+      "hallmark": "BIS 916 Hallmarked",
+      "certification": "IGI certified diamonds with 22K/18K BIS hallmark",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Wear jewellery after applying perfume, lotion or hair spray",
+        "Store each piece separately in the pouch provided to avoid scratches",
+        "Clean with a soft dry cloth; use lukewarm water with mild soap once a month",
+        "Free professional cleaning and polishing at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "3",
@@ -36,8 +96,38 @@
       "weight": 24.8,
       "makingCharges": 14,
       "description": "A magnificent antique kundan necklace set in 22K gold, decorated with intricate floral carvings, gemstone embellishments, and dangling seed pearls.",
-      "image": "/images/products/antique-necklace.jpg",
-      "featured": true
+      "image": "/images/products/antique-kundan-necklace.jpg",
+      "featured": true,
+      "gallery": [
+        "/images/products/antique-kundan-necklace.jpg",
+        "/images/products/gallery/antique-kundan-necklace-2.jpg",
+        "/images/products/gallery/antique-kundan-necklace-3.jpg"
+      ],
+      "sku": "JBO-NK-003",
+      "detailedDescription": "A statement kundan necklace set in 22K gold with uncut stone work, hand-carved floral frames and a row of dangling seed pearls. The reverse side carries traditional meenakari enamel, making it beautiful from both sides.",
+      "highlights": [
+        "Hand-set uncut kundan stones",
+        "Reverse meenakari enamel work",
+        "Matching earrings included",
+        "Adjustable dori back closure"
+      ],
+      "dimensions": "Necklace length 18 inch | Pendant drop 7.5 cm",
+      "stoneDetails": "Uncut kundan stones with freshwater seed pearl drops",
+      "finish": "Antique matte gold",
+      "occasion": "Wedding & Festive",
+      "gender": "Women",
+      "craftingTime": "15-20 days made to order",
+      "hallmark": "BIS 916 Hallmarked",
+      "certification": "BIS hallmark certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Wear jewellery after applying perfume, lotion or hair spray",
+        "Store each piece separately in the pouch provided to avoid scratches",
+        "Clean with a soft dry cloth; use lukewarm water with mild soap once a month",
+        "Free professional cleaning and polishing at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "4",
@@ -49,8 +139,38 @@
       "weight": 12.5,
       "makingCharges": 12,
       "description": "Traditional gold jhumkas featuring delicate filigree patterns, miniature gold beads, and a stunning bell-shaped dangle that sways with grace.",
-      "image": "/images/products/royal-earrings.jpg",
-      "featured": true
+      "image": "/images/products/gold-jhumka-earrings.jpg",
+      "featured": true,
+      "gallery": [
+        "/images/products/gold-jhumka-earrings.jpg",
+        "/images/products/gallery/gold-jhumka-earrings-2.jpg",
+        "/images/products/gallery/gold-jhumka-earrings-3.jpg"
+      ],
+      "sku": "JBO-ER-004",
+      "detailedDescription": "Classic Maharani jhumkas in 22K gold with layered filigree domes and tiny gold bead fringes that move with you. Light for their size thanks to a hollow-dome construction, with screw-back posts for a secure hold.",
+      "highlights": [
+        "Hollow-dome light weight build",
+        "Screw-back posts for secure hold",
+        "Hand-drawn filigree work",
+        "Gold bead fringe detailing"
+      ],
+      "dimensions": "Length 5.2 cm | Dome width 3.1 cm",
+      "stoneDetails": "No stone - pure gold beadwork",
+      "finish": "Satin & polish dual tone",
+      "occasion": "Festive & Wedding",
+      "gender": "Women",
+      "craftingTime": "7-10 days",
+      "hallmark": "BIS 916 Hallmarked",
+      "certification": "BIS hallmark certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Wear jewellery after applying perfume, lotion or hair spray",
+        "Store each piece separately in the pouch provided to avoid scratches",
+        "Clean with a soft dry cloth; use lukewarm water with mild soap once a month",
+        "Free professional cleaning and polishing at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "5",
@@ -62,8 +182,38 @@
       "weight": 38,
       "makingCharges": 10,
       "description": "A set of four beautifully matched gold bangles with embossed floral motifs. Perfect for bridal styling or festive celebrations.",
-      "image": "/images/products/gold-bangles.jpg",
-      "featured": true
+      "image": "/images/products/gold-bangles-set.jpg",
+      "featured": true,
+      "gallery": [
+        "/images/products/gold-bangles-set.jpg",
+        "/images/products/gallery/gold-bangles-set-2.jpg",
+        "/images/products/gallery/gold-bangles-set-3.jpg"
+      ],
+      "sku": "JBO-BG-005",
+      "detailedDescription": "A matched set of four 22K gold bangles with embossed floral motifs running along the full circumference. Rounded inner edges keep them comfortable when stacked or worn all day.",
+      "highlights": [
+        "Set of 4 matched bangles",
+        "Embossed floral motif work",
+        "Rounded comfort inner edge",
+        "Available in sizes 2.4 to 2.10"
+      ],
+      "dimensions": "Size 2.6 (5.7 cm diameter) | Each bangle 5 mm wide",
+      "stoneDetails": "No stone - solid gold design",
+      "finish": "High polish with matte motifs",
+      "occasion": "Wedding & Festive",
+      "gender": "Women",
+      "craftingTime": "10-12 days for custom size",
+      "hallmark": "BIS 916 Hallmarked",
+      "certification": "BIS hallmark certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Wear jewellery after applying perfume, lotion or hair spray",
+        "Store each piece separately in the pouch provided to avoid scratches",
+        "Clean with a soft dry cloth; use lukewarm water with mild soap once a month",
+        "Free professional cleaning and polishing at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "6",
@@ -75,8 +225,38 @@
       "weight": 15.2,
       "makingCharges": 11,
       "description": "A modern yet sacred design featuring double black bead chains connected to a stunning gold pendant with floral and geometric engravings.",
-      "image": "/images/products/designer-mangalsutra.jpg",
-      "featured": false
+      "image": "/images/products/gold-mangalsutra.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/gold-mangalsutra.jpg",
+        "/images/products/gallery/gold-mangalsutra-2.jpg",
+        "/images/products/gallery/gold-mangalsutra-3.jpg"
+      ],
+      "sku": "JBO-MS-006",
+      "detailedDescription": "A sacred mangalsutra with twin black bead chains supporting a 22K gold pendant engraved with floral and geometric detail. The chain is machine-strung for strength and finished with a secure S-hook clasp.",
+      "highlights": [
+        "Double-line black bead chain",
+        "Engraved gold vati pendant",
+        "Secure S-hook clasp",
+        "Everyday-safe light weight"
+      ],
+      "dimensions": "Chain length 24 inch | Pendant 2.6 cm",
+      "stoneDetails": "Traditional black beads (nazariya) with gold pendant",
+      "finish": "High polish",
+      "occasion": "Daily Wear & Ceremonial",
+      "gender": "Women",
+      "craftingTime": "5-7 days",
+      "hallmark": "BIS 916 Hallmarked",
+      "certification": "BIS hallmark certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Wear jewellery after applying perfume, lotion or hair spray",
+        "Store each piece separately in the pouch provided to avoid scratches",
+        "Clean with a soft dry cloth; use lukewarm water with mild soap once a month",
+        "Free professional cleaning and polishing at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "7",
@@ -88,8 +268,38 @@
       "weight": 92.5,
       "makingCharges": 18,
       "description": "An opulent bridal masterpiece featuring a heavy choker necklace, a long rani haar, matching jhumkas, maang tikka, and a nose ring, detailed with rubies and emeralds.",
-      "image": "/images/products/bridal-set.jpg",
-      "featured": true
+      "image": "/images/products/bridal-wedding-set.jpg",
+      "featured": true,
+      "gallery": [
+        "/images/products/bridal-wedding-set.jpg",
+        "/images/products/gallery/bridal-wedding-set-2.jpg",
+        "/images/products/gallery/bridal-wedding-set-3.jpg"
+      ],
+      "sku": "JBO-BS-007",
+      "detailedDescription": "A complete bridal ensemble: a heavy choker, a long rani haar, matching jhumkas, maang tikka and nath, all in 22K gold with ruby and emerald accents. Every piece is individually hallmarked and delivered in a fitted bridal case.",
+      "highlights": [
+        "5-piece complete bridal set",
+        "Ruby & emerald stone accents",
+        "Each piece individually hallmarked",
+        "Fitted velvet bridal case included"
+      ],
+      "dimensions": "Choker 14 inch | Rani haar 28 inch | Jhumka 6 cm",
+      "stoneDetails": "Natural rubies & emeralds with kundan polki accents",
+      "finish": "Antique gold with high-polish highlights",
+      "occasion": "Bridal",
+      "gender": "Women",
+      "craftingTime": "25-30 days made to order",
+      "hallmark": "BIS 916 Hallmarked",
+      "certification": "BIS hallmark certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Wear jewellery after applying perfume, lotion or hair spray",
+        "Store each piece separately in the pouch provided to avoid scratches",
+        "Clean with a soft dry cloth; use lukewarm water with mild soap once a month",
+        "Free professional cleaning and polishing at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "8",
@@ -101,8 +311,38 @@
       "weight": 18.2,
       "makingCharges": 16,
       "description": "A high-fashion choker necklace blending rows of premium freshwater cultured pearls with a hand-designed 18K yellow gold floral center clasp.",
-      "image": "/images/products/pearl-choker.jpg",
-      "featured": false
+      "image": "/images/products/pearl-gold-choker.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/pearl-gold-choker.jpg",
+        "/images/products/gallery/pearl-gold-choker-2.jpg",
+        "/images/products/gallery/pearl-gold-choker-3.jpg"
+      ],
+      "sku": "JBO-NK-008",
+      "detailedDescription": "Rows of premium freshwater cultured pearls held by an 18K gold floral centre clasp. The multi-strand layout sits flat on the collarbone, making it a modern choice for receptions and evening wear.",
+      "highlights": [
+        "Grade AA freshwater cultured pearls",
+        "18K gold floral centre clasp",
+        "4-strand flat-sitting layout",
+        "Extension chain for length control"
+      ],
+      "dimensions": "Length 13 inch + 2 inch extender | 4 strands",
+      "stoneDetails": "Approx. 180 cultured pearls, 4-4.5 mm",
+      "finish": "Lustre pearl with polished gold",
+      "occasion": "Reception & Party",
+      "gender": "Women",
+      "craftingTime": "7-10 days",
+      "hallmark": "BIS 916 Hallmarked",
+      "certification": "BIS hallmark certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Wear jewellery after applying perfume, lotion or hair spray",
+        "Store each piece separately in the pouch provided to avoid scratches",
+        "Clean with a soft dry cloth; use lukewarm water with mild soap once a month",
+        "Free professional cleaning and polishing at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "9",
@@ -114,8 +354,38 @@
       "weight": 22,
       "makingCharges": 9,
       "description": "A bold and heavy single kada bracelet featuring traditional hand-engraved motifs and a secure side clasp. Designed for both grandeur and comfort.",
-      "image": "/images/products/kada-bracelet.jpg",
-      "featured": false
+      "image": "/images/products/gold-kada-bracelet.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/gold-kada-bracelet.jpg",
+        "/images/products/gallery/gold-kada-bracelet-2.jpg",
+        "/images/products/gallery/gold-kada-bracelet-3.jpg"
+      ],
+      "sku": "JBO-BG-009",
+      "detailedDescription": "A solid 22K gold kada with deep hand-engraving across the outer face and a smooth polished interior. The screw-lock opening makes it easy to wear while keeping it firmly closed.",
+      "highlights": [
+        "Hand-engraved outer surface",
+        "Screw-lock secure opening",
+        "Smooth polished interior",
+        "Unisex broad-band styling"
+      ],
+      "dimensions": "Inner diameter 6.2 cm | Band width 12 mm",
+      "stoneDetails": "No stone - solid gold design",
+      "finish": "Mirror polish with matte engraving",
+      "occasion": "Daily Wear & Festive",
+      "gender": "Unisex",
+      "craftingTime": "10-12 days",
+      "hallmark": "BIS 916 Hallmarked",
+      "certification": "BIS hallmark certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Wear jewellery after applying perfume, lotion or hair spray",
+        "Store each piece separately in the pouch provided to avoid scratches",
+        "Clean with a soft dry cloth; use lukewarm water with mild soap once a month",
+        "Free professional cleaning and polishing at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "10",
@@ -127,8 +397,38 @@
       "weight": 8.6,
       "makingCharges": 13,
       "description": "Exquisite temple jewellery studs depicting the goddess Lakshmi, seated in a lotus, surrounded by rubies and high-purity gold filigree work.",
-      "image": "/images/products/temple-earrings.jpg",
-      "featured": false
+      "image": "/images/products/ruby-temple-studs.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/ruby-temple-studs.jpg",
+        "/images/products/gallery/ruby-temple-studs-2.jpg",
+        "/images/products/gallery/ruby-temple-studs-3.jpg"
+      ],
+      "sku": "JBO-ER-010",
+      "detailedDescription": "Temple-style studs with natural ruby cabochons set in a 22K gold frame inspired by South Indian temple art. Butterfly push-backs keep them light and comfortable for all-day wear.",
+      "highlights": [
+        "Natural ruby cabochon stones",
+        "Temple art inspired frame",
+        "Light weight push-back studs",
+        "Suitable for daily office wear"
+      ],
+      "dimensions": "Diameter 1.2 cm | Weight per stud 1.7 g",
+      "stoneDetails": "2 natural ruby cabochons, approx. 0.8 ct total",
+      "finish": "Antique gold",
+      "occasion": "Daily Wear & Festive",
+      "gender": "Women",
+      "craftingTime": "5-7 days",
+      "hallmark": "BIS 916 Hallmarked",
+      "certification": "BIS hallmark certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Wear jewellery after applying perfume, lotion or hair spray",
+        "Store each piece separately in the pouch provided to avoid scratches",
+        "Clean with a soft dry cloth; use lukewarm water with mild soap once a month",
+        "Free professional cleaning and polishing at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "11",
@@ -140,8 +440,38 @@
       "weight": 48.5,
       "makingCharges": 15,
       "description": "Exquisitely designed 92.5 sterling silver bridal payal (anklets) featuring traditional handmade flower charms, small silver tinkling bells, and an antique oxidised finish.",
-      "image": "/images/products/silver-payal.jpg",
-      "featured": true
+      "image": "/images/products/silver-bridal-payal.jpg",
+      "featured": true,
+      "gallery": [
+        "/images/products/silver-bridal-payal.jpg",
+        "/images/products/gallery/silver-bridal-payal-2.jpg",
+        "/images/products/gallery/silver-bridal-payal-3.jpg"
+      ],
+      "sku": "JBO-SL-011",
+      "detailedDescription": "Bridal payal in 92.5 sterling silver with layered ghungroo bells and a hand-cut filigree chain. Made heavier than daily-wear anklets so it drapes well on the ankle for wedding photography.",
+      "highlights": [
+        "92.5 sterling silver hallmarked",
+        "Layered ghungroo bell fringe",
+        "Hand-cut filigree chain",
+        "Adjustable hook length"
+      ],
+      "dimensions": "Length 10.5 inch adjustable | Sold as a pair",
+      "stoneDetails": "No stone - silver ghungroo work",
+      "finish": "Bright silver polish",
+      "occasion": "Bridal & Festive",
+      "gender": "Women",
+      "craftingTime": "7-10 days",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "12",
@@ -153,8 +483,38 @@
       "weight": 32.2,
       "makingCharges": 18,
       "description": "A luxury modern sterling silver necklace set with brilliant cubic zirconia accents. Elegant layout, perfect for celebrations and high-class styling.",
-      "image": "/images/products/silver-necklace.jpg",
-      "featured": true
+      "image": "/images/products/silver-diamond-necklace.jpg",
+      "featured": true,
+      "gallery": [
+        "/images/products/silver-diamond-necklace.jpg",
+        "/images/products/gallery/silver-diamond-necklace-2.jpg",
+        "/images/products/gallery/silver-diamond-necklace-3.jpg"
+      ],
+      "sku": "JBO-SL-012",
+      "detailedDescription": "A sterling silver necklace with a cluster pendant of lab-grown diamonds in a rhodium-plated setting that resists tarnish. Fine box chain keeps the focus on the pendant.",
+      "highlights": [
+        "Rhodium plated anti-tarnish finish",
+        "Lab-grown diamond cluster",
+        "Fine box chain 1 mm",
+        "Comes with authenticity card"
+      ],
+      "dimensions": "Chain 18 inch | Pendant 1.4 cm",
+      "stoneDetails": "7 lab-grown diamonds, approx. 0.35 ct total",
+      "finish": "Rhodium plated silver",
+      "occasion": "Party & Gifting",
+      "gender": "Women",
+      "craftingTime": "3-5 days",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "13",
@@ -166,8 +526,38 @@
       "weight": 6.8,
       "makingCharges": 12,
       "description": "A stunning 92.5 sterling silver ring featuring a high-brilliance round-cut solitaire gem. Elegant and durable for daily luxury wear.",
-      "image": "/images/products/silver-ring.jpg",
-      "featured": true
+      "image": "/images/products/silver-solitaire-ring.jpg",
+      "featured": true,
+      "gallery": [
+        "/images/products/silver-solitaire-ring.jpg",
+        "/images/products/gallery/silver-solitaire-ring-2.jpg",
+        "/images/products/gallery/silver-solitaire-ring-3.jpg"
+      ],
+      "sku": "JBO-SL-013",
+      "detailedDescription": "A sterling silver solitaire ring with a four-prong set cubic zirconia centre and a tapered band. A budget-friendly alternative to a gold solitaire with the same silhouette.",
+      "highlights": [
+        "92.5 sterling silver",
+        "Four-prong secure setting",
+        "Tapered comfort band",
+        "Free size adjustment"
+      ],
+      "dimensions": "Band width 2 mm | Standard size 14 (resizable)",
+      "stoneDetails": "1 AAA cubic zirconia, 6 mm round",
+      "finish": "Rhodium plated silver",
+      "occasion": "Gifting & Daily Wear",
+      "gender": "Women",
+      "craftingTime": "3-5 days",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "14",
@@ -179,8 +569,38 @@
       "weight": 14.5,
       "makingCharges": 15,
       "description": "Beautiful traditional Indian jhumkas with intricate peacock engravings and hanging oxidized silver beads. Adds a rustic heritage glow to any outfit.",
-      "image": "/images/products/silver-earrings.jpg",
-      "featured": true
+      "image": "/images/products/oxidized-peacock-jhumka.jpg",
+      "featured": true,
+      "gallery": [
+        "/images/products/oxidized-peacock-jhumka.jpg",
+        "/images/products/gallery/oxidized-peacock-jhumka-2.jpg",
+        "/images/products/gallery/oxidized-peacock-jhumka-3.jpg"
+      ],
+      "sku": "JBO-SL-014",
+      "detailedDescription": "Oxidised silver jhumkas with a peacock motif and a fringe of tiny silver beads. The antique black polish is applied by hand into the recesses to make the carving stand out.",
+      "highlights": [
+        "Hand-applied antique oxidised polish",
+        "Peacock motif carving",
+        "Bead fringe drop",
+        "Light weight for long wear"
+      ],
+      "dimensions": "Length 6.4 cm | Width 3.4 cm",
+      "stoneDetails": "No stone - oxidised silver work",
+      "finish": "Oxidised antique black",
+      "occasion": "Festive & Casual",
+      "gender": "Women",
+      "craftingTime": "5-7 days",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "15",
@@ -192,8 +612,38 @@
       "weight": 28,
       "makingCharges": 10,
       "description": "A heavy and bold unisex sterling silver kada bracelet with hand-carved spiral motifs. Polished to a mirror shine.",
-      "image": "/images/products/kada-bracelet.jpg",
-      "featured": false
+      "image": "/images/products/silver-kada-bracelet.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/silver-kada-bracelet.jpg",
+        "/images/products/gallery/silver-kada-bracelet-2.jpg",
+        "/images/products/gallery/silver-kada-bracelet-3.jpg"
+      ],
+      "sku": "JBO-SL-015",
+      "detailedDescription": "A broad sterling silver kada with an all-over textured pattern and a hinged opening. Heavy enough to feel substantial, finished smooth on the inside so it never catches skin.",
+      "highlights": [
+        "Hinged easy-open design",
+        "All-over textured pattern",
+        "Smooth polished interior",
+        "Unisex sizing"
+      ],
+      "dimensions": "Inner diameter 6.0 cm | Band width 18 mm",
+      "stoneDetails": "No stone - textured silver design",
+      "finish": "Brushed silver with polished edges",
+      "occasion": "Daily Wear",
+      "gender": "Unisex",
+      "craftingTime": "5-7 days",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "16",
@@ -205,8 +655,38 @@
       "weight": 18.5,
       "makingCharges": 8,
       "description": "A sleek and durable silver curb link chain. Made in Italy with high-purity sterling silver and a secure lobster clasp.",
-      "image": "/images/products/silver-necklace.jpg",
-      "featured": false
+      "image": "/images/products/silver-curb-chain.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/silver-curb-chain.jpg",
+        "/images/products/gallery/silver-curb-chain-2.jpg",
+        "/images/products/gallery/silver-curb-chain-3.jpg"
+      ],
+      "sku": "JBO-SL-016",
+      "detailedDescription": "A classic curb link chain in high-purity sterling silver with a heavy lobster clasp. Each link is individually soldered and diamond-cut for a bright reflective face.",
+      "highlights": [
+        "Individually soldered links",
+        "Diamond-cut reflective faces",
+        "Heavy lobster clasp",
+        "Italian made chain stock"
+      ],
+      "dimensions": "Length 20 inch | Link width 5 mm",
+      "stoneDetails": "No stone - solid silver chain",
+      "finish": "Diamond-cut bright silver",
+      "occasion": "Daily Wear",
+      "gender": "Men",
+      "craftingTime": "In stock - ready to collect",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "17",
@@ -218,8 +698,38 @@
       "weight": 22.4,
       "makingCharges": 12,
       "description": "Lightweight daily wear silver anklets (payal) with a simple chain layout and delicate bead charms. Comfortable for everyday use.",
-      "image": "/images/products/silver-payal.jpg",
-      "featured": false
+      "image": "/images/products/silver-anklets.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/silver-anklets.jpg",
+        "/images/products/gallery/silver-anklets-2.jpg",
+        "/images/products/gallery/silver-anklets-3.jpg"
+      ],
+      "sku": "JBO-SL-017",
+      "detailedDescription": "Slim daily-wear anklets with a fine chain and small bead charms. Light enough to forget you are wearing them and finished with an anti-tarnish coating for regular use.",
+      "highlights": [
+        "Anti-tarnish protective coating",
+        "Fine 1.5 mm chain",
+        "Small bead charm detailing",
+        "Adjustable 3-step hook"
+      ],
+      "dimensions": "Length 9.5-10.5 inch adjustable | Sold as a pair",
+      "stoneDetails": "No stone - silver bead charms",
+      "finish": "Bright silver polish",
+      "occasion": "Daily Wear",
+      "gender": "Women",
+      "craftingTime": "In stock - ready to collect",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "18",
@@ -231,8 +741,38 @@
       "weight": 7.2,
       "makingCharges": 14,
       "description": "An antique-styled sterling silver ring hosting a gorgeous oval-cut natural green emerald gemstone, surrounded by filigree patterns.",
-      "image": "/images/products/silver-ring.jpg",
-      "featured": false
+      "image": "/images/products/silver-emerald-ring.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/silver-emerald-ring.jpg",
+        "/images/products/gallery/silver-emerald-ring-2.jpg",
+        "/images/products/gallery/silver-emerald-ring-3.jpg"
+      ],
+      "sku": "JBO-SL-018",
+      "detailedDescription": "A vintage-styled sterling silver ring holding an oval natural emerald in a bezel frame, surrounded by filigree scroll work and small cubic zirconia accents.",
+      "highlights": [
+        "Natural oval-cut emerald",
+        "Bezel protected setting",
+        "Filigree scroll shoulders",
+        "Certificate of stone origin included"
+      ],
+      "dimensions": "Stone 9 x 7 mm | Standard size 14 (resizable)",
+      "stoneDetails": "1 natural emerald approx. 1.8 ct with 24 CZ accents",
+      "finish": "Antique silver",
+      "occasion": "Party & Gifting",
+      "gender": "Women",
+      "craftingTime": "7-10 days",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "19",
@@ -244,8 +784,38 @@
       "weight": 11.2,
       "makingCharges": 14,
       "description": "Handcrafted silver hanging earrings depicting royal peacocks. Finished with a light antique polish to accentuate details.",
-      "image": "/images/products/silver-earrings.jpg",
-      "featured": false
+      "image": "/images/products/silver-peacock-earrings.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/silver-peacock-earrings.jpg",
+        "/images/products/gallery/silver-peacock-earrings-2.jpg",
+        "/images/products/gallery/silver-peacock-earrings-3.jpg"
+      ],
+      "sku": "JBO-SL-019",
+      "detailedDescription": "Traditional hanging earrings in sterling silver with a stone-set crown and pearl drop fringe. A lighter alternative to gold jhumkas that pairs with both sarees and Indo-western wear.",
+      "highlights": [
+        "Pearl drop fringe",
+        "Stone-set crown detail",
+        "Light 5.6 g per earring",
+        "Secure hook with safety back"
+      ],
+      "dimensions": "Length 5.8 cm | Width 3.2 cm",
+      "stoneDetails": "Kundan-style stones with freshwater pearl drops",
+      "finish": "Light antique silver",
+      "occasion": "Festive & Wedding",
+      "gender": "Women",
+      "craftingTime": "5-7 days",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "20",
@@ -257,8 +827,38 @@
       "weight": 15.6,
       "makingCharges": 11,
       "description": "An elegant link chain bracelet supporting multiple tiny polished silver charms (heart, star, clover). A personalized fashion statement.",
-      "image": "/images/products/silver-payal.jpg",
-      "featured": false
+      "image": "/images/products/silver-charm-bracelet.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/silver-charm-bracelet.jpg",
+        "/images/products/gallery/silver-charm-bracelet-2.jpg",
+        "/images/products/gallery/silver-charm-bracelet-3.jpg"
+      ],
+      "sku": "JBO-SL-020",
+      "detailedDescription": "A sterling silver link bracelet fitted with polished charms. Extra charms can be added later at the showroom, so the bracelet can be built up over time as a gift piece.",
+      "highlights": [
+        "Add-on charms available anytime",
+        "Polished link chain",
+        "Lobster clasp with safety ring",
+        "Gift box packaging included"
+      ],
+      "dimensions": "Length 7.5 inch adjustable | 5 charms included",
+      "stoneDetails": "No stone - polished silver charms",
+      "finish": "High polish silver",
+      "occasion": "Gifting & Daily Wear",
+      "gender": "Women",
+      "craftingTime": "3-5 days",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "21",
@@ -270,8 +870,38 @@
       "weight": 34,
       "makingCharges": 16,
       "description": "A magnificent wide collar choker necklace in oxidized silver. Detailed tribal design that pairs beautifully with traditional dresses.",
-      "image": "/images/products/silver-necklace.jpg",
-      "featured": false
+      "image": "/images/products/oxidized-silver-choker.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/oxidized-silver-choker.jpg",
+        "/images/products/gallery/oxidized-silver-choker-2.jpg",
+        "/images/products/gallery/oxidized-silver-choker-3.jpg"
+      ],
+      "sku": "JBO-SL-021",
+      "detailedDescription": "A wide oxidised silver collar choker with tribal-inspired panels and a dangling bead border. Sits high on the neck and pairs strongly with plain kurtas and traditional dresses.",
+      "highlights": [
+        "Wide tribal panel design",
+        "Hand oxidised finish",
+        "Dangling bead border",
+        "Adjustable dori back tie"
+      ],
+      "dimensions": "Inner length 13.5 inch | Panel height 4.5 cm",
+      "stoneDetails": "No stone - oxidised silver panels",
+      "finish": "Oxidised antique black",
+      "occasion": "Festive & Casual",
+      "gender": "Women",
+      "craftingTime": "7-10 days",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     },
     {
       "id": "22",
@@ -283,8 +913,38 @@
       "weight": 9.5,
       "makingCharges": 10,
       "description": "A sacred and beautifully detailed Ganesha pendant carved in solid 92.5 silver. Brings prosperity and positive protection energy.",
-      "image": "/images/products/silver-ring.jpg",
-      "featured": false
+      "image": "/images/products/silver-ganesha-pendant.jpg",
+      "featured": false,
+      "gallery": [
+        "/images/products/silver-ganesha-pendant.jpg",
+        "/images/products/gallery/silver-ganesha-pendant-2.jpg",
+        "/images/products/gallery/silver-ganesha-pendant-3.jpg"
+      ],
+      "sku": "JBO-SL-022",
+      "detailedDescription": "A solid 92.5 silver Ganesha pendant with deep three-dimensional carving on the front and a smooth reverse. Supplied with a matching silver chain and a temple-blessed pouch.",
+      "highlights": [
+        "Solid 92.5 silver casting",
+        "3D hand-finished carving",
+        "Matching silver chain included",
+        "Temple pouch packaging"
+      ],
+      "dimensions": "Pendant 3.2 x 2.4 cm | Chain 20 inch",
+      "stoneDetails": "No stone - solid silver carving",
+      "finish": "Antique silver with polished highlights",
+      "occasion": "Daily Wear & Religious",
+      "gender": "Unisex",
+      "craftingTime": "3-5 days",
+      "hallmark": "92.5 Sterling Silver Stamped",
+      "certification": "Purity assurance certificate provided with invoice",
+      "warranty": "Lifetime buy-back and exchange as per current market rate",
+      "careInstructions": [
+        "Keep away from moisture, perfume and chlorine water",
+        "Store in the airtight pouch provided to slow down tarnishing",
+        "Rub gently with the silver polishing cloth included in the box",
+        "Free re-polishing service at our Kamrej showroom"
+      ],
+      "availability": "In showroom - Kamrej, Surat",
+      "inStock": true
     }
   ],
   "inquiries": [

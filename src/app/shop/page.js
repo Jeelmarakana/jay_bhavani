@@ -91,7 +91,7 @@ function ShopContent() {
 
   return (
     <div className="container" style={{ padding: '3rem 2rem 5rem' }}>
-      <div className={styles.shopHeader}>
+      <div className={styles.shopHeader} data-3d-reveal>
         <span className={styles.shopSubtitle}>Jay Bhavani Catalog</span>
         <h1 className="serif-title" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Our Collection</h1>
         <p className={styles.shopDesc}>Browse through our authentic 22K Gold and Diamond signature pieces.</p>
@@ -99,7 +99,7 @@ function ShopContent() {
 
       <div className={styles.shopLayout}>
         {/* Filters Sidebar */}
-        <aside className={`${styles.sidebar} glassmorphism`}>
+        <aside className={`${styles.sidebar} glassmorphism`} data-3d-reveal>
           <div className={styles.sidebarHeader}>
             <h3 className="serif-title" style={{ fontSize: '1rem', color: 'var(--accent-gold)' }}>Filter By</h3>
             <button onClick={handleClearFilters} className={styles.clearBtn}>Clear All</button>
@@ -185,9 +185,9 @@ function ShopContent() {
               <button onClick={handleClearFilters} className="outline-btn" style={{ marginTop: '1rem' }}>View All Ornaments</button>
             </div>
           ) : (
-            <div className={styles.productsGrid}>
+            <div className={`${styles.productsGrid} stagger-3d`}>
               {products.map((product) => (
-                <div key={product.id} className={`${styles.shopCard} card`}>
+                <div key={product.id} className={`${styles.shopCard} card`} data-3d-tilt data-3d-lift>
                   <div className={styles.imgWrapper}>
                     <img src={product.image} alt={product.name} className={styles.productImg} />
                     <span className={styles.purityTag}>{product.purity}</span>

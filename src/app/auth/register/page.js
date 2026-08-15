@@ -75,7 +75,7 @@ export default function RegisterPage() {
         </div>
       ) : null}
 
-      <div className={styles.authCard}>
+      <div className={styles.authCard} data-3d-reveal>
         <span className={styles.kicker}>Client Registration</span>
         <h1 className="serif-title">Create Account</h1>
         <p className={styles.subtitle}>Register your account to continue shopping and manage your jewellery enquiries.</p>
