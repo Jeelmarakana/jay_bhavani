@@ -176,9 +176,79 @@ input, select, textarea, button {
   box-shadow: 0 24px 50px rgba(184, 134, 11, 0.18), 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
+[data-3d-tilt] {
+  position: relative;
+}
+
+[data-3d-tilt]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--glare-opacity, 0);
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0) 55%
+  );
+  z-index: 3;
+}
+
+[data-3d-tilt][data-3d-lift] > * {
+  transform: translateZ(22px);
+}
+
+[data-3d-parallax] {
+  transform: translate3d(0, var(--parallax-y, 0px), 0) rotateX(var(--parallax-rotate, 0deg));
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+[data-3d-depth] {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+}
+
+[data-3d-depth]:hover {
+  transform: perspective(900px) translate3d(0, -8px, 30px) rotateX(3deg);
+  box-shadow: 0 28px 55px rgba(184, 134, 11, 0.22);
+}
+
+.stagger-3d > * {
+  animation: reveal3d 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.stagger-3d > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-3d > *:nth-child(2) { animation-delay: 0.13s; }
+.stagger-3d > *:nth-child(3) { animation-delay: 0.21s; }
+.stagger-3d > *:nth-child(4) { animation-delay: 0.29s; }
+.stagger-3d > *:nth-child(5) { animation-delay: 0.37s; }
+.stagger-3d > *:nth-child(6) { animation-delay: 0.45s; }
+.stagger-3d > *:nth-child(n + 7) { animation-delay: 0.5s; }
+
 .animate-3d-float {
   animation: float3d 5s ease-in-out infinite;
   transform-style: preserve-3d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-3d-reveal],
+  [data-3d-reveal].is-visible,
+  .stagger-3d > *,
+  .animate-3d-float,
+  .floating-whatsapp {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  [data-3d-tilt],
+  [data-3d-parallax],
+  [data-3d-depth]:hover {
+    transform: none;
+  }
 }
 
 /* Animations Utility Classes */

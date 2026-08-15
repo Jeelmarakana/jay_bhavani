@@ -27,7 +27,7 @@ export default function WishlistPage() {
 
   return (
     <div className="container" style={{ padding: '3rem 2rem 5rem' }}>
-      <div className={styles.header}>
+      <div className={styles.header} data-3d-reveal>
         <span className={styles.kicker}>My Shortlist</span>
         <h1 className="serif-title" style={{ fontSize: '2.4rem', marginBottom: '0.5rem' }}>My Wishlist</h1>
         <p className={styles.desc}>
@@ -50,9 +50,9 @@ export default function WishlistPage() {
             </a>
           </div>
 
-          <div className={styles.grid}>
+          <div className={`${styles.grid} stagger-3d`}>
             {items.map((item) => (
-              <div key={item.id} className={`${styles.card} card`}>
+              <div key={item.id} className={`${styles.card} card`} data-3d-tilt data-3d-lift>
                 <div className={styles.imgWrap}>
                   <ProductImage src={item.image} alt={`${item.name} - Jay Bhavani Ornaments`} className={styles.img} />
                   <WishlistButton product={item} className={styles.wishBtn} />

@@ -7,11 +7,13 @@ import { submitInquiry, openOwnerWhatsAppNotify } from '@/lib/inquiry';
 import styles from './page.module.css';
 
 const categories = [
-  { name: 'Rings', slug: 'rings', image: '/images/products/gold-ring.jpg' },
-  { name: 'Necklaces & Har', slug: 'necklaces', image: '/images/products/antique-necklace.jpg' },
-  { name: 'Earrings', slug: 'earrings', image: '/images/products/royal-earrings.jpg' },
-  { name: 'Bangles & Bracelets', slug: 'bangles', image: '/images/products/gold-bangles.jpg' },
-  { name: 'Bridal Sets', slug: 'bridal-sets', image: '/images/products/bridal-set.jpg' },
+  { name: 'Rings', slug: 'rings', image: '/images/categories/rings.jpg' },
+  { name: 'Necklaces & Har', slug: 'necklaces', image: '/images/categories/necklaces.jpg' },
+  { name: 'Earrings', slug: 'earrings', image: '/images/categories/earrings.jpg' },
+  { name: 'Bangles & Bracelets', slug: 'bangles', image: '/images/categories/bangles.jpg' },
+  { name: 'Mangalsutra', slug: 'mangalsutra', image: '/images/categories/mangalsutra.jpg' },
+  { name: 'Bridal Sets', slug: 'bridal-sets', image: '/images/categories/bridal-sets.jpg' },
+  { name: 'Silver Jewellery', slug: 'silver', image: '/images/categories/silver.jpg' },
 ];
 
 const trustPoints = [
@@ -29,15 +31,15 @@ const reviews = [
 ];
 
 const gallery = [
-  '/images/products/diamond-ring.jpg',
-  '/images/products/bridal-set.jpg',
-  '/images/products/temple-earrings.jpg',
-  '/images/products/silver-earrings.jpg',
-  '/images/products/gold-bangles.jpg',
-  '/images/products/antique-necklace.jpg',
-  '/images/products/royal-earrings.jpg',
-  '/images/products/gold-ring.jpg',
-  '/images/products/designer-mangalsutra.jpg',
+  '/images/products/diamond-solitaire-ring.jpg',
+  '/images/products/bridal-wedding-set.jpg',
+  '/images/products/ruby-temple-studs.jpg',
+  '/images/products/silver-peacock-earrings.jpg',
+  '/images/products/gold-bangles-set.jpg',
+  '/images/products/antique-kundan-necklace.jpg',
+  '/images/products/gold-jhumka-earrings.jpg',
+  '/images/products/gold-engagement-ring.jpg',
+  '/images/products/gold-mangalsutra.jpg',
 ];
 
 export default function Home() {
@@ -135,8 +137,8 @@ export default function Home() {
 
   return (
     <div className={styles.homeContainer}>
-      <section className={styles.hero} style={{ '--bg-image': "url('/images/products/bridal-set.jpg')" }}>
-        <div className={`${styles.heroContent} container`}>
+      <section className={styles.hero} style={{ '--bg-image': "url('/images/hero-banner.jpg')" }}>
+        <div className={`${styles.heroContent} container`} data-3d-parallax="32">
           <span className={styles.heroSubtitle}>Digital Showroom + WhatsApp Sales Machine</span>
           <h1 className={`${styles.heroTitle} serif-title`}>
             સોનાની સુંદરતા, વિશ્વાસ સાથે.
@@ -189,7 +191,7 @@ export default function Home() {
             <h2 className={`${styles.sectionTitle} serif-title`}>Shop by Category</h2>
             <div className={styles.titleDivider}></div>
           </div>
-          <div className={styles.categoriesGrid}>
+          <div className={`${styles.categoriesGrid} stagger-3d`}>
             {categories.map((category) => (
               <Link
                 key={category.slug}
@@ -211,9 +213,9 @@ export default function Home() {
             <h2 className={`${styles.sectionTitle} serif-title`}>Our Signature Collection</h2>
             <div className={styles.titleDivider}></div>
           </div>
-          <div className="grid-4">
+          <div className="grid-4 stagger-3d">
             {featuredProducts.map((product) => (
-              <div key={product.id} className="card" data-3d-tilt>
+              <div key={product.id} className="card" data-3d-tilt data-3d-lift>
                 <div className={styles.productImgWrapper}>
                   <img src={product.image} alt={product.name} className={styles.productImg} />
                   <span className={styles.metalTag}>{product.metal}</span>
@@ -232,7 +234,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="bridal" className={styles.bridalSection}>
+      <section id="bridal" className={styles.bridalSection} data-3d-reveal>
         <div className="container">
           <div className={styles.bridalLayout}>
             <div className={styles.bridalContent}>
@@ -250,15 +252,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className={styles.section}>
+      <section id="about" className={styles.section} data-3d-reveal>
         <div className="container">
           <div className={styles.sectionHeader}>
             <h2 className={`${styles.sectionTitle} serif-title`}>Why Choose Jay Bhavani Ornaments?</h2>
             <div className={styles.titleDivider}></div>
           </div>
-          <div className={styles.trustGrid}>
+          <div className={`${styles.trustGrid} stagger-3d`}>
             {trustPoints.map((item) => (
-              <div key={item} className={styles.trustCard}>
+              <div key={item} className={styles.trustCard} data-3d-depth>
                 <span className={styles.checkmark}>✓</span>
                 <span>{item}</span>
               </div>
@@ -267,7 +269,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.storySection}>
+      <section className={styles.storySection} data-3d-reveal>
         <div className="container">
           <div className={styles.storyBox}>
             <div>
@@ -281,9 +283,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.section}>
+      <section className={styles.section} data-3d-reveal>
         <div className="container">
-          <div className={styles.customCTA}>
+          <div className={styles.customCTA} data-3d-depth>
             <div>
               <span className={styles.kicker}>Custom Jewellery</span>
               <h3 className="serif-title" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Have a design in mind?</h3>
@@ -293,15 +295,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.section}>
+      <section className={styles.section} data-3d-reveal>
         <div className="container">
           <div className={styles.sectionHeader}>
             <h2 className={`${styles.sectionTitle} serif-title`}>What Our Customers Say</h2>
             <div className={styles.titleDivider}></div>
           </div>
-          <div className={styles.reviewGrid}>
+          <div className={`${styles.reviewGrid} stagger-3d`}>
             {reviews.map((review) => (
-              <div key={review.name} className={styles.reviewCard}>
+              <div key={review.name} className={styles.reviewCard} data-3d-tilt="6">
                 <div className={styles.stars}>★★★★★</div>
                 <p>“{review.quote}”</p>
                 <strong>{review.name}</strong>
@@ -311,21 +313,21 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.section}>
+      <section className={styles.section} data-3d-reveal>
         <div className="container">
           <div className={styles.sectionHeader}>
             <h2 className={`${styles.sectionTitle} serif-title`}>Follow Our Latest Designs</h2>
             <div className={styles.titleDivider}></div>
           </div>
-          <div className={styles.instagramGrid}>
+          <div className={`${styles.instagramGrid} stagger-3d`}>
             {gallery.map((img, index) => (
-              <img key={`${img}-${index}`} src={img} alt="Latest jewellery design at Jay Bhavani Ornaments" className={styles.instagramImage} />
+              <img key={`${img}-${index}`} src={img} alt="Latest jewellery design at Jay Bhavani Ornaments" className={styles.instagramImage} loading="lazy" data-3d-depth />
             ))}
           </div>
         </div>
       </section>
 
-      <section id="contact" className={styles.section}>
+      <section id="contact" className={styles.section} data-3d-reveal>
         <div className="container">
           <div className={styles.visitCard}>
             <div className={styles.visitContent}>
@@ -350,7 +352,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.finalCTASection}>
+      <section className={styles.finalCTASection} data-3d-reveal>
         <div className="container">
           <div className={styles.finalCTA}>
             <h3 className="serif-title" style={{ fontSize: '2.1rem', marginBottom: '1rem' }}>Your perfect ornament is waiting.</h3>
@@ -393,7 +395,9 @@ export default function Home() {
                     <option>Necklaces & Har</option>
                     <option>Earrings</option>
                     <option>Bangles & Bracelets</option>
+                    <option>Mangalsutra</option>
                     <option>Bridal Sets</option>
+                    <option>Silver Jewellery</option>
                     <option>Custom Design</option>
                   </select>
                 </div>

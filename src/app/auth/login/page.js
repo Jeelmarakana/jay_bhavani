@@ -67,7 +67,7 @@ export default function LoginPage() {
         </div>
       ) : null}
 
-      <div className={styles.authCard}>
+      <div className={styles.authCard} data-3d-reveal>
         <span className={styles.kicker}>Client Login</span>
         <h1 className="serif-title">Welcome Back</h1>
         <p className={styles.subtitle}>Login with your registered email or name to continue shopping.</p>
