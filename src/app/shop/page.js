@@ -211,7 +211,15 @@ function ShopContent() {
                 <div key={product.id} className={`${styles.shopCard} card`} style={{ animationDelay: `${index * 0.1}s` }}>
                   <Link href={`/product/${product.id}`} className={styles.imgLink}>
                     <div className={styles.imgWrapper}>
-                      <img src={product.image} alt={product.name} className={styles.productImg} />
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className={styles.productImg}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.innerHTML = `<div class="${styles.shopProductFallback}"><span class="${styles.shopFallbackEmoji}">💎</span><span class="${styles.shopFallbackText}">${product.name}</span></div>`;
+                        }}
+                      />
                       <span className={styles.purityTag}>{product.purity}</span>
                     </div>
                   </Link>

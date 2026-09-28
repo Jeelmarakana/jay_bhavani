@@ -7,11 +7,11 @@ import { submitInquiry, openOwnerWhatsAppNotify } from '@/lib/inquiry';
 import styles from './page.module.css';
 
 const categories = [
-  { name: 'Rings', slug: 'rings', image: '/images/products/gold-ring.jpg' },
-  { name: 'Necklaces & Har', slug: 'necklaces', image: '/images/products/antique-necklace.jpg' },
-  { name: 'Earrings', slug: 'earrings', image: '/images/products/royal-earrings.jpg' },
-  { name: 'Bangles & Bracelets', slug: 'bangles', image: '/images/products/gold-bangles.jpg' },
-  { name: 'Bridal Sets', slug: 'bridal-sets', image: '/images/products/bridal-set.jpg' },
+  { name: 'Rings', slug: 'rings', image: '/images/products/gold-ring.jpg', fallback: '💍' },
+  { name: 'Necklaces & Har', slug: 'necklaces', image: '/images/products/antique-necklace.jpg', fallback: '📿' },
+  { name: 'Earrings', slug: 'earrings', image: '/images/products/royal-earrings.jpg', fallback: '✨' },
+  { name: 'Bangles & Bracelets', slug: 'bangles', image: '/images/products/gold-bangles.jpg', fallback: '⚪' },
+  { name: 'Bridal Sets', slug: 'bridal-sets', image: '/images/products/bridal-set.jpg', fallback: '👑' },
 ];
 
 const trustPoints = [
@@ -47,6 +47,7 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: null, message: '' });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [imageErrors, setImageErrors] = useState({});
 
   useEffect(() => {
     const fetchRates = async () => {
@@ -91,6 +92,17 @@ export default function Home() {
       }
     };
     fetchFeatured();
+  }, []);
+
+  // Handle image loading errors
+  useEffect(() => {
+    categories.forEach((category) => {
+      const img = new Image();
+      img.src = category.image;
+      img.onerror = () => {
+        setImageErrors((prev) => ({ ...prev, [category.slug]: true }));
+      };
+    });
   }, []);
 
   const handleInputChange = (event) => {
@@ -217,9 +229,16 @@ export default function Home() {
                 href={`/shop?category=${category.slug}`}
                 className={`${styles.categoryCard} animate-3d-float`}
                 data-3d-tilt
-                style={{ backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.1) 80%), url('${category.image}')` }}
+                style={{ backgroundImage: imageErrors[category.slug] ? 'linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-hover) 100%)' : `linear-gradient(to top, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.1) 80%), url('${category.image}')` }}
               >
-                <span className={`${styles.categoryName} serif-title`}>{category.name}</span>
+                {imageErrors[category.slug] ? (
+                  <div className={styles.categoryFallback}>
+                    <span className={styles.fallbackIcon}>{category.fallback}</span>
+                    <span className={`${styles.categoryName} serif-title`}>{category.name}</span>
+                  </div>
+                ) : (
+                  <span className={`${styles.categoryName} serif-title`}>{category.name}</span>
+                )}
               </Link>
             ))}
           </div>
@@ -237,7 +256,15 @@ export default function Home() {
               <div key={product.id} className="card" data-3d-tilt style={{ animation: `cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.15}s forwards`, opacity: 0, transform: 'translateY(20px)' }}>
                 <Link href={`/product/${product.id}`} className={styles.productLink}>
                   <div className={styles.productImgWrapper}>
-                    <img src={product.image} alt={product.name} className={styles.productImg} />
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className={styles.productImg}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.parentElement.innerHTML = `<div class="${styles.productFallback}"><span class="${styles.fallbackEmoji}">💎</span><span class="${styles.fallbackText}">${product.name}</span></div>`;
+                      }}
+                    />
                     <span className={styles.metalTag}>{product.metal}</span>
                   </div>
                 </Link>
@@ -393,7 +420,15 @@ export default function Home() {
                 className={styles.instagramCard}
                 aria-label="View design on Instagram"
               >
-                <img src={img} alt="Latest jewellery design at Jay Bhavani Ornaments" className={styles.instagramImage} />
+                <img
+                  src={img}
+                  alt="Latest jewellery design at Jay Bhavani Ornaments"
+                  className={styles.instagramImage}
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentElement.innerHTML = `<div class="${styles.galleryFallback}"><span class="${styles.galleryIcon}">📸</span><span class="${styles.galleryText}">Jewellery Design</span></div>`;
+                  }}
+                />
                 <div className={styles.instagramOverlay}>
                   <span className={styles.instagramIcon}>📸</span>
                   <span>View on Instagram</span>
