@@ -27,7 +27,12 @@ function ShopContent() {
     { name: 'Bangles & Bracelets', value: 'bangles' },
     { name: 'Mangalsutras', value: 'mangalsutra' },
     { name: 'Bridal Sets', value: 'bridal-sets' },
-    { name: 'Silver Jewellery', value: 'silver' }
+    { name: 'Silver Jewellery', value: 'silver' },
+    { name: 'Temple Jewellery', value: 'temple' },
+    { name: 'Kundan Jewellery', value: 'kundan' },
+    { name: 'Pendant Sets', value: 'pendants' },
+    { name: 'Chains', value: 'chains' },
+    { name: 'Anklets (Payal)', value: 'anklets' }
   ];
 
   // Metals list

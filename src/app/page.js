@@ -11,7 +11,14 @@ const categories = [
   { name: 'Necklaces & Har', slug: 'necklaces', image: '/images/products/antique-necklace.jpg', fallback: '📿' },
   { name: 'Earrings', slug: 'earrings', image: '/images/products/royal-earrings.jpg', fallback: '✨' },
   { name: 'Bangles & Bracelets', slug: 'bangles', image: '/images/products/gold-bangles.jpg', fallback: '⚪' },
+  { name: 'Mangalsutras', slug: 'mangalsutra', image: '/images/products/designer-mangalsutra.jpg', fallback: '🔗' },
   { name: 'Bridal Sets', slug: 'bridal-sets', image: '/images/products/bridal-set.jpg', fallback: '👑' },
+  { name: 'Silver Jewellery', slug: 'silver', image: '/images/products/silver-earrings.jpg', fallback: '🥈' },
+  { name: 'Temple Jewellery', slug: 'temple', image: '/images/products/temple-earrings.jpg', fallback: '🏛️' },
+  { name: 'Kundan Jewellery', slug: 'kundan', image: '/images/products/pearl-choker.jpg', fallback: '💎' },
+  { name: 'Pendant Sets', slug: 'pendants', image: '/images/products/diamond-ring.jpg', fallback: '📿' },
+  { name: 'Chains', slug: 'chains', image: '/images/products/silver-necklace.jpg', fallback: '⛓️' },
+  { name: 'Anklets (Payal)', slug: 'anklets', image: '/images/products/silver-payal.jpg', fallback: '🦶' },
 ];
 
 const trustPoints = [
@@ -517,7 +524,14 @@ export default function Home() {
                     <option>Necklaces & Har</option>
                     <option>Earrings</option>
                     <option>Bangles & Bracelets</option>
+                    <option>Mangalsutras</option>
                     <option>Bridal Sets</option>
+                    <option>Silver Jewellery</option>
+                    <option>Temple Jewellery</option>
+                    <option>Kundan Jewellery</option>
+                    <option>Pendant Sets</option>
+                    <option>Chains</option>
+                    <option>Anklets (Payal)</option>
                     <option>Custom Design</option>
                   </select>
                 </div>
