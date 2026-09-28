@@ -317,7 +317,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={`${styles.servicesSection} ${styles.darkBg}`} data-3d-reveal>
+      <section className={styles.servicesSection} data-3d-reveal>
         <div className="container">
           <div className={styles.sectionHeader}>
             <span className={styles.kicker}>Our Services</span>

@@ -623,6 +623,9 @@
   padding: 6rem 0;
   position: relative;
   overflow: hidden;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .servicesSection::before {
@@ -642,6 +645,7 @@
   gap: 2rem;
   position: relative;
   z-index: 2;
+  margin-top: 3rem;
 }
 
 .serviceCard {
@@ -651,17 +655,14 @@
   padding: 2.5rem 2rem;
   text-align: center;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  animation: serviceCardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
-  transform: translateY(30px) scale(0.95);
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
-
-.serviceCard:nth-child(1) { animation-delay: 0.1s; }
-.serviceCard:nth-child(2) { animation-delay: 0.2s; }
-.serviceCard:nth-child(3) { animation-delay: 0.3s; }
-.serviceCard:nth-child(4) { animation-delay: 0.4s; }
-.serviceCard:nth-child(5) { animation-delay: 0.5s; }
-.serviceCard:nth-child(6) { animation-delay: 0.6s; }
 
 @keyframes serviceCardEntrance {
   to {
@@ -687,6 +688,7 @@
   border-radius: 16px 16px 0 0;
   opacity: 0;
   transition: opacity 0.3s ease;
+  z-index: 1;
 }
 
 .serviceCard:hover::before {
@@ -699,6 +701,7 @@
   display: inline-block;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   filter: drop-shadow(0 4px 8px rgba(226, 173, 27, 0.3));
+  line-height: 1;
 }
 
 .serviceCard:hover .serviceIcon {
@@ -713,6 +716,7 @@
   margin-bottom: 1rem;
   letter-spacing: 0.08em;
   transition: color 0.3s ease;
+  line-height: 1.3;
 }
 
 .serviceCard:hover .serviceTitle {
@@ -724,6 +728,7 @@
   font-size: 0.95rem;
   line-height: 1.7;
   transition: color 0.3s ease;
+  max-width: 280px;
 }
 
 .serviceCard:hover .serviceDesc {
