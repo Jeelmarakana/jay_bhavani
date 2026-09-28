@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { ADMIN_SESSION_COOKIE, isValidAdminSession } from '@/lib/admin-auth';
 import { addInquiry, getInquiries } from '@/lib/db';
 import { getOwnerNotifyUrl, pushOwnerWhatsAppNotification } from '@/lib/whatsapp';
 
@@ -44,7 +45,12 @@ export async function POST(request) {
   }
 }
 
-export async function GET() {
+export async function GET(request) {
+  const token = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
+  if (!isValidAdminSession(token)) {
+    return NextResponse.json({ success: false, error: 'Unauthorized.' }, { status: 401 });
+  }
+
   try {
     const inquiries = await getInquiries();
     return NextResponse.json({ success: true, inquiries }, { status: 200 });

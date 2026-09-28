@@ -1,11 +1,5 @@
 export const CLIENT_USERS_KEY = 'jay_bhavani_client_users';
 export const CLIENT_SESSION_KEY = 'jay_bhavani_client_session';
-export const ADMIN_SESSION_KEY = 'jay_bhavani_admin_session';
-
-export const ADMIN_CREDENTIALS = {
-  username: 'itadmin1',
-  password: 'It@admin1',
-};
 
 const readStorage = (key, fallback = []) => {
   if (typeof window === 'undefined') {
@@ -101,30 +95,6 @@ export function getClientSession() {
 }
 
 export function clearClientSession() {
-  if (typeof window !== 'undefined') {
-    window.localStorage.removeItem(CLIENT_SESSION_KEY);
-  }
-}
-
-export function loginAdmin({ username, password }) {
-  if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-    writeStorage(ADMIN_SESSION_KEY, {
-      username,
-      loggedInAt: new Date().toISOString(),
-    });
-
-    return { success: true, message: 'Admin login successful.' };
-  }
-
-  return { success: false, message: 'Invalid admin username or password.' };
-}
-
-export function getAdminSession() {
-  return readStorage(ADMIN_SESSION_KEY, null);
-}
-
-export function clearAdminSession() {
-  if (typeof window !== 'undefined') {
-    window.localStorage.removeItem(ADMIN_SESSION_KEY);
-  }
+  if (typeof window === 'undefined') return;
+  window.localStorage.removeItem(CLIENT_SESSION_KEY);
 }

@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { getWishlist } from '@/lib/wishlist';
+import { getClientSession, clearClientSession } from '@/lib/auth';
 import { DEFAULT_WHATSAPP_URL } from '@/lib/config';
+import ThemeToggle from './ThemeToggle';
 import styles from './Navbar.module.css';
 
 const navLinks = [
@@ -16,12 +18,11 @@ const navLinks = [
   { name: 'Contact', hash: 'contact' },
 ];
 
-const WHATSAPP_URL = 'https://wa.me/919898426635?text=Hi%20Jay%20Bhavani%20Ornaments%2C%20I%20would%20like%20to%20enquire%20about%20your%20collection.';
-
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [clientUser, setClientUser] = useState(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -38,12 +39,32 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    const updateAuth = () => {
+      setClientUser(getClientSession());
+    };
+    updateAuth();
+    window.addEventListener('client-auth-updated', updateAuth);
+    window.addEventListener('storage', updateAuth);
+    return () => {
+      window.removeEventListener('client-auth-updated', updateAuth);
+      window.removeEventListener('storage', updateAuth);
+    };
+  }, []);
+
+  useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
+
+  const handleLogout = () => {
+    clearClientSession();
+    setClientUser(null);
+    window.dispatchEvent(new Event('client-auth-updated'));
+    closeMenu();
+  };
 
   const handleLogoClick = (event) => {
     closeMenu();
@@ -86,24 +107,55 @@ export default function Navbar() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`${styles.container} container`}>
+        {/* Logo - Left */}
         <Link href="/" className={styles.logo} onClick={handleLogoClick}>
           <span className={styles.logoText}>JAY BHAVANI</span>
           <span className={styles.logoSubtext}>ORNAMENTS</span>
         </Link>
 
+        {/* Navigation Links - Center */}
         <nav className={styles.desktopNav}>
           {navLinks.map((link) => renderLink(link))}
+        </nav>
 
+        {/* Right Actions */}
+        <div className={styles.rightActions}>
           <Link href="/wishlist" className={styles.wishlistLink} aria-label="My Wishlist">
             <span className={styles.wishlistIcon}>♡</span>
             {wishlistCount > 0 && <span className={styles.wishlistBadge}>{wishlistCount}</span>}
             <span className={styles.wishlistLabel}>Wishlist</span>
           </Link>
 
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="gold-btn" style={{ padding: '0.55rem 1.3rem', fontSize: '0.78rem' }}>
+          {/* Theme Toggle Button */}
+          <ThemeToggle showLabel={false} />
+
+          {/* Auth State */}
+          {clientUser ? (
+            <div className={styles.authGroup}>
+              <span className={styles.userBadge} title={clientUser.email || clientUser.name}>
+                <span>👤</span>
+                <span className={styles.userName}>{clientUser.name}</span>
+              </span>
+              <button onClick={handleLogout} className={styles.logoutBtn} title="Log Out">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link href="/auth/login" className={styles.authLink}>
+              Login
+            </Link>
+          )}
+
+          <a
+            href={DEFAULT_WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="gold-btn"
+            style={{ padding: '0.55rem 1.3rem', fontSize: '0.78rem' }}
+          >
             WhatsApp
           </a>
-        </nav>
+        </div>
 
         <button className={`${styles.hamburger} ${isOpen ? styles.hamburgerActive : ''}`} onClick={toggleMenu} aria-label="Toggle Menu">
           <span className={styles.bar}></span>
@@ -119,7 +171,41 @@ export default function Navbar() {
               ♡ Wishlist {wishlistCount > 0 ? `(${wishlistCount})` : ''}
             </Link>
 
-            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="gold-btn" style={{ width: '100%', marginTop: '0.8rem', textAlign: 'center' }} onClick={closeMenu}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem 0' }}>
+              <ThemeToggle showLabel={true} />
+            </div>
+
+            <div className={styles.mobileAuthGroup}>
+              {clientUser ? (
+                <>
+                  <div className={styles.userBadge} style={{ alignSelf: 'flex-start' }}>
+                    <span>👤</span>
+                    <span>{clientUser.name}</span>
+                  </div>
+                  <button onClick={handleLogout} className={styles.logoutBtn} style={{ width: '100%', padding: '0.6rem' }}>
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Link href="/auth/login" className={styles.authLink} style={{ flex: 1, textAlign: 'center' }} onClick={closeMenu}>
+                    Login
+                  </Link>
+                  <Link href="/auth/register" className={styles.authLink} style={{ flex: 1, textAlign: 'center' }} onClick={closeMenu}>
+                    Register
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            <a
+              href={DEFAULT_WHATSAPP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="gold-btn"
+              style={{ width: '100%', marginTop: '0.8rem', textAlign: 'center' }}
+              onClick={closeMenu}
+            >
               WhatsApp
             </a>
           </nav>

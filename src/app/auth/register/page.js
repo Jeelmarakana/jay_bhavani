@@ -4,14 +4,18 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { registerUser, loginUser } from '@/lib/auth';
+import ThemeToggle from '@/components/ThemeToggle';
+import { useTheme } from '@/components/ThemeContext';
 import styles from './page.module.css';
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { theme, mounted } = useTheme();
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [status, setStatus] = useState({ success: null, message: '' });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
 
   useEffect(() => {
     if (!status.message) {
@@ -24,6 +28,14 @@ export default function RegisterPage() {
 
     return () => clearTimeout(timer);
   }, [status.message]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPageLoaded(true);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,12 +64,26 @@ export default function RegisterPage() {
     }
 
     setStatus({ success: true, message: result.message });
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('client-auth-updated'));
+    }
     setTimeout(() => router.push('/shop'), 800);
     setLoading(false);
   };
 
+  if (!isPageLoaded) {
+    return (
+      <div className="page-loader">
+        <div className="loader-content">
+          <div className="loader-spinner"></div>
+          <p className="loader-text">Loading Registration...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className={styles.authShell}>
+    <div className={`${styles.authShell} animate-fade-in`}>
       {status.message ? (
         <div className={`${styles.toast} ${status.success ? styles.success : styles.error}`}>
           <div className={styles.toastIcon}>
@@ -76,7 +102,10 @@ export default function RegisterPage() {
       ) : null}
 
       <div className={styles.authCard}>
-        <span className={styles.kicker}>Client Registration</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+          <span className={styles.kicker}>Client Registration</span>
+          <ThemeToggle />
+        </div>
         <h1 className="serif-title">Create Account</h1>
         <p className={styles.subtitle}>Register your account to continue shopping and manage your jewellery enquiries.</p>
 

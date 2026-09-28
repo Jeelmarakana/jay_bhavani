@@ -5,7 +5,7 @@ export default function JsonLd() {
     name: 'Jay Bhavani Ornaments',
     description: '22K gold, diamond, antique and bridal jewellery in Kamrej, Surat.',
     url: 'https://jaybhavaniornaments.com',
-    telephone: '+919898426635',
+    telephone: '+919054049570',
     email: 'info@jaybhavaniornaments.com',
     address: {
       '@type': 'PostalAddress',
@@ -21,7 +21,7 @@ export default function JsonLd() {
       closes: '20:30',
     }],
     priceRange: '₹₹₹',
-    sameAs: ['https://www.instagram.com/jaybhavaniornaments'],
+    sameAs: ['https://www.instagram.com/jaybhavani_ornaments?stkn=MTR5ajdjMHY5bDIxbA%3D%3D'],
   };
 
   const faq = {

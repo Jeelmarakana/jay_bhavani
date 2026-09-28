@@ -1,24 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Jay Bhavani is a Next.js storefront with a local JSON data store and an admin inquiry dashboard.
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies and configure local environment variables:
+
+```bash
+npm install
+Copy-Item .env.example .env.local
+```
+
+Set a private admin username and password in `.env.local`, and set `ADMIN_SESSION_SECRET` to a random value at least 32 characters long. Then start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000). Admin inquiries are available at [http://localhost:3000/admin](http://localhost:3000/admin). The admin session is stored in a signed, HTTP-only cookie; inquiry reads require a valid session.
 
 ## Learn More
 

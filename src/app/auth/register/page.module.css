@@ -5,6 +5,24 @@
   justify-content: center;
   padding: 4rem 1rem;
   position: relative;
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  overflow: hidden;
+}
+
+.authShell::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, rgba(226, 173, 27, 0.1) 0%, transparent 50%);
+  animation: authBackgroundFloat 20s ease-in-out infinite;
+}
+
+@keyframes authBackgroundFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(2%, 2%) rotate(5deg); }
 }
 
 .toast {
@@ -15,7 +33,7 @@
   max-width: min(90vw, 360px);
   padding: 0.85rem 1.2rem;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 3px 10px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--card-shadow);
   font-family: var(--font-sans);
   font-size: 0.88rem;
   font-weight: 500;
@@ -30,13 +48,32 @@
 
 .authCard {
   width: min(100%, 560px);
-  background: rgba(28, 27, 23, 0.82);
-  border: 1px solid rgba(226, 173, 27, 0.28);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 2.5rem;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--card-shadow);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: authCardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes authCardEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.authCard:hover {
+  border-color: var(--accent-gold);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-4px);
 }
 
 .kicker {
@@ -47,28 +84,66 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 700;
+  animation: kickerFadeIn 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes kickerFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .authCard h1 {
-  background: linear-gradient(135deg, #FFF6D6 0%, #E2AD1B 50%, #C59300 100%);
+  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-hover) 50%, var(--accent-gold-light) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: var(--accent-gold);
   margin-bottom: 0.6rem;
   font-size: 2.2rem;
   font-weight: 700;
+  animation: titleFadeIn 0.6s ease-out 0.3s forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes titleFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .subtitle {
   margin: 0.8rem 0 1.5rem;
-  color: rgba(252, 252, 250, 0.75);
+  color: var(--text-secondary);
   font-size: 0.95rem;
+  animation: subtitleFadeIn 0.6s ease-out 0.4s forwards;
+  opacity: 0;
+}
+
+@keyframes subtitleFadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  animation: formFadeIn 0.6s ease-out 0.5s forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes formFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .passwordWrap {
@@ -88,48 +163,61 @@
   background: transparent;
   cursor: pointer;
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.eyeButton:hover {
+  color: var(--accent-gold);
+  transform: translateY(-50%) scale(1.2);
 }
 
 .authCard label {
-  color: rgba(252, 252, 250, 0.85);
+  color: var(--text-secondary);
   font-size: 0.88rem;
+  transition: color 0.3s ease;
 }
 
 .authCard input {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(226, 173, 27, 0.35);
-  color: #FFFFFF;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .authCard input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--text-muted);
 }
 
 .authCard input:focus {
   border-color: var(--accent-gold);
-  box-shadow: 0 0 0 3px rgba(226, 173, 27, 0.2);
-  background-color: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 3px rgba(226, 173, 27, 0.12);
+  background-color: var(--input-bg);
+  transform: translateY(-2px);
+}
+
+.authCard input:focus ~ label {
+  color: var(--accent-gold);
 }
 
 .success {
-  background-color: rgba(240, 253, 244, 0.9);
-  color: #15803d;
+  background-color: rgba(240, 253, 244, 0.95);
+  color: var(--success);
   border: 1px solid rgba(74, 222, 128, 0.45);
 }
 
 .success svg {
-  color: #16a34a;
+  color: var(--success);
 }
 
 .error {
-  background-color: rgba(254, 242, 242, 0.9);
-  color: #b91c1c;
+  background-color: rgba(254, 242, 242, 0.95);
+  color: var(--error);
   border: 1px solid rgba(248, 113, 113, 0.45);
 }
 
 .error svg {
-  color: #dc2626;
+  color: var(--error);
 }
 
 .toastIcon {
@@ -160,11 +248,40 @@
   justify-content: center;
   gap: 0.4rem;
   flex-wrap: wrap;
-  color: rgba(252, 252, 250, 0.6);
+  color: var(--text-muted);
   font-size: 0.92rem;
 }
 
 .linkText {
   color: var(--accent-gold);
   font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.linkText:hover {
+  color: var(--accent-gold-hover);
+}
+
+/* Theme-specific adjustments */
+[data-theme="dark"] .authCard {
+  background: rgba(23, 20, 17, 0.95);
+  border-color: rgba(229, 178, 72, 0.3);
+}
+
+[data-theme="dark"] .authCard input {
+  background-color: rgba(27, 24, 20, 0.9);
+  border-color: rgba(229, 178, 72, 0.3);
+}
+
+[data-theme="dark"] .authCard input:focus {
+  background-color: rgba(27, 24, 20, 1);
+  box-shadow: 0 0 0 3px rgba(229, 178, 72, 0.2);
+}
+
+[data-theme="dark"] .eyeButton {
+  color: rgba(156, 148, 135, 0.6);
+}
+
+[data-theme="dark"] .eyeButton:hover {
+  color: rgba(229, 178, 72, 0.8);
 }

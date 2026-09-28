@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { buildWhatsAppUrl, DEFAULT_WHATSAPP_URL } from '@/lib/config';
+import { buildWhatsAppUrl, DEFAULT_WHATSAPP_URL, INSTAGRAM_URL } from '@/lib/config';
 import { submitInquiry, openOwnerWhatsAppNotify } from '@/lib/inquiry';
 import styles from './page.module.css';
 
@@ -46,6 +46,7 @@ export default function Home() {
   const [formData, setFormData] = useState({ name: '', phone: '', interestedIn: 'Rings', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: null, message: '' });
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const fetchRates = async () => {
@@ -66,6 +67,15 @@ export default function Home() {
     fetchRates();
     const interval = setInterval(fetchRates, 15000);
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // Simulate smooth loading with staggered animations
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -133,20 +143,31 @@ export default function Home() {
     minute: '2-digit',
   }) : 'Today';
 
+  if (!isLoaded) {
+    return (
+      <div className="page-loader">
+        <div className="loader-content">
+          <div className="loader-spinner"></div>
+          <p className="loader-text">Loading Jay Bhavani Ornaments...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className={styles.homeContainer}>
+    <div className={`${styles.homeContainer} animate-fade-in`}>
       <section className={styles.hero} style={{ '--bg-image': "url('/images/products/bridal-set.jpg')" }}>
         <div className={`${styles.heroContent} container`}>
           <span className={styles.heroSubtitle}>Digital Showroom + WhatsApp Sales Machine</span>
           <h1 className={`${styles.heroTitle} serif-title`}>
-            સોનાની સુંદરતા, વિશ્વાસ સાથે.
+            Timeless Gold Elegance, Crafted With Trust.
           </h1>
           <p className={styles.heroText}>
-            22K Gold • Diamond • Bridal • Antique Jewellery — Kamrej, Surat માં તમારા પરિવાર માટે વિશ્વાસપાત્ર jewellery collection.
+            22K Gold • Diamond • Bridal • Antique Jewellery — Kamrej, Surat&apos;s Most Trusted Family Jewellery Destination.
           </p>
           <div className={styles.heroBtns}>
             <Link href="#shop-by-category" className="gold-btn">Explore Collection</Link>
-            <a href={DEFAULT_WHATSAPP_URL} className="outline-btn" target="_blank" rel="noreferrer">WhatsApp Us</a>
+            <a href={buildWhatsAppUrl('Hi Jay Bhavani Ornaments, I am visiting your digital showroom and would like to explore your jewellery collection.')} className="outline-btn" target="_blank" rel="noreferrer">WhatsApp Us</a>
           </div>
         </div>
       </section>
@@ -212,12 +233,14 @@ export default function Home() {
             <div className={styles.titleDivider}></div>
           </div>
           <div className="grid-4">
-            {featuredProducts.map((product) => (
-              <div key={product.id} className="card" data-3d-tilt>
-                <div className={styles.productImgWrapper}>
-                  <img src={product.image} alt={product.name} className={styles.productImg} />
-                  <span className={styles.metalTag}>{product.metal}</span>
-                </div>
+            {featuredProducts.map((product, index) => (
+              <div key={product.id} className="card" data-3d-tilt style={{ animation: `cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.15}s forwards`, opacity: 0, transform: 'translateY(20px)' }}>
+                <Link href={`/product/${product.id}`} className={styles.productLink}>
+                  <div className={styles.productImgWrapper}>
+                    <img src={product.image} alt={product.name} className={styles.productImg} />
+                    <span className={styles.metalTag}>{product.metal}</span>
+                  </div>
+                </Link>
                 <div className={styles.productInfo}>
                   <span className={styles.productCategory}>{product.categoryName}</span>
                   <h3 className={styles.productName}>{product.name}</h3>
@@ -263,6 +286,48 @@ export default function Home() {
                 <span>{item}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.servicesSection} ${styles.darkBg}`} data-3d-reveal>
+        <div className="container">
+          <div className={styles.sectionHeader}>
+            <span className={styles.kicker}>Our Services</span>
+            <h2 className={`${styles.sectionTitle} serif-title`}>Premium Jewellery Services</h2>
+            <div className={styles.titleDivider}></div>
+          </div>
+          <div className={styles.servicesGrid}>
+            <div className={styles.serviceCard} data-3d-tilt>
+              <div className={styles.serviceIcon}>💎</div>
+              <h3 className={styles.serviceTitle}>Custom Design</h3>
+              <p className={styles.serviceDesc}>Create your dream jewellery with our expert craftsmen. From concept to creation, we bring your vision to life.</p>
+            </div>
+            <div className={styles.serviceCard} data-3d-tilt>
+              <div className={styles.serviceIcon}>🔬</div>
+              <h3 className={styles.serviceTitle}>Purity Testing</h3>
+              <p className={styles.serviceDesc}>Certified purity testing for all gold and silver jewellery. Trust our BIS hallmarked pieces for guaranteed quality.</p>
+            </div>
+            <div className={styles.serviceCard} data-3d-tilt>
+              <div className={styles.serviceIcon}>🔄</div>
+              <h3 className={styles.serviceTitle}>Exchange & Upgrade</h3>
+              <p className={styles.serviceDesc}>Flexible exchange policies and upgrade options. Trade in your old jewellery for new designs with minimal loss.</p>
+            </div>
+            <div className={styles.serviceCard} data-3d-tilt>
+              <div className={styles.serviceIcon}>🎁</div>
+              <h3 className={styles.serviceTitle}>Gift Packaging</h3>
+              <p className={styles.serviceDesc}>Elegant gift packaging for special occasions. Make your jewellery gifts memorable with our premium boxes.</p>
+            </div>
+            <div className={styles.serviceCard} data-3d-tilt>
+              <div className={styles.serviceIcon}>🛡️</div>
+              <h3 className={styles.serviceTitle}>Insurance Assistance</h3>
+              <p className={styles.serviceDesc}>Help with jewellery insurance documentation and valuation. Protect your precious investments properly.</p>
+            </div>
+            <div className={styles.serviceCard} data-3d-tilt>
+              <div className={styles.serviceIcon}>🏠</div>
+              <h3 className={styles.serviceTitle}>Home Consultation</h3>
+              <p className={styles.serviceDesc}>Personalised home consultations for bridal and bulk purchases. We bring our collection to your doorstep.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -314,13 +379,37 @@ export default function Home() {
       <section className={styles.section}>
         <div className="container">
           <div className={styles.sectionHeader}>
+            <span className={styles.kicker}>Instagram Gallery</span>
             <h2 className={`${styles.sectionTitle} serif-title`}>Follow Our Latest Designs</h2>
             <div className={styles.titleDivider}></div>
           </div>
           <div className={styles.instagramGrid}>
             {gallery.map((img, index) => (
-              <img key={`${img}-${index}`} src={img} alt="Latest jewellery design at Jay Bhavani Ornaments" className={styles.instagramImage} />
+              <a
+                key={`${img}-${index}`}
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.instagramCard}
+                aria-label="View design on Instagram"
+              >
+                <img src={img} alt="Latest jewellery design at Jay Bhavani Ornaments" className={styles.instagramImage} />
+                <div className={styles.instagramOverlay}>
+                  <span className={styles.instagramIcon}>📸</span>
+                  <span>View on Instagram</span>
+                </div>
+              </a>
             ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="gold-btn"
+            >
+              Follow @jaybhavani_ornaments on Instagram
+            </a>
           </div>
         </div>
       </section>

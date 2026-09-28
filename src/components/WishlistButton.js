@@ -30,6 +30,13 @@ export default function WishlistButton({ product, className = '' }) {
     if (!product) return;
     const result = toggleWishlistItem(product);
     setActive(result.added);
+
+    // Add particle effect if adding to wishlist
+    if (result.added) {
+      const button = event.currentTarget;
+      button.classList.add('adding');
+      setTimeout(() => button.classList.remove('adding'), 600);
+    }
   };
 
   return (

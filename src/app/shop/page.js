@@ -12,6 +12,7 @@ function ShopContent() {
   // State filters
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
   const [search, setSearch] = useState(searchParams.get('search') || '');
   const [category, setCategory] = useState(searchParams.get('category') || 'all');
   const [metal, setMetal] = useState(searchParams.get('metal') || 'all');
@@ -42,6 +43,15 @@ function ShopContent() {
     setCategory(searchParams.get('category') || 'all');
     setSearch(searchParams.get('search') || '');
   }, [searchParams]);
+
+  // Smooth page loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPageLoaded(true);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Fetch filtered products
   useEffect(() => {
@@ -89,8 +99,19 @@ function ShopContent() {
     router.push('/shop');
   };
 
+  if (!isPageLoaded) {
+    return (
+      <div className="page-loader">
+        <div className="loader-content">
+          <div className="loader-spinner"></div>
+          <p className="loader-text">Loading Collection...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container" style={{ padding: '3rem 2rem 5rem' }}>
+    <div className="container animate-fade-in" style={{ padding: '3rem 2rem 5rem' }}>
       <div className={styles.shopHeader}>
         <span className={styles.shopSubtitle}>Jay Bhavani Catalog</span>
         <h1 className="serif-title" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Our Collection</h1>
@@ -186,12 +207,14 @@ function ShopContent() {
             </div>
           ) : (
             <div className={styles.productsGrid}>
-              {products.map((product) => (
-                <div key={product.id} className={`${styles.shopCard} card`}>
-                  <div className={styles.imgWrapper}>
-                    <img src={product.image} alt={product.name} className={styles.productImg} />
-                    <span className={styles.purityTag}>{product.purity}</span>
-                  </div>
+              {products.map((product, index) => (
+                <div key={product.id} className={`${styles.shopCard} card`} style={{ animationDelay: `${index * 0.1}s` }}>
+                  <Link href={`/product/${product.id}`} className={styles.imgLink}>
+                    <div className={styles.imgWrapper}>
+                      <img src={product.image} alt={product.name} className={styles.productImg} />
+                      <span className={styles.purityTag}>{product.purity}</span>
+                    </div>
+                  </Link>
                   <div className={styles.details}>
                     <span className={styles.categoryLabel}>{product.categoryName}</span>
                     <h3 className={styles.name}>{product.name}</h3>

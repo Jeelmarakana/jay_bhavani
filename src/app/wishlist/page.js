@@ -5,6 +5,7 @@ import Link from 'next/link';
 import ProductImage from '@/components/ProductImage';
 import WishlistButton from '@/components/WishlistButton';
 import { getWishlist, getWishlistShareText } from '@/lib/wishlist';
+import { buildWhatsAppUrl } from '@/lib/config';
 import styles from './page.module.css';
 
 export default function WishlistPage() {
@@ -22,7 +23,7 @@ export default function WishlistPage() {
   }, []);
 
   const shareUrl = items.length
-    ? `https://wa.me/919898426635?text=${encodeURIComponent(getWishlistShareText(items))}`
+    ? buildWhatsAppUrl(getWishlistShareText(items))
     : '#';
 
   return (
@@ -53,10 +54,12 @@ export default function WishlistPage() {
           <div className={styles.grid}>
             {items.map((item) => (
               <div key={item.id} className={`${styles.card} card`}>
-                <div className={styles.imgWrap}>
-                  <ProductImage src={item.image} alt={`${item.name} - Jay Bhavani Ornaments`} className={styles.img} />
-                  <WishlistButton product={item} className={styles.wishBtn} />
-                </div>
+                <Link href={`/product/${item.id}`} className={styles.imgLink}>
+                  <div className={styles.imgWrap}>
+                    <ProductImage src={item.image} alt={`${item.name} - Jay Bhavani Ornaments`} className={styles.img} />
+                    <WishlistButton product={item} className={styles.wishBtn} />
+                  </div>
+                </Link>
                 <div className={styles.details}>
                   <span className={styles.category}>{item.categoryName}</span>
                   <h3>{item.name}</h3>

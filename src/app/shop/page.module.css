@@ -1,6 +1,16 @@
 .shopHeader {
   text-align: center;
   margin-bottom: 3.5rem;
+  animation: shopHeaderFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes shopHeaderFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .shopSubtitle {
@@ -11,11 +21,29 @@
   font-weight: 600;
   display: block;
   margin-bottom: 0.8rem;
+  animation: subtitleSlideUp 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes subtitleSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .shopDesc {
   color: var(--text-secondary);
   font-size: 1rem;
+  animation: descFadeIn 0.6s ease-out 0.4s forwards;
+  opacity: 0;
+}
+
+@keyframes descFadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 /* Shop Layout Split */
@@ -32,13 +60,23 @@
   border-radius: 8px;
   position: sticky;
   top: 100px;
+  animation: sidebarSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+@keyframes sidebarSlideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .sidebarHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -50,15 +88,31 @@
   font-size: 0.8rem;
   cursor: pointer;
   text-decoration: underline;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .clearBtn:hover {
   color: var(--accent-gold);
+  transform: translateX(2px);
 }
 
 .filterSection {
   margin-bottom: 1.8rem;
+  animation: filterSectionFadeIn 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.filterSection:nth-child(2) { animation-delay: 0.1s; }
+.filterSection:nth-child(3) { animation-delay: 0.2s; }
+.filterSection:nth-child(4) { animation-delay: 0.3s; }
+.filterSection:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes filterSectionFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .filterSection:last-child {
@@ -80,19 +134,43 @@
   padding: 0.5rem 0.8rem;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.filterBtn::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--accent-gold);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
 }
 
 .filterBtn:hover {
   color: var(--accent-gold);
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: rgba(229, 178, 72, 0.08);
+  transform: translateX(4px);
+}
+
+.filterBtn:hover::before {
+  transform: scaleY(1);
 }
 
 .filterBtnActive {
   color: var(--accent-gold);
-  background-color: rgba(212, 175, 55, 0.08);
-  border-color: rgba(212, 175, 55, 0.2);
+  background-color: rgba(212, 175, 55, 0.12);
+  border-color: rgba(212, 175, 55, 0.3);
   font-weight: 500;
+  transform: translateX(4px);
+}
+
+.filterBtnActive::before {
+  transform: scaleY(1);
 }
 
 /* Grid Section Header */
@@ -101,13 +179,32 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.8rem;
+  animation: gridHeaderFadeIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes gridHeaderFadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 .resultsCount {
   font-size: 0.9rem;
   color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.resultsCount strong {
+  color: var(--accent-gold);
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.resultsCount:hover strong {
+  transform: scale(1.1);
 }
 
 /* Products Grid */
@@ -120,6 +217,29 @@
 .shopCard {
   display: flex;
   flex-direction: column;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cardEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.shopCard:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(184, 134, 11, 0.2);
+}
+
+.imgLink {
+  display: block;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
 }
 
 .imgWrapper {
@@ -128,17 +248,32 @@
   position: relative;
   overflow: hidden;
   background-color: var(--bg-tertiary);
+  border-radius: 8px 8px 0 0;
+}
+
+.imgWrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(226, 173, 27, 0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+
+.shopCard:hover .imgWrapper::before {
+  opacity: 1;
 }
 
 .productImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.shopCard:hover .productImg {
-  transform: scale(1.08);
+.imgLink:hover .productImg {
+  transform: scale(1.12) rotate(1deg);
 }
 
 .purityTag {
@@ -152,6 +287,13 @@
   padding: 0.2rem 0.5rem;
   border-radius: 3px;
   letter-spacing: 0.05em;
+  z-index: 3;
+  transition: all 0.3s ease;
+}
+
+.shopCard:hover .purityTag {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.4);
 }
 
 .details {
@@ -159,6 +301,11 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  transition: background-color 0.3s ease;
+}
+
+.shopCard:hover .details {
+  background-color: var(--accent-gold-light);
 }
 
 .categoryLabel {
@@ -167,6 +314,11 @@
   color: var(--text-muted);
   letter-spacing: 0.08em;
   margin-bottom: 0.4rem;
+  transition: color 0.3s ease;
+}
+
+.shopCard:hover .categoryLabel {
+  color: var(--accent-gold);
 }
 
 .name {
@@ -180,16 +332,35 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.shopCard:hover .name {
+  color: var(--accent-gold);
 }
 
 .specs {
   font-size: 0.82rem;
   color: var(--text-secondary);
   margin-bottom: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.shopCard:hover .specs {
+  color: var(--text-primary);
 }
 
 .cardFooter {
   margin-top: auto;
+}
+
+.cardFooter .gold-btn {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.shopCard:hover .cardFooter .gold-btn {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(184, 134, 11, 0.3);
 }
 
 /* Status States */

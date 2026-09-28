@@ -25,10 +25,34 @@
   animation: heroZoom 18s ease-in-out infinite alternate;
 }
 
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(226, 173, 27, 0.15) 0%, transparent 50%);
+  z-index: 2;
+  animation: heroGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlow {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
 .heroContent {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   max-width: 700px;
+  animation: heroContentSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes heroContentSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .heroSubtitle {
@@ -39,6 +63,16 @@
   text-transform: uppercase;
   letter-spacing: 0.18em;
   color: var(--accent-gold);
+  animation: subtitleFadeIn 0.8s ease-out 0.3s forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes subtitleFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .heroTitle {
@@ -47,6 +81,16 @@
   color: #fff;
   margin-bottom: 1.5rem;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  animation: titleFadeIn 0.8s ease-out 0.5s forwards;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+@keyframes titleFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .heroText {
@@ -55,12 +99,32 @@
   font-size: 1.1rem;
   line-height: 1.8;
   margin-bottom: 2rem;
+  animation: textFadeIn 0.8s ease-out 0.7s forwards;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+@keyframes textFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .heroBtns {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  animation: buttonsFadeIn 0.8s ease-out 0.9s forwards;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+@keyframes buttonsFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes heroZoom {
@@ -100,6 +164,16 @@
   margin-top: -3.5rem;
   position: relative;
   z-index: 10;
+  animation: ratesSlideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+@keyframes ratesSlideDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .ratesCard {
@@ -108,6 +182,12 @@
   border-radius: 12px;
   padding: 2rem;
   box-shadow: var(--card-shadow);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ratesCard:hover {
+  border-color: var(--accent-gold);
+  box-shadow: 0 16px 40px rgba(184, 134, 11, 0.15);
 }
 
 .ratesHeader {
@@ -148,6 +228,29 @@
   border: 1px solid var(--border-color);
   border-radius: 10px;
   background: var(--bg-tertiary);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: rateBoxFadeIn 0.5s ease-out forwards;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.rateBox:nth-child(1) { animation-delay: 0.1s; }
+.rateBox:nth-child(2) { animation-delay: 0.2s; }
+.rateBox:nth-child(3) { animation-delay: 0.3s; }
+.rateBox:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes rateBoxFadeIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.rateBox:hover {
+  transform: translateY(-4px) scale(1.05);
+  border-color: var(--accent-gold);
+  background: var(--accent-gold-light);
+  box-shadow: 0 8px 20px rgba(184, 134, 11, 0.2);
 }
 
 .rateLabel {
@@ -157,12 +260,22 @@
   color: var(--text-secondary);
   text-align: center;
   margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.rateBox:hover .rateLabel {
+  color: var(--accent-gold);
 }
 
 .rateVal {
   font-family: var(--font-serif);
   font-size: clamp(1.2rem, 2vw, 1.8rem);
   color: var(--accent-gold);
+  transition: transform 0.3s ease;
+}
+
+.rateBox:hover .rateVal {
+  transform: scale(1.1);
 }
 
 .ratesDisclaimer {
@@ -189,20 +302,78 @@
   background-size: cover;
   background-position: center;
   border: 1px solid var(--border-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border 0.4s ease;
+  animation: categoryCardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+}
+
+.categoryCard:nth-child(1) { animation-delay: 0.1s; }
+.categoryCard:nth-child(2) { animation-delay: 0.2s; }
+.categoryCard:nth-child(3) { animation-delay: 0.3s; }
+.categoryCard:nth-child(4) { animation-delay: 0.4s; }
+.categoryCard:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes categoryCardEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.categoryCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.categoryCard:hover::before {
+  opacity: 0.7;
+}
+
+.categoryCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(226, 173, 27, 0.3) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+
+.categoryCard:hover::after {
+  opacity: 1;
 }
 
 .categoryCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(-8px) scale(1.02);
   border-color: var(--accent-gold);
-  box-shadow: var(--gold-glow-hover);
+  box-shadow: 0 20px 40px rgba(184, 134, 11, 0.25), 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .categoryName {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   font-size: 1.3rem;
   color: #fff;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.categoryCard:hover .categoryName {
+  transform: translateY(-4px);
+}
+
+.productLink {
+  display: block;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.productLink:hover {
+  transform: translateY(-4px);
 }
 
 .productImgWrapper {
@@ -219,7 +390,7 @@
   transition: transform 0.4s ease;
 }
 
-.card:hover .productImg {
+.productLink:hover .productImg {
   transform: scale(1.08);
 }
 
@@ -264,6 +435,11 @@
   gap: 0.75rem;
   border-top: 1px solid rgba(0,0,0,0.06);
   padding-top: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover .productFooter {
+  border-top-color: var(--accent-gold);
 }
 
 .productWeight {
@@ -288,6 +464,11 @@
   display: flex;
   align-items: center;
   padding: clamp(2rem, 4vw, 4rem);
+  border: 1px solid var(--border-color);
+}
+
+:global([data-theme="dark"]) .bridalLayout {
+  background: linear-gradient(120deg, rgba(20, 17, 13, 0.93), rgba(38, 30, 20, 0.88)), url('/images/products/bridal-set.jpg') center/cover no-repeat;
 }
 
 .bridalContent {
@@ -302,6 +483,13 @@
   text-transform: uppercase;
   color: var(--accent-gold);
   font-weight: 700;
+}
+
+@keyframes cardEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .trustGrid {
@@ -323,6 +511,30 @@
   text-align: center;
   font-weight: 600;
   color: var(--text-primary);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: trustCardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.trustCard:nth-child(1) { animation-delay: 0.1s; }
+.trustCard:nth-child(2) { animation-delay: 0.2s; }
+.trustCard:nth-child(3) { animation-delay: 0.3s; }
+.trustCard:nth-child(4) { animation-delay: 0.4s; }
+.trustCard:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes trustCardEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.trustCard:hover {
+  transform: translateY(-8px) scale(1.05);
+  border-color: var(--accent-gold);
+  box-shadow: 0 12px 30px rgba(184, 134, 11, 0.2);
+  background: rgba(255,255,255,0.6);
 }
 
 .checkmark {
@@ -335,10 +547,127 @@
   background: rgba(226, 173, 27, 0.12);
   color: var(--accent-gold);
   font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.trustCard:hover .checkmark {
+  transform: scale(1.15) rotate(10deg);
+  background: rgba(226, 173, 27, 0.2);
 }
 
 .storySection {
   padding: 0 0 5rem;
+}
+
+.servicesSection {
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.servicesSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(226, 173, 27, 0.08) 0%, transparent 50%);
+  z-index: 1;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.serviceCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: serviceCardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+}
+
+.serviceCard:nth-child(1) { animation-delay: 0.1s; }
+.serviceCard:nth-child(2) { animation-delay: 0.2s; }
+.serviceCard:nth-child(3) { animation-delay: 0.3s; }
+.serviceCard:nth-child(4) { animation-delay: 0.4s; }
+.serviceCard:nth-child(5) { animation-delay: 0.5s; }
+.serviceCard:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes serviceCardEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.serviceCard:hover {
+  transform: translateY(-12px) scale(1.03);
+  border-color: var(--accent-gold);
+  box-shadow: 0 25px 50px rgba(184, 134, 11, 0.2), 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.serviceCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-hover));
+  border-radius: 16px 16px 0 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.serviceCard:hover::before {
+  opacity: 1;
+}
+
+.serviceIcon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 4px 8px rgba(226, 173, 27, 0.3));
+}
+
+.serviceCard:hover .serviceIcon {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.serviceTitle {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: 0.08em;
+  transition: color 0.3s ease;
+}
+
+.serviceCard:hover .serviceTitle {
+  color: var(--accent-gold);
+}
+
+.serviceDesc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  transition: color 0.3s ease;
+}
+
+.serviceCard:hover .serviceDesc {
+  color: var(--text-primary);
 }
 
 .storyBox {
@@ -363,6 +692,10 @@
   background: linear-gradient(135deg, rgba(250,247,240,0.9), rgba(232,214,175,0.9));
 }
 
+:global([data-theme="dark"]) .customCTA {
+  background: linear-gradient(135deg, rgba(28, 24, 19, 0.95), rgba(45, 36, 26, 0.95));
+}
+
 .reviewGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -374,22 +707,59 @@
   border: 1px solid var(--border-color);
   border-radius: 12px;
   background: var(--bg-secondary);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: reviewCardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(25px);
+}
+
+.reviewCard:nth-child(1) { animation-delay: 0.1s; }
+.reviewCard:nth-child(2) { animation-delay: 0.2s; }
+.reviewCard:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes reviewCardEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reviewCard:hover {
+  transform: translateY(-6px) rotateX(2deg);
+  border-color: var(--accent-gold);
+  box-shadow: 0 15px 35px rgba(184, 134, 11, 0.15);
 }
 
 .stars {
   color: #d4af37;
   letter-spacing: 0.15em;
   margin-bottom: 1rem;
+  animation: starsGlow 2s ease-in-out infinite;
+}
+
+@keyframes starsGlow {
+  0%, 100% { text-shadow: 0 0 5px rgba(212, 175, 55, 0.3); }
+  50% { text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
 }
 
 .reviewCard p {
   margin-bottom: 1.2rem;
   color: var(--text-secondary);
   line-height: 1.7;
+  transition: color 0.3s ease;
+}
+
+.reviewCard:hover p {
+  color: var(--text-primary);
 }
 
 .reviewCard strong {
   color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.reviewCard:hover strong {
+  color: var(--accent-gold);
 }
 
 .instagramGrid {
@@ -398,12 +768,59 @@
   gap: 1rem;
 }
 
+.instagramCard {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  display: block;
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 1;
+}
+
+.instagramCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-gold);
+  box-shadow: var(--gold-glow-hover);
+}
+
 .instagramImage {
   width: 100%;
-  aspect-ratio: 1;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
+  transition: transform 0.5s ease;
+}
+
+.instagramCard:hover .instagramImage {
+  transform: scale(1.08);
+}
+
+.instagramOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 13, 11, 0.72);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #FFFFFF;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-align: center;
+  padding: 1rem;
+}
+
+.instagramCard:hover .instagramOverlay {
+  opacity: 1;
+}
+
+.instagramIcon {
+  font-size: 1.5rem;
 }
 
 .visitCard {
@@ -495,6 +912,7 @@
   .categoriesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .trustGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .reviewGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .servicesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .enquiryGrid, .visitCard, .storyBox { grid-template-columns: 1fr; }
 }
 
@@ -503,6 +921,7 @@
   .heroBtns { flex-direction: column; }
   .ratesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .categoriesGrid, .trustGrid, .reviewGrid, .instagramGrid { grid-template-columns: 1fr; }
+  .servicesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .customCTA, .finalCTA { flex-direction: column; align-items: flex-start; }
 }
 
@@ -510,4 +929,6 @@
   .ratesGrid { grid-template-columns: 1fr; }
   .ratesCard { padding: 1.2rem; }
   .enquiryFormWrap { padding: 1.25rem; }
+  .servicesGrid { grid-template-columns: 1fr; }
+  .serviceCard { padding: 2rem 1.5rem; }
 }

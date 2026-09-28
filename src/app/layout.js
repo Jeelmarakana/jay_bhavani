@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import JsonLd from '@/components/JsonLd';
 import Page3D from '@/components/Page3D';
+import { ThemeProvider } from '@/components/ThemeContext';
 import { DEFAULT_WHATSAPP_URL } from '@/lib/config';
 
 export const metadata = {
@@ -17,28 +18,42 @@ export const metadata = {
   },
 };
 
+const themeInitializerScript = `(function() {
+  try {
+    var stored = localStorage.getItem('jay_bhavani_theme');
+    var theme = stored === 'dark' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {}
+})();`;
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
-        <JsonLd />
-        <Navbar />
-        <Page3D>
-          <main style={{ marginTop: 'var(--header-height)' }}>
-            {children}
-          </main>
-        </Page3D>
-        <Footer />
-        <a
-          href={DEFAULT_WHATSAPP_URL}
-          className="floating-whatsapp"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Chat on WhatsApp"
-        >
-          WhatsApp
-        </a>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitializerScript }} />
+      </head>
+      <body suppressHydrationWarning>
+        <ThemeProvider>
+          <JsonLd />
+          <Navbar />
+          <Page3D>
+            <main style={{ marginTop: 'var(--header-height)' }}>
+              {children}
+            </main>
+          </Page3D>
+          <Footer />
+          <a
+            href={DEFAULT_WHATSAPP_URL}
+            className="floating-whatsapp"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Chat on WhatsApp"
+          >
+            WhatsApp
+          </a>
+        </ThemeProvider>
       </body>
     </html>
   );
 }
+

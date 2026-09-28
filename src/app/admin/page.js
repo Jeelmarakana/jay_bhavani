@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getAdminSession, loginAdmin, clearAdminSession, ADMIN_CREDENTIALS } from '@/lib/auth';
+import ThemeToggle from '@/components/ThemeToggle';
 import styles from './page.module.css';
 
 export default function AdminDashboard() {
@@ -13,6 +13,7 @@ export default function AdminDashboard() {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [adminForm, setAdminForm] = useState({ username: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [authStatus, setAuthStatus] = useState({ success: null, message: '' });
 
   useEffect(() => {
@@ -28,61 +29,69 @@ export default function AdminDashboard() {
   }, [authStatus.message]);
 
   useEffect(() => {
-    const session = getAdminSession();
-    const hasSession = Boolean(session?.username);
-    setIsAdminLoggedIn(hasSession);
-    setAuthLoading(false);
-
-    if (typeof window !== 'undefined') {
-      const msg = sessionStorage.getItem('admin_login_toast');
-      if (msg) {
-        setAuthStatus({ success: true, message: msg });
-        sessionStorage.removeItem('admin_login_toast');
-      }
-    }
-
-    if (!hasSession) {
-      setLoading(false);
-      return;
-    }
-
-    const fetchInquiries = async () => {
+    const loadDashboard = async () => {
       try {
-        const res = await fetch('/api/inquiries');
-        const data = await res.json();
-        if (data.success) {
+        const sessionResponse = await fetch('/api/admin/session');
+        const session = await sessionResponse.json();
+        setIsAdminLoggedIn(session.authenticated);
+
+        if (session.authenticated) {
+          const response = await fetch('/api/inquiries');
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || 'Unable to retrieve inquiries.');
           setInquiries(data.inquiries);
         }
       } catch (err) {
-        console.error('Error fetching inquiries:', err);
+        setAuthStatus({ success: false, message: err.message || 'Unable to connect to the server.' });
       } finally {
         setLoading(false);
+        setAuthLoading(false);
       }
     };
 
-    fetchInquiries();
+    loadDashboard();
   }, []);
 
-  const handleAdminLogin = (e) => {
+  const handleAdminLogin = async (e) => {
     e.preventDefault();
-    const result = loginAdmin(adminForm);
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/admin/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(adminForm),
+      });
+      const result = await response.json();
 
-    if (!result.success) {
-      setAuthStatus({ success: false, message: result.message });
-      return;
-    }
+      if (!response.ok) {
+        setAuthStatus({ success: false, message: result.error || 'Admin login failed.' });
+        return;
+      }
 
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('admin_login_toast', result.message || 'Admin login successful.');
+      setAuthStatus({ success: true, message: result.message });
+      setIsAdminLoggedIn(true);
+      const inquiriesResponse = await fetch('/api/inquiries');
+      const inquiriesData = await inquiriesResponse.json();
+      if (!inquiriesResponse.ok) throw new Error(inquiriesData.error || 'Unable to retrieve inquiries.');
+      setInquiries(inquiriesData.inquiries);
+    } catch (err) {
+      setAuthStatus({ success: false, message: err.message || 'Unable to connect to the server.' });
+    } finally {
+      setIsSubmitting(false);
+      setLoading(false);
     }
-    setIsAdminLoggedIn(true);
-    window.location.reload();
   };
 
-  const handleLogout = () => {
-    clearAdminSession();
-    setIsAdminLoggedIn(false);
-    setAuthStatus({ success: true, message: 'Logged out successfully.' });
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/admin/session', { method: 'DELETE' });
+      if (!response.ok) throw new Error('Unable to log out. Please try again.');
+      setIsAdminLoggedIn(false);
+      setInquiries([]);
+      setAuthStatus({ success: true, message: 'Logged out successfully.' });
+    } catch (err) {
+      setAuthStatus({ success: false, message: err.message || 'Unable to connect to the server.' });
+    }
   };
 
   const filteredInquiries = inquiries.filter((inq) => {
@@ -128,38 +137,47 @@ export default function AdminDashboard() {
         ) : null}
 
         <div className={styles.authCard}>
-          <span className={styles.adminSubtitle}>Restricted Access</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
+            <span className={styles.adminSubtitle} style={{ marginBottom: 0 }}>Restricted Access</span>
+            <ThemeToggle />
+          </div>
           <h1 className="serif-title" style={{ fontSize: '2.1rem', marginBottom: '0.8rem' }}>Admin Login</h1>
           <p className={styles.adminDesc}>Use the protected admin account to launch the control dashboard.</p>
 
           <form onSubmit={handleAdminLogin} className={styles.loginForm}>
             <div className="form-group">
-              <label className="form-label">Username</label>
+              <label className="form-label" htmlFor="admin-username">Username</label>
               <input
+                id="admin-username"
                 className="form-control"
                 type="text"
+                autoComplete="username"
+                required
                 value={adminForm.username}
                 onChange={(e) => setAdminForm((prev) => ({ ...prev, username: e.target.value }))}
               />
             </div>
 
             <div className="form-group">
-              <label className="form-label">Password</label>
+              <label className="form-label" htmlFor="admin-password">Password</label>
               <div className={styles.passwordWrap}>
                 <input
+                  id="admin-password"
                   className="form-control"
                   type={showPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
+                  required
                   value={adminForm.password}
                   onChange={(e) => setAdminForm((prev) => ({ ...prev, password: e.target.value }))}
                 />
-                <button type="button" className={styles.eyeButton} onClick={() => setShowPassword((prev) => !prev)}>
-                  {showPassword ? '🙈' : '👁️'}
+                <button type="button" className={styles.eyeButton} aria-label={showPassword ? 'Hide password' : 'Show password'} onClick={() => setShowPassword((prev) => !prev)}>
+                  {showPassword ? 'Hide' : 'Show'}
                 </button>
               </div>
             </div>
 
-            <button type="submit" className="gold-btn" style={{ width: '100%' }}>
-              Login as Admin
+            <button type="submit" className="gold-btn" style={{ width: '100%' }} disabled={isSubmitting}>
+              {isSubmitting ? 'Signing in...' : 'Login as Admin'}
             </button>
           </form>
         </div>
@@ -176,15 +194,19 @@ export default function AdminDashboard() {
           <h1 className="serif-title" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Customer Inquiries</h1>
           <p className={styles.adminDesc}>Manage, check, and follow up on customer product callback requests and web forms.</p>
         </div>
-        <button className="outline-btn" onClick={handleLogout} style={{ padding: '0.55rem 1.2rem', fontSize: '0.72rem' }}>
-          Logout Admin
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <ThemeToggle />
+          <button className="outline-btn" onClick={handleLogout} style={{ padding: '0.55rem 1.2rem', fontSize: '0.72rem' }}>
+            Logout Admin
+          </button>
+        </div>
       </div>
 
       <div className={`${styles.controlPanel} glassmorphism`}>
         <div style={{ flex: 1 }}>
-          <label className="form-label">Search Submissions</label>
+          <label className="form-label" htmlFor="inquiry-search">Search Submissions</label>
           <input 
+            id="inquiry-search"
             type="text" 
             value={searchTerm} 
             onChange={(e) => setSearchTerm(e.target.value)} 

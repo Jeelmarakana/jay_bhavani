@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { DEFAULT_WHATSAPP_URL, INSTAGRAM_URL, SHOP_PHONE_DISPLAY, SHOP_WHATSAPP } from '@/lib/config';
+import ThemeToggle from './ThemeToggle';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -15,9 +17,9 @@ export default function Footer() {
               Digital Showroom + WhatsApp Sales Machine — premium 22K gold, bridal and antique jewellery in Kamrej, Surat.
             </p>
             <div className={styles.social}>
-              <a href="https://wa.me/919898426635" target="_blank" rel="noreferrer" aria-label="WhatsApp">WhatsApp</a>
-              <a href="https://www.instagram.com/jaybhavaniornaments" target="_blank" rel="noreferrer" aria-label="Instagram">Instagram</a>
-              <a href="https://maps.google.com/?q=Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat" target="_blank" rel="noreferrer" aria-label="Google Maps">Maps</a>
+              <a href={DEFAULT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WhatsApp</a>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a>
+              <a href="https://maps.google.com/?q=Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat" target="_blank" rel="noopener noreferrer" aria-label="Google Maps">Maps</a>
             </div>
           </div>
 
@@ -48,15 +50,15 @@ export default function Footer() {
             <h3 className={styles.title}>Our Boutique</h3>
             <p className={styles.contactItem}>
               <strong>Address:</strong> Jay Bhavani Ornaments, Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat.{' '}
-              <a href="https://maps.google.com/?q=Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>Map</a>
+              <a href="https://maps.google.com/?q=Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>Map</a>
             </p>
             <p className={styles.contactItem}>
               <strong>Phone:</strong>{' '}
-              <a href="tel:+919898426635">98984 26635</a> ·{' '}
-              <a href="https://wa.me/919898426635" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>WhatsApp</a>
+              <a href={`tel:+${SHOP_WHATSAPP}`}>{SHOP_PHONE_DISPLAY}</a> ·{' '}
+              <a href={DEFAULT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>WhatsApp</a>
             </p>
             <p className={styles.contactItem}>
-              <strong>Email:</strong> info@jaybhavaniornaments.com
+              <strong>Email:</strong> info@jaybhavani_ornaments.com
             </p>
             <p className={styles.contactItem}>
               <strong>Hours:</strong> Mon – Sat: 11:00 AM – 8:30 PM
@@ -68,8 +70,11 @@ export default function Footer() {
           <p className={styles.copyright}>
             © {new Date().getFullYear()} Jay Bhavani Ornaments. All rights reserved.
           </p>
-          <div className={styles.policies}>
-            <Link href="/#contact">Privacy & Policies</Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+            <ThemeToggle showLabel={true} />
+            <div className={styles.policies}>
+              <Link href="/#contact">Privacy & Policies</Link>
+            </div>
           </div>
         </div>
       </div>

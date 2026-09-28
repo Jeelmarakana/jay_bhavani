@@ -7,6 +7,10 @@ export default function Page3D({ children }) {
   useEffect(() => {
     const sections = document.querySelectorAll('[data-3d-reveal]');
     const cards = document.querySelectorAll('[data-3d-tilt]');
+    const fadeElements = document.querySelectorAll('[data-fade-in]');
+    const slideElements = document.querySelectorAll('[data-slide-up]');
+    const scaleElements = document.querySelectorAll('[data-scale-up]');
+    const parallaxElements = document.querySelectorAll('[data-parallax]');
 
     const revealObserver = new IntersectionObserver(
       (entries) => {
@@ -20,7 +24,60 @@ export default function Page3D({ children }) {
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
     );
 
+    const fadeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    const slideObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-slide-up');
+            slideObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    const scaleObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-scale-up');
+            scaleObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    const parallaxObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('parallax-active');
+          } else {
+            entry.target.classList.remove('parallax-active');
+          }
+        });
+      },
+      { threshold: 0, rootMargin: '0px 0px -100px 0px' }
+    );
+
     sections.forEach((el) => revealObserver.observe(el));
+    fadeElements.forEach((el) => fadeObserver.observe(el));
+    slideElements.forEach((el) => slideObserver.observe(el));
+    scaleElements.forEach((el) => scaleObserver.observe(el));
+    parallaxElements.forEach((el) => parallaxObserver.observe(el));
 
     const handleTilt = (event) => {
       const card = event.currentTarget;
@@ -42,12 +99,31 @@ export default function Page3D({ children }) {
       card.addEventListener('mouseleave', resetTilt);
     });
 
+    // Smooth scroll parallax effect
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      parallaxElements.forEach((el) => {
+        const speed = parseFloat(el.dataset.parallax) || 0.5;
+        const rect = el.getBoundingClientRect();
+        const elementTop = rect.top + scrollY;
+        const relativeY = (scrollY - elementTop) * speed;
+        el.style.transform = `translateY(${relativeY}px)`;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => {
       revealObserver.disconnect();
+      fadeObserver.disconnect();
+      slideObserver.disconnect();
+      scaleObserver.disconnect();
+      parallaxObserver.disconnect();
       cards.forEach((card) => {
         card.removeEventListener('mousemove', handleTilt);
         card.removeEventListener('mouseleave', resetTilt);
       });
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
