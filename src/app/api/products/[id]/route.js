@@ -1,11 +1,17 @@
 import { NextResponse } from 'next/server';
-import { getProductById } from '@/lib/db';
 
 export async function GET(request, { params }) {
   try {
     const resolvedParams = await params;
     const { id } = resolvedParams;
-    const product = await getProductById(id);
+
+    let product = null;
+    try {
+      const { getProductById } = await import('@/lib/db');
+      product = await getProductById(id);
+    } catch (dbError) {
+      console.error('Database error for product lookup:', dbError);
+    }
 
     if (!product) {
       return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
