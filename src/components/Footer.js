@@ -38,6 +38,16 @@ export default function Footer() {
               <li><Link href="/shop?category=pendants">Pendant Sets</Link></li>
               <li><Link href="/shop?category=chains">Chains</Link></li>
               <li><Link href="/shop?category=anklets">Anklets (Payal)</Link></li>
+              <li><Link href="/shop?category=nose-pins">Nose Pins</Link></li>
+              <li><Link href="/shop?category=brooches">Brooches</Link></li>
+              <li><Link href="/shop?category=kamarband">Kamarband</Link></li>
+              <li><Link href="/shop?category=hair-accessories">Hair Accessories</Link></li>
+              <li><Link href="/shop?category=mens-jewellery">Men's Jewellery</Link></li>
+              <li><Link href="/shop?category=gold-coins">Gold Coins</Link></li>
+              <li><Link href="/shop?category=religious">Religious Items</Link></li>
+              <li><Link href="/shop?category=lockets">Lockets</Link></li>
+              <li><Link href="/shop?category=solitaires">Solitaires</Link></li>
+              <li><Link href="/shop?category=antique">Antique Jewellery</Link></li>
             </ul>
           </div>
 

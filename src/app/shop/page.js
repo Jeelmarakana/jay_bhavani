@@ -32,7 +32,17 @@ function ShopContent() {
     { name: 'Kundan Jewellery', value: 'kundan' },
     { name: 'Pendant Sets', value: 'pendants' },
     { name: 'Chains', value: 'chains' },
-    { name: 'Anklets (Payal)', value: 'anklets' }
+    { name: 'Anklets (Payal)', value: 'anklets' },
+    { name: 'Nose Pins', value: 'nose-pins' },
+    { name: 'Brooches', value: 'brooches' },
+    { name: 'Kamarband (Waist Belt)', value: 'kamarband' },
+    { name: 'Hair Accessories', value: 'hair-accessories' },
+    { name: 'Men\'s Jewellery', value: 'mens-jewellery' },
+    { name: 'Gold Coins', value: 'gold-coins' },
+    { name: 'Religious Items', value: 'religious' },
+    { name: 'Lockets', value: 'lockets' },
+    { name: 'Solitaires', value: 'solitaires' },
+    { name: 'Antique Jewellery', value: 'antique' }
   ];
 
   // Metals list

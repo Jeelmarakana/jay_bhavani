@@ -19,6 +19,16 @@ const categories = [
   { name: 'Pendant Sets', slug: 'pendants', image: '/images/products/diamond-ring.jpg', fallback: '📿' },
   { name: 'Chains', slug: 'chains', image: '/images/products/silver-necklace.jpg', fallback: '⛓️' },
   { name: 'Anklets (Payal)', slug: 'anklets', image: '/images/products/silver-payal.jpg', fallback: '🦶' },
+  { name: 'Nose Pins', slug: 'nose-pins', image: '/images/products/diamond-ring.jpg', fallback: '💎' },
+  { name: 'Brooches', slug: 'brooches', image: '/images/products/royal-earrings.jpg', fallback: '🌸' },
+  { name: 'Kamarband (Waist Belt)', slug: 'kamarband', image: '/images/products/antique-necklace.jpg', fallback: '🎀' },
+  { name: 'Hair Accessories', slug: 'hair-accessories', image: '/images/products/temple-earrings.jpg', fallback: '👑' },
+  { name: 'Men\'s Jewellery', slug: 'mens-jewellery', image: '/images/products/kada-bracelet.jpg', fallback: '🤵' },
+  { name: 'Gold Coins', slug: 'gold-coins', image: '/images/products/gold-ring.jpg', fallback: '🪙' },
+  { name: 'Religious Items', slug: 'religious', image: '/images/products/temple-earrings.jpg', fallback: '🙏' },
+  { name: 'Lockets', slug: 'lockets', image: '/images/products/pearl-choker.jpg', fallback: '🔒' },
+  { name: 'Solitaires', slug: 'solitaires', image: '/images/products/diamond-ring.jpg', fallback: '💎' },
+  { name: 'Antique Jewellery', slug: 'antique', image: '/images/products/antique-necklace.jpg', fallback: '🏺' },
 ];
 
 const trustPoints = [
@@ -45,6 +55,11 @@ const gallery = [
   '/images/products/royal-earrings.jpg',
   '/images/products/gold-ring.jpg',
   '/images/products/designer-mangalsutra.jpg',
+  '/images/products/pearl-choker.jpg',
+  '/images/products/kada-bracelet.jpg',
+  '/images/products/silver-necklace.jpg',
+  '/images/products/silver-payal.jpg',
+  '/images/products/silver-ring.jpg',
 ];
 
 export default function Home() {
@@ -532,6 +547,16 @@ export default function Home() {
                     <option>Pendant Sets</option>
                     <option>Chains</option>
                     <option>Anklets (Payal)</option>
+                    <option>Nose Pins</option>
+                    <option>Brooches</option>
+                    <option>Kamarband (Waist Belt)</option>
+                    <option>Hair Accessories</option>
+                    <option>Men's Jewellery</option>
+                    <option>Gold Coins</option>
+                    <option>Religious Items</option>
+                    <option>Lockets</option>
+                    <option>Solitaires</option>
+                    <option>Antique Jewellery</option>
                     <option>Custom Design</option>
                   </select>
                 </div>
