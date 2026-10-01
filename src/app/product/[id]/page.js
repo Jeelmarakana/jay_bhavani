@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { submitInquiry, openOwnerWhatsAppNotify } from '@/lib/inquiry';
-import { SHOP_WHATSAPP, SHOP_PHONE_DISPLAY, buildWhatsAppUrl } from '@/lib/config';
+import { SHOP_PHONE_DISPLAY } from '@/lib/config';
 import styles from './page.module.css';
 
 export default function ProductDetail() {
@@ -165,13 +166,6 @@ export default function ProductDetail() {
     }
   };
 
-  // WhatsApp pre-filled link
-  const getWhatsAppLink = () => {
-    if (!product) return '#';
-    const text = `Hi Jay Bhavani Ornaments, I am interested in inquiring about this product:\n\n*Product:* ${product.name}\n*ID:* ${product.id}\n*Category:* ${product.categoryName}\n*Weight:* ${product.weight}g\n*Purity:* ${product.purity}\n\n${priceBreakdown ? `*Approximate Estimate:* ₹${priceBreakdown.total.toLocaleString('en-IN')}\n\n` : ''}Please let me know the availability and current buying process.`;
-    return buildWhatsAppUrl(text);
-  };
-
   if (loading) {
     return (
       <div className="page-loader">
@@ -205,168 +199,165 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="container" style={{ padding: '3rem 2rem 5rem' }}>
-      {/* Breadcrumbs */}
-      <div className={styles.breadcrumbs}>
-        <Link href="/">Home</Link> &gt; <Link href="/shop">Shop</Link> &gt; <Link href={`/shop?category=${product.category}`}>{product.categoryName}</Link> &gt; <span>{product.name}</span>
-      </div>
-
-      <div className={styles.detailLayout}>
-        {/* Left Side: Product Image */}
-        <div className={styles.imageGallery}>
-          <div className={`${styles.mainImageWrapper} glassmorphism`}>
-            <img src={product.image} alt={product.name} className={styles.mainImage} />
-            <span className={styles.purityBadge}>{product.purity} Purity</span>
-          </div>
-        </div>
-
-        {/* Right Side: Specifications & Calculations */}
-        <div className={styles.infoDetails}>
-          <span className={styles.categoryTag}>{product.categoryName}</span>
-          <h1 className={`${styles.productName} serif-title`}>{product.name}</h1>
-          
-          <div className={styles.specificationBox}>
-            <h3 className={styles.specTitle}>Specifications</h3>
-            <table className={styles.specTable}>
-              <tbody>
-                <tr>
-                  <td>Product ID</td>
-                  <td><strong>#{product.id}</strong></td>
-                </tr>
-                <tr>
-                  <td>Metal Type</td>
-                  <td>{product.metal}</td>
-                </tr>
-                <tr>
-                  <td>Gold Purity</td>
-                  <td>{product.purity} (Hallmarked)</td>
-                </tr>
-                <tr>
-                  <td>Gross Weight</td>
-                  <td><strong>{product.weight} grams</strong></td>
-                </tr>
-                <tr>
-                  <td>Making Charges</td>
-                  <td>{product.makingCharges}%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div className={styles.descriptionSection}>
-            <p>{product.description}</p>
-          </div>
-
-          {/* Pricing Estimation Section */}
-          {priceBreakdown && (
-            <div className={`${styles.priceBox} glassmorphism`}>
-              <div className={styles.priceHeader}>
-                <span className={styles.pricingTitle}>Estimated Value Breakdown</span>
-                <span className={styles.liveTag}>Live Rates Applied</span>
-              </div>
-              <div className={styles.priceRow}>
-                <span>Base Metal Value ({product.weight}g @ ₹{priceBreakdown.ratePerGram}/g)</span>
-                <span>₹{priceBreakdown.metalValue.toLocaleString('en-IN')}</span>
-              </div>
-              {priceBreakdown.diamondValue > 0 && (
-                <div className={styles.priceRow}>
-                  <span>Diamond Gem Charges</span>
-                  <span>₹{priceBreakdown.diamondValue.toLocaleString('en-IN')}</span>
-                </div>
-              )}
-              <div className={styles.priceRow}>
-                <span>Making Charges ({product.makingCharges}%)</span>
-                <span>₹{priceBreakdown.makingCharges.toLocaleString('en-IN')}</span>
-              </div>
-              <div className={styles.priceRow}>
-                <span>GST (3%)</span>
-                <span>₹{priceBreakdown.gst.toLocaleString('en-IN')}</span>
-              </div>
-              <div className={`${styles.priceRow} ${styles.totalRow}`}>
-                <span>Total Approximate Price</span>
-                <span className="gold-text">₹{priceBreakdown.total.toLocaleString('en-IN')}</span>
-              </div>
-              <p className={styles.priceNotice}>
-                *Calculations are approximate, based on live rate ₹{priceBreakdown.ratePerGram}/g. Making charges are calculated on base metal value. Final pricing depends on current rate at time of purchase.
-              </p>
+    <>
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Shop', href: '/shop' },
+          { label: product.categoryName, href: `/shop?category=${product.category}` },
+          { label: product.name },
+        ]}
+      />
+      <div className="container" style={{ padding: '1.5rem 2rem 5rem' }}>
+        <div className={styles.detailLayout}>
+          {/* Left Side: Product Image */}
+          <div className={styles.imageGallery}>
+            <div className={`${styles.mainImageWrapper} glassmorphism`}>
+              <img src={product.image} alt={product.name} className={styles.mainImage} />
+              <span className={styles.purityBadge}>{product.purity} Purity</span>
             </div>
-          )}
-
-          <div className={styles.actionSection}>
-            <a 
-              href={getWhatsAppLink()} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className={`${styles.whatsappBtn} gold-btn`}
-              style={{ display: 'flex', gap: '0.8rem', color: '#FFFFFF' }}
-            >
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.431 2.522 1.22 3.52l-.794 2.899 2.966-.777c.955.651 2.09 1.003 3.375 1.004 3.182 0 5.768-2.587 5.769-5.766.002-3.18-2.585-5.766-5.768-5.766zm3.611 8.228c-.206.581-1.028 1.109-1.414 1.144-.386.035-.747.187-2.45-.487-2.179-.865-3.585-3.08-3.694-3.226-.109-.146-.889-1.182-.889-2.254 0-1.072.56-1.599.76-1.815.199-.216.436-.271.581-.271.145 0 .29.002.418.008.136.006.317-.052.496.381.186.449.634 1.547.69 1.658.056.111.093.24.019.387-.074.148-.112.24-.223.369-.111.13-.233.29-.333.389-.111.111-.228.232-.098.455.13.223.578.955 1.24 1.547.854.764 1.571 1.002 1.794 1.113.223.111.353.093.483-.056.13-.149.557-.65.706-.873.149-.223.298-.186.502-.111.204.074 1.293.61 1.516.721.223.111.371.167.427.262.056.096.056.554-.15 1.135zM12 2C6.477 2 2 6.477 2 12c0 2.03.606 3.917 1.647 5.49L2 22l4.653-1.22C8.12 21.353 9.97 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.834 0-3.551-.54-5.002-1.464l-.358-.22-2.753.722.735-2.686-.24-.383C3.473 14.502 3 12.802 3 12c0-4.963 4.037-9 9-9s9 4.037 9 9-4.037 9-9 9z"/>
-              </svg>
-              Interested in this design? Get price & availability on WhatsApp
-            </a>
           </div>
 
-          <div className={`${styles.detailInquiryForm} glassmorphism`}>
-            <h3 className="serif-title" style={{ fontSize: '1.1rem', marginBottom: '1.2rem', color: 'var(--accent-gold)' }}>Send enquiry for this piece</h3>
-            
-            {submitStatus.message && (
-              <div className={`${styles.statusMsg} ${submitStatus.success ? styles.successMsg : styles.errorMsg}`}>
-                {submitStatus.message}
+          {/* Right Side: Specifications & Calculations */}
+          <div className={styles.infoDetails}>
+            <span className={styles.categoryTag}>{product.categoryName}</span>
+            <h1 className={`${styles.productName} serif-title`}>{product.name}</h1>
+
+            <div className={styles.specificationBox}>
+              <h3 className={styles.specTitle}>Specifications</h3>
+              <table className={styles.specTable}>
+                <tbody>
+                  <tr>
+                    <td>Product ID</td>
+                    <td><strong>#{product.id}</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Metal Type</td>
+                    <td>{product.metal}</td>
+                  </tr>
+                  <tr>
+                    <td>Gold Purity</td>
+                    <td>{product.purity} (Hallmarked)</td>
+                  </tr>
+                  <tr>
+                    <td>Gross Weight</td>
+                    <td><strong>{product.weight} grams</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Making Charges</td>
+                    <td>{product.makingCharges}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className={styles.descriptionSection}>
+              <p>{product.description}</p>
+            </div>
+
+            {/* Pricing Estimation Section */}
+            {priceBreakdown && (
+              <div className={`${styles.priceBox} glassmorphism`}>
+                <div className={styles.priceHeader}>
+                  <span className={styles.pricingTitle}>Estimated Value Breakdown</span>
+                  <span className={styles.liveTag}>Live Rates Applied</span>
+                </div>
+                <div className={styles.priceRow}>
+                  <span>Base Metal Value ({product.weight}g @ ₹{priceBreakdown.ratePerGram}/g)</span>
+                  <span>₹{priceBreakdown.metalValue.toLocaleString('en-IN')}</span>
+                </div>
+                {priceBreakdown.diamondValue > 0 && (
+                  <div className={styles.priceRow}>
+                    <span>Diamond Gem Charges</span>
+                    <span>₹{priceBreakdown.diamondValue.toLocaleString('en-IN')}</span>
+                  </div>
+                )}
+                <div className={styles.priceRow}>
+                  <span>Making Charges ({product.makingCharges}%)</span>
+                  <span>₹{priceBreakdown.makingCharges.toLocaleString('en-IN')}</span>
+                </div>
+                <div className={styles.priceRow}>
+                  <span>GST (3%)</span>
+                  <span>₹{priceBreakdown.gst.toLocaleString('en-IN')}</span>
+                </div>
+                <div className={`${styles.priceRow} ${styles.totalRow}`}>
+                  <span>Total Approximate Price</span>
+                  <span className="gold-text">₹{priceBreakdown.total.toLocaleString('en-IN')}</span>
+                </div>
+                <p className={styles.priceNotice}>
+                  *Calculations are approximate, based on live rate ₹{priceBreakdown.ratePerGram}/g. Making charges are calculated on base metal value. Final pricing depends on current rate at time of purchase.
+                </p>
               </div>
             )}
 
-            <form onSubmit={handleFormSubmit}>
-              <div className="grid-2" style={{ gap: '1rem', marginBottom: '0.8rem' }}>
-                <div className="form-group" style={{ marginBottom: '0' }}>
-                  <label className="form-label">Name *</label>
-                  <input 
-                    type="text" 
-                    name="name" 
-                    value={formData.name} 
-                    onChange={handleInputChange} 
-                    className="form-control" 
-                    placeholder="Your name" 
-                    required 
+            <div className={`${styles.detailInquiryForm} glassmorphism`}>
+              <h3 className="serif-title" style={{ fontSize: '1.1rem', marginBottom: '1.2rem', color: 'var(--accent-gold)' }}>
+                Send enquiry for this piece
+              </h3>
+
+              {submitStatus.message && (
+                <div className={`${styles.statusMsg} ${submitStatus.success ? styles.successMsg : styles.errorMsg}`}>
+                  {submitStatus.message}
+                </div>
+              )}
+
+              <form onSubmit={handleFormSubmit}>
+                <div className="grid-2" style={{ gap: '1rem', marginBottom: '0.8rem' }}>
+                  <div className="form-group" style={{ marginBottom: '0' }}>
+                    <label className="form-label">Name *</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="form-control"
+                      placeholder="Your name"
+                      required
+                      style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                    />
+                  </div>
+                  <div className="form-group" style={{ marginBottom: '0' }}>
+                    <label className="form-label">Phone *</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="form-control"
+                      placeholder="Mobile number"
+                      required
+                      style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                    />
+                  </div>
+                </div>
+                <div className="form-group" style={{ marginBottom: '0.8rem' }}>
+                  <label className="form-label">Inquiry Message *</label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows="3"
+                    className="form-control"
+                    required
                     style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
                   />
                 </div>
-                <div className="form-group" style={{ marginBottom: '0' }}>
-                  <label className="form-label">Phone *</label>
-                  <input 
-                    type="tel" 
-                    name="phone" 
-                    value={formData.phone} 
-                    onChange={handleInputChange} 
-                    className="form-control" 
-                    placeholder="Mobile number" 
-                    required 
-                    style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
-                  />
-                </div>
-              </div>
-              <div className="form-group" style={{ marginBottom: '0.8rem' }}>
-                <label className="form-label">Inquiry Message *</label>
-                <textarea 
-                  name="message" 
-                  value={formData.message} 
-                  onChange={handleInputChange} 
-                  rows="3" 
-                  className="form-control" 
-                  required
-                  style={{ padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
-                ></textarea>
-              </div>
-              <p style={{ marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
-                Login is optional and never required for a price quote or showroom visit.
-              </p>
-              <button type="submit" className="outline-btn" style={{ width: '100%', padding: '0.6rem', fontSize: '0.8rem' }} disabled={isSubmitting}>
-                {isSubmitting ? 'Sending Request...' : 'Send Enquiry'}
-              </button>
-            </form>
+                <p style={{ marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                  Login is optional and never required for a price quote or showroom visit.
+                </p>
+                <button
+                  type="submit"
+                  className="outline-btn"
+                  style={{ width: '100%', padding: '0.6rem', fontSize: '0.8rem' }}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending Request...' : 'Send Enquiry'}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

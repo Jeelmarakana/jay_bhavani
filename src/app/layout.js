@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import JsonLd from '@/components/JsonLd';
 import Page3D from '@/components/Page3D';
+import { PageBreadcrumbs } from '@/components/Breadcrumbs';
 import { ThemeProvider } from '@/components/ThemeContext';
 import { DEFAULT_WHATSAPP_URL } from '@/lib/config';
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <Page3D>
             <main style={{ marginTop: 'var(--header-height)' }}>
+              <PageBreadcrumbs />
               {children}
             </main>
           </Page3D>

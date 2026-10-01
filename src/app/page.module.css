@@ -136,6 +136,22 @@
   padding: 5rem 0;
 }
 
+.categoriesSection {
+  padding-top: 0.5rem;
+}
+
+.categoriesSection .sectionHeader {
+  margin-bottom: 0.75rem;
+}
+
+.categoriesSection .sectionTitle {
+  margin-bottom: 0;
+}
+
+.categoriesSection .titleDivider {
+  display: none;
+}
+
 .darkBg {
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
@@ -287,7 +303,7 @@
 
 .categoriesGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.5rem;
 }
 
@@ -295,37 +311,20 @@
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: 300px;
-  padding: 1.5rem;
+  aspect-ratio: 3 / 2;
+  min-height: 0;
+  padding: 1.25rem;
   border-radius: 12px;
   overflow: hidden;
-  background-size: cover;
-  background-position: center;
   border: 1px solid var(--border-color);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border 0.4s ease;
-  animation: categoryCardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
-  transform: translateY(30px) scale(0.95);
-}
-
-.categoryCard:nth-child(1) { animation-delay: 0.1s; }
-.categoryCard:nth-child(2) { animation-delay: 0.2s; }
-.categoryCard:nth-child(3) { animation-delay: 0.3s; }
-.categoryCard:nth-child(4) { animation-delay: 0.4s; }
-.categoryCard:nth-child(5) { animation-delay: 0.5s; }
-
-@keyframes categoryCardEntrance {
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
 }
 
 .categoryCard::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+  background: linear-gradient(to top, rgba(0,0,0,0.76) 0%, rgba(0,0,0,0.18) 55%, rgba(0,0,0,0.02) 100%);
   transition: opacity 0.4s ease;
   z-index: 1;
 }
@@ -356,9 +355,11 @@
 
 .categoryName {
   position: relative;
-  z-index: 3;
-  font-size: 1.3rem;
+  z-index: 4;
+  font-size: 1.1rem;
+  line-height: 1.25;
   color: #fff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -368,20 +369,32 @@
 
 .categoryFallback {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 3;
+}
+
+.categoryCardFallback {
+  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-hover) 100%);
+}
+
+.categoryImage {
+  z-index: 0;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.categoryCard:hover .categoryImage {
+  transform: scale(1.05);
 }
 
 .fallbackIcon {
-  font-size: 3rem;
+  font-size: 2.5rem;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
   animation: iconFloat 3s ease-in-out infinite;
 }
@@ -518,17 +531,16 @@
 }
 
 .bridalLayout {
-  background: linear-gradient(120deg, rgba(245, 237, 220, 0.9), rgba(241, 216, 173, 0.8)), url('/images/products/bridal-set.jpg') center/cover no-repeat;
-  border-radius: 18px;
-  min-height: 500px;
+  background: linear-gradient(90deg, rgba(245, 237, 220, 0.92) 0%, rgba(241, 216, 173, 0.76) 44%, rgba(241, 216, 173, 0.18) 100%), url('/images/products/bridal-sets-4k.jpg') center/cover no-repeat;
+  min-height: 420px;
   display: flex;
   align-items: center;
-  padding: clamp(2rem, 4vw, 4rem);
-  border: 1px solid var(--border-color);
+  padding: clamp(2rem, 4vw, 3rem) 0;
+  border-block: 1px solid var(--border-color);
 }
 
 :global([data-theme="dark"]) .bridalLayout {
-  background: linear-gradient(120deg, rgba(20, 17, 13, 0.93), rgba(38, 30, 20, 0.88)), url('/images/products/bridal-set.jpg') center/cover no-repeat;
+  background: linear-gradient(90deg, rgba(20, 17, 13, 0.95) 0%, rgba(38, 30, 20, 0.76) 44%, rgba(38, 30, 20, 0.18) 100%), url('/images/products/bridal-sets-4k.jpg') center/cover no-repeat;
 }
 
 .bridalContent {
@@ -543,13 +555,6 @@
   text-transform: uppercase;
   color: var(--accent-gold);
   font-weight: 700;
-}
-
-@keyframes cardEntrance {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .trustGrid {
@@ -616,7 +621,9 @@
 }
 
 .storySection {
-  padding: 0 0 5rem;
+  padding: clamp(2rem, 3.5vw, 3rem) 0;
+  background: var(--bg-secondary);
+  border-block: 1px solid var(--border-color);
 }
 
 .servicesSection {
@@ -736,13 +743,10 @@
 }
 
 .storyBox {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: clamp(2rem, 4vw, 3rem);
+  padding: 0;
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 2rem;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 6vw, 6rem);
   align-items: center;
 }
 
@@ -1007,7 +1011,7 @@
 }
 
 @media (max-width: 1024px) {
-  .categoriesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .categoriesGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .trustGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .reviewGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .servicesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1018,7 +1022,7 @@
   .hero { min-height: 68vh; }
   .heroBtns { flex-direction: column; }
   .ratesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .categoriesGrid, .trustGrid, .reviewGrid, .instagramGrid { grid-template-columns: 1fr; }
+  .categoriesGrid, .trustGrid, .reviewGrid, .instagramGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .servicesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .customCTA, .finalCTA { flex-direction: column; align-items: flex-start; }
 }
@@ -1026,6 +1030,9 @@
 @media (max-width: 480px) {
   .ratesGrid { grid-template-columns: 1fr; }
   .ratesCard { padding: 1.2rem; }
+  .categoriesGrid { gap: 0.75rem; }
+  .categoryCard { padding: 0.85rem; }
+  .categoryName { font-size: 1rem; }
   .enquiryFormWrap { padding: 1.25rem; }
   .servicesGrid { grid-template-columns: 1fr; }
   .serviceCard { padding: 2rem 1.5rem; }

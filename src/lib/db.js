@@ -13,11 +13,26 @@ async function ensureWritableDb() {
   seedPromise = (async () => {
     await fs.mkdir(writableDir, { recursive: true });
 
+    let database;
     try {
-      await fs.access(dbPath);
-    } catch {
+      database = JSON.parse(await fs.readFile(dbPath, 'utf-8'));
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
       const seed = await fs.readFile(seedPath, 'utf-8');
       await fs.writeFile(dbPath, seed, 'utf-8');
+      return;
+    }
+
+    const seed = JSON.parse(await fs.readFile(seedPath, 'utf-8'));
+    if (!Array.isArray(database.products)) database.products = [];
+    const existingIds = new Set(database.products.map((product) => String(product.id)));
+    const missingProducts = seed.products.filter((product) => !existingIds.has(String(product.id)));
+
+    if (missingProducts.length) {
+      database.products.push(...missingProducts);
+      const tempPath = `${dbPath}.seed.tmp`;
+      await fs.writeFile(tempPath, JSON.stringify(database, null, 2), 'utf-8');
+      await fs.rename(tempPath, dbPath);
     }
   })();
 

@@ -423,8 +423,8 @@ input, select, textarea, button {
 }
 
 [data-3d-reveal] {
-  opacity: 0;
-  transform: perspective(900px) rotateX(14deg) translateY(40px);
+  opacity: 1;
+  transform: none;
   transform-style: preserve-3d;
   transition: none;
 }

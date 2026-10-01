@@ -2,33 +2,34 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { buildWhatsAppUrl, DEFAULT_WHATSAPP_URL, INSTAGRAM_URL } from '@/lib/config';
 import { submitInquiry, openOwnerWhatsAppNotify } from '@/lib/inquiry';
 import styles from './page.module.css';
 
 const categories = [
-  { name: 'Rings', slug: 'rings', image: '/images/products/gold-ring.jpg', fallback: '💍' },
-  { name: 'Necklaces & Har', slug: 'necklaces', image: '/images/products/antique-necklace.jpg', fallback: '📿' },
-  { name: 'Earrings', slug: 'earrings', image: '/images/products/royal-earrings.jpg', fallback: '✨' },
-  { name: 'Bangles & Bracelets', slug: 'bangles', image: '/images/products/gold-bangles.jpg', fallback: '⚪' },
-  { name: 'Mangalsutras', slug: 'mangalsutra', image: '/images/products/designer-mangalsutra.jpg', fallback: '🔗' },
-  { name: 'Bridal Sets', slug: 'bridal-sets', image: '/images/products/bridal-set.jpg', fallback: '👑' },
-  { name: 'Silver Jewellery', slug: 'silver', image: '/images/products/silver-earrings.jpg', fallback: '🥈' },
-  { name: 'Temple Jewellery', slug: 'temple', image: '/images/products/temple-earrings.jpg', fallback: '🏛️' },
-  { name: 'Kundan Jewellery', slug: 'kundan', image: '/images/products/pearl-choker.jpg', fallback: '💎' },
-  { name: 'Pendant Sets', slug: 'pendants', image: '/images/products/diamond-ring.jpg', fallback: '📿' },
-  { name: 'Chains', slug: 'chains', image: '/images/products/silver-necklace.jpg', fallback: '⛓️' },
-  { name: 'Anklets (Payal)', slug: 'anklets', image: '/images/products/silver-payal.jpg', fallback: '🦶' },
-  { name: 'Nose Pins', slug: 'nose-pins', image: '/images/products/diamond-ring.jpg', fallback: '💎' },
-  { name: 'Brooches', slug: 'brooches', image: '/images/products/royal-earrings.jpg', fallback: '🌸' },
-  { name: 'Kamarband (Waist Belt)', slug: 'kamarband', image: '/images/products/antique-necklace.jpg', fallback: '🎀' },
-  { name: 'Hair Accessories', slug: 'hair-accessories', image: '/images/products/temple-earrings.jpg', fallback: '👑' },
-  { name: 'Men\'s Jewellery', slug: 'mens-jewellery', image: '/images/products/kada-bracelet.jpg', fallback: '🤵' },
-  { name: 'Gold Coins', slug: 'gold-coins', image: '/images/products/gold-ring.jpg', fallback: '🪙' },
-  { name: 'Religious Items', slug: 'religious', image: '/images/products/temple-earrings.jpg', fallback: '🙏' },
-  { name: 'Lockets', slug: 'lockets', image: '/images/products/pearl-choker.jpg', fallback: '🔒' },
-  { name: 'Solitaires', slug: 'solitaires', image: '/images/products/diamond-ring.jpg', fallback: '💎' },
-  { name: 'Antique Jewellery', slug: 'antique', image: '/images/products/antique-necklace.jpg', fallback: '🏺' },
+  { name: 'Rings', slug: 'rings', image: '/images/products/rings-4k.jpg', fallback: '💍' },
+  { name: 'Necklaces & Har', slug: 'necklaces', image: '/images/products/necklaces-4k.jpg', fallback: '📿' },
+  { name: 'Earrings', slug: 'earrings', image: '/images/products/earrings-4k.jpg', fallback: '✨' },
+  { name: 'Bangles & Bracelets', slug: 'bangles', image: '/images/products/bangles-4k.jpg', fallback: '⚪' },
+  { name: 'Mangalsutras', slug: 'mangalsutra', image: '/images/products/mangalsutras-4k.jpg', fallback: '🔗' },
+  { name: 'Bridal Sets', slug: 'bridal-sets', image: '/images/products/bridal-sets-4k.jpg', fallback: '👑' },
+  { name: 'Silver Jewellery', slug: 'silver', image: '/images/products/silver-jewellery-4k.jpg', fallback: '🥈' },
+  { name: 'Temple Jewellery', slug: 'temple', image: '/images/products/temple-jewellery-4k.jpg', fallback: '🏛️' },
+  { name: 'Kundan Jewellery', slug: 'kundan', image: '/images/products/kundan-jewellery-4k.jpg', fallback: '💎' },
+  { name: 'Pendant Sets', slug: 'pendants', image: '/images/products/pendant-sets-4k.jpg', fallback: '📿' },
+  { name: 'Chains', slug: 'chains', image: '/images/products/chains-4k.jpg', fallback: '⛓️' },
+  { name: 'Anklets (Payal)', slug: 'anklets', image: '/images/products/anklets-4k.jpg', fallback: '🦶' },
+  { name: 'Nose Pins', slug: 'nose-pins', image: '/images/products/nose-pins-4k.jpg', fallback: '💎' },
+  { name: 'Brooches', slug: 'brooches', image: '/images/products/brooches-4k.jpg', fallback: '🌸' },
+  { name: 'Kamarband (Waist Belt)', slug: 'kamarband', image: '/images/products/kamarband-4k.jpg', fallback: '🎀' },
+  { name: 'Hair Accessories', slug: 'hair-accessories', image: '/images/products/hair-accessories-4k.jpg', fallback: '👑' },
+  { name: 'Men\'s Jewellery', slug: 'mens-jewellery', image: '/images/products/mens-jewellery-4k.jpg', fallback: '🤵' },
+  { name: 'Gold Coins', slug: 'gold-coins', image: '/images/products/gold-coins-4k.jpg', fallback: '🪙' },
+  { name: 'Religious Items', slug: 'religious', image: '/images/products/religious-items-4k.jpg', fallback: '🙏' },
+  { name: 'Lockets', slug: 'lockets', image: '/images/products/lockets-4k.jpg', fallback: '🔒' },
+  { name: 'Solitaires', slug: 'solitaires', image: '/images/products/solitaires-4k.jpg', fallback: '💎' },
+  { name: 'Antique Jewellery', slug: 'antique', image: '/images/products/antique-jewellery-4k.jpg', fallback: '🏺' },
 ];
 
 const trustPoints = [
@@ -46,20 +47,20 @@ const reviews = [
 ];
 
 const gallery = [
-  '/images/products/diamond-ring.jpg',
-  '/images/products/bridal-set.jpg',
-  '/images/products/temple-earrings.jpg',
-  '/images/products/silver-earrings.jpg',
-  '/images/products/gold-bangles.jpg',
-  '/images/products/antique-necklace.jpg',
-  '/images/products/royal-earrings.jpg',
-  '/images/products/gold-ring.jpg',
-  '/images/products/designer-mangalsutra.jpg',
-  '/images/products/pearl-choker.jpg',
-  '/images/products/kada-bracelet.jpg',
-  '/images/products/silver-necklace.jpg',
-  '/images/products/silver-payal.jpg',
-  '/images/products/silver-ring.jpg',
+  '/images/products/rings-4k.jpg',
+  '/images/products/bridal-sets-4k.jpg',
+  '/images/products/temple-jewellery-4k.jpg',
+  '/images/products/silver-jewellery-4k.jpg',
+  '/images/products/bangles-4k.jpg',
+  '/images/products/antique-jewellery-4k.jpg',
+  '/images/products/earrings-4k.jpg',
+  '/images/products/solitaires-4k.jpg',
+  '/images/products/mangalsutras-4k.jpg',
+  '/images/products/necklaces-4k.jpg',
+  '/images/products/chains-4k.jpg',
+  '/images/products/anklets-4k.jpg',
+  '/images/products/pendant-sets-4k.jpg',
+  '/images/products/kundan-jewellery-4k.jpg',
 ];
 
 export default function Home() {
@@ -114,17 +115,6 @@ export default function Home() {
       }
     };
     fetchFeatured();
-  }, []);
-
-  // Handle image loading errors
-  useEffect(() => {
-    categories.forEach((category) => {
-      const img = new Image();
-      img.src = category.image;
-      img.onerror = () => {
-        setImageErrors((prev) => ({ ...prev, [category.slug]: true }));
-      };
-    });
   }, []);
 
   const handleInputChange = (event) => {
@@ -190,7 +180,7 @@ export default function Home() {
 
   return (
     <div className={`${styles.homeContainer} animate-fade-in`}>
-      <section className={styles.hero} style={{ '--bg-image': "url('/images/products/bridal-set.jpg')" }}>
+      <section className={styles.hero} style={{ '--bg-image': "url('/images/products/bridal-sets-4k.jpg')" }}>
         <div className={`${styles.heroContent} container`}>
           <span className={styles.heroSubtitle}>Digital Showroom + WhatsApp Sales Machine</span>
           <h1 className={`${styles.heroTitle} serif-title`}>
@@ -238,7 +228,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="shop-by-category" className={styles.section} data-3d-reveal>
+      <section id="shop-by-category" className={`${styles.section} ${styles.categoriesSection}`}>
         <div className="container">
           <div className={styles.sectionHeader}>
             <h2 className={`${styles.sectionTitle} serif-title`}>Shop by Category</h2>
@@ -249,18 +239,26 @@ export default function Home() {
               <Link
                 key={category.slug}
                 href={`/shop?category=${category.slug}`}
-                className={`${styles.categoryCard} animate-3d-float`}
+                className={`${styles.categoryCard} ${imageErrors[category.slug] ? styles.categoryCardFallback : ''}`}
                 data-3d-tilt
-                style={{ backgroundImage: imageErrors[category.slug] ? 'linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-hover) 100%)' : `linear-gradient(to top, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.1) 80%), url('${category.image}')` }}
               >
                 {imageErrors[category.slug] ? (
                   <div className={styles.categoryFallback}>
                     <span className={styles.fallbackIcon}>{category.fallback}</span>
-                    <span className={`${styles.categoryName} serif-title`}>{category.name}</span>
                   </div>
                 ) : (
-                  <span className={`${styles.categoryName} serif-title`}>{category.name}</span>
+                  <Image
+                    src={category.image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    loading="lazy"
+                    className={styles.categoryImage}
+                    onLoad={(event) => event.currentTarget.classList.add('loaded')}
+                    onError={() => setImageErrors((prev) => ({ ...prev, [category.slug]: true }))}
+                  />
                 )}
+                <span className={`${styles.categoryName} serif-title`}>{category.name}</span>
               </Link>
             ))}
           </div>
@@ -275,7 +273,7 @@ export default function Home() {
           </div>
           <div className="grid-4">
             {featuredProducts.map((product, index) => (
-              <div key={product.id} className="card" data-3d-tilt style={{ animation: `cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.15}s forwards`, opacity: 0, transform: 'translateY(20px)' }}>
+              <div key={product.id} className="card" data-3d-tilt>
                 <Link href={`/product/${product.id}`} className={styles.productLink}>
                   <div className={styles.productImgWrapper}>
                     <img
@@ -305,8 +303,8 @@ export default function Home() {
       </section>
 
       <section id="bridal" className={styles.bridalSection}>
-        <div className="container">
-          <div className={styles.bridalLayout}>
+        <div className={styles.bridalLayout}>
+          <div className="container">
             <div className={styles.bridalContent}>
               <span className={styles.kicker}>Bridal Jewellery</span>
               <h2 className="serif-title" style={{ fontSize: '2.3rem', marginBottom: '1rem' }}>Bridal Jewellery, Made for Your Big Day</h2>
@@ -442,9 +440,11 @@ export default function Home() {
                 className={styles.instagramCard}
                 aria-label="View design on Instagram"
               >
-                <img
+                <Image
                   src={img}
                   alt="Latest jewellery design at Jay Bhavani Ornaments"
+                  fill
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
                   className={styles.instagramImage}
                   onError={(e) => {
                     e.target.style.display = 'none';

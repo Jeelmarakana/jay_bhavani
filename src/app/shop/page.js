@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './page.module.css';
 
 function ShopContent() {
@@ -21,29 +22,30 @@ function ShopContent() {
   // Categories list
   const categoriesList = [
     { name: 'All Collection', value: 'all' },
-    { name: 'Rings', value: 'rings' },
-    { name: 'Necklaces & Har', value: 'necklaces' },
-    { name: 'Earrings', value: 'earrings' },
-    { name: 'Bangles & Bracelets', value: 'bangles' },
-    { name: 'Mangalsutras', value: 'mangalsutra' },
-    { name: 'Bridal Sets', value: 'bridal-sets' },
-    { name: 'Silver Jewellery', value: 'silver' },
-    { name: 'Temple Jewellery', value: 'temple' },
-    { name: 'Kundan Jewellery', value: 'kundan' },
-    { name: 'Pendant Sets', value: 'pendants' },
-    { name: 'Chains', value: 'chains' },
-    { name: 'Anklets (Payal)', value: 'anklets' },
-    { name: 'Nose Pins', value: 'nose-pins' },
-    { name: 'Brooches', value: 'brooches' },
-    { name: 'Kamarband (Waist Belt)', value: 'kamarband' },
-    { name: 'Hair Accessories', value: 'hair-accessories' },
-    { name: 'Men\'s Jewellery', value: 'mens-jewellery' },
-    { name: 'Gold Coins', value: 'gold-coins' },
-    { name: 'Religious Items', value: 'religious' },
-    { name: 'Lockets', value: 'lockets' },
-    { name: 'Solitaires', value: 'solitaires' },
-    { name: 'Antique Jewellery', value: 'antique' }
+    { name: 'Rings', value: 'rings', image: '/images/products/rings-4k.jpg' },
+    { name: 'Necklaces & Har', value: 'necklaces', image: '/images/products/necklaces-4k.jpg' },
+    { name: 'Earrings', value: 'earrings', image: '/images/products/earrings-4k.jpg' },
+    { name: 'Bangles & Bracelets', value: 'bangles', image: '/images/products/bangles-4k.jpg' },
+    { name: 'Mangalsutras', value: 'mangalsutra', image: '/images/products/mangalsutras-4k.jpg' },
+    { name: 'Bridal Sets', value: 'bridal-sets', image: '/images/products/bridal-sets-4k.jpg' },
+    { name: 'Silver Jewellery', value: 'silver', image: '/images/products/silver-jewellery-4k.jpg' },
+    { name: 'Temple Jewellery', value: 'temple', image: '/images/products/temple-jewellery-4k.jpg' },
+    { name: 'Kundan Jewellery', value: 'kundan', image: '/images/products/kundan-jewellery-4k.jpg' },
+    { name: 'Pendant Sets', value: 'pendants', image: '/images/products/pendant-sets-4k.jpg' },
+    { name: 'Chains', value: 'chains', image: '/images/products/chains-4k.jpg' },
+    { name: 'Anklets (Payal)', value: 'anklets', image: '/images/products/anklets-4k.jpg' },
+    { name: 'Nose Pins', value: 'nose-pins', image: '/images/products/nose-pins-4k.jpg' },
+    { name: 'Brooches', value: 'brooches', image: '/images/products/brooches-4k.jpg' },
+    { name: 'Kamarband (Waist Belt)', value: 'kamarband', image: '/images/products/kamarband-4k.jpg' },
+    { name: 'Hair Accessories', value: 'hair-accessories', image: '/images/products/hair-accessories-4k.jpg' },
+    { name: 'Men\'s Jewellery', value: 'mens-jewellery', image: '/images/products/mens-jewellery-4k.jpg' },
+    { name: 'Gold Coins', value: 'gold-coins', image: '/images/products/gold-coins-4k.jpg' },
+    { name: 'Religious Items', value: 'religious', image: '/images/products/religious-items-4k.jpg' },
+    { name: 'Lockets', value: 'lockets', image: '/images/products/lockets-4k.jpg' },
+    { name: 'Solitaires', value: 'solitaires', image: '/images/products/solitaires-4k.jpg' },
+    { name: 'Antique Jewellery', value: 'antique', image: '/images/products/antique-jewellery-4k.jpg' }
   ];
+  const activeCategory = categoriesList.find((item) => item.value === category && item.image);
 
   // Metals list
   const metalsList = [
@@ -133,6 +135,24 @@ function ShopContent() {
         <p className={styles.shopDesc}>Browse through our authentic 22K Gold and Diamond signature pieces.</p>
       </div>
 
+      {activeCategory && (
+        <section className={styles.categoryHero} aria-label={`${activeCategory.name} collection`}>
+          <Image
+            src={activeCategory.image}
+            alt=""
+            fill
+            sizes="(max-width: 1200px) 100vw, 1200px"
+            loading="eager"
+            className={styles.categoryHeroImage}
+          />
+          <div className={styles.categoryHeroContent}>
+            <span className={styles.categoryHeroLabel}>Category collection</span>
+            <h2 className="serif-title">{activeCategory.name}</h2>
+            {!loading && <p>{products.length} designs</p>}
+          </div>
+        </section>
+      )}
+
       <div className={styles.shopLayout}>
         {/* Filters Sidebar */}
         <aside className={`${styles.sidebar} glassmorphism`}>
@@ -217,6 +237,18 @@ function ShopContent() {
             </div>
           ) : products.length === 0 ? (
             <div className={styles.emptyBox}>
+              {activeCategory && (
+                <div className={styles.emptyCategoryImage}>
+                  <Image
+                    src={activeCategory.image}
+                    alt={`${activeCategory.name} collection preview`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 360px"
+                    loading="eager"
+                    className={styles.emptyCategoryPhoto}
+                  />
+                </div>
+              )}
               <p>No jewellery matches your current selection.</p>
               <button onClick={handleClearFilters} className="outline-btn" style={{ marginTop: '1rem' }}>View All Ornaments</button>
             </div>

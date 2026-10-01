@@ -1,9 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import styles from './Page3D.module.css';
 
 export default function Page3D({ children }) {
+  const pathname = usePathname();
+
   useEffect(() => {
     const sections = document.querySelectorAll('[data-3d-reveal]');
     const cards = document.querySelectorAll('[data-3d-tilt]');
@@ -11,7 +14,6 @@ export default function Page3D({ children }) {
     const slideElements = document.querySelectorAll('[data-slide-up]');
     const scaleElements = document.querySelectorAll('[data-scale-up]');
     const parallaxElements = document.querySelectorAll('[data-parallax]');
-
     const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -125,7 +127,7 @@ export default function Page3D({ children }) {
       });
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <div className={styles.scene}>
