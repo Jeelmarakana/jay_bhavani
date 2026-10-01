@@ -1486,3 +1486,14 @@ option {
   transform: translateY(-2px);
   background: #20ba5a;
 }
+
+/* Hide Next.js Dev Indicator ("N" badge) */
+nextjs-portal,
+#nextjs-dev-tools,
+[data-nextjs-dev-tools],
+nextjs-dev-tools {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

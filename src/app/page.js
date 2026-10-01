@@ -169,10 +169,10 @@ export default function Home() {
 
   if (!isLoaded) {
     return (
-      <div className="page-loader">
-        <div className="loader-content">
-          <div className="loader-spinner"></div>
-          <p className="loader-text">Loading Jay Bhavani Ornaments...</p>
+      <div className="page-loader" suppressHydrationWarning>
+        <div className="loader-content" suppressHydrationWarning>
+          <div className="loader-spinner" suppressHydrationWarning></div>
+          <p className="loader-text" suppressHydrationWarning>Loading Jay Bhavani Ornaments...</p>
         </div>
       </div>
     );
@@ -311,7 +311,7 @@ export default function Home() {
               <p>
                 Traditional elegance meets modern craftsmanship. From red-carpet-worthy bridal sets to heirloom-worthy family pieces, every design is crafted with a balance of beauty, comfort, and lasting value.
               </p>
-              <div className={styles.heroBtns}>
+              <div className={styles.bridalBtns}>
                 <Link href="/shop?category=bridal-sets" className="gold-btn">Explore Bridal Collection</Link>
                 <a href={buildWhatsAppUrl('Hi Jay Bhavani Ornaments, I would like to book a bridal consultation.')} className="outline-btn" target="_blank" rel="noreferrer">Book Bridal Consultation</a>
               </div>
@@ -444,7 +444,7 @@ export default function Home() {
                   src={img}
                   alt="Latest jewellery design at Jay Bhavani Ornaments"
                   fill
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 400px"
                   className={styles.instagramImage}
                   onError={(e) => {
                     e.target.style.display = 'none';

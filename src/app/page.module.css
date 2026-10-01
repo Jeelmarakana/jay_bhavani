@@ -120,6 +120,27 @@
   transform: translateY(15px);
 }
 
+.heroBtns :global(.gold-btn),
+.heroBtns :global(.outline-btn) {
+  min-width: 240px;
+}
+
+.hero .heroBtns :global(.gold-btn) {
+  color: #20170a;
+}
+
+.hero .heroBtns :global(.outline-btn) {
+  color: #fff;
+  background: #15803d;
+  border-color: #15803d;
+}
+
+.hero .heroBtns :global(.outline-btn:hover) {
+  color: #fff;
+  background: #126b34;
+  border-color: #126b34;
+}
+
 @keyframes buttonsFadeIn {
   to {
     opacity: 1;
@@ -547,6 +568,41 @@
   max-width: 620px;
 }
 
+.bridalBtns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  max-width: 540px;
+  margin-top: 1.5rem;
+}
+
+.bridalBtns :global(.gold-btn),
+.bridalBtns :global(.outline-btn) {
+  width: 100%;
+  min-height: 52px;
+  padding: 0.8rem 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.bridalBtns :global(.gold-btn) {
+  color: #20170a;
+}
+
+.bridalBtns :global(.outline-btn) {
+  color: #fff;
+  background: #18513a;
+  border-color: #18513a;
+}
+
+.bridalBtns :global(.outline-btn:hover) {
+  color: #fff;
+  background: #123f2d;
+  border-color: #123f2d;
+}
+
 .kicker {
   display: inline-block;
   margin-bottom: 1rem;
@@ -860,6 +916,10 @@
   transition: transform 0.5s ease;
 }
 
+.instagramCard .instagramImage {
+  opacity: 1;
+}
+
 .instagramCard:hover .instagramImage {
   transform: scale(1.08);
 }
@@ -1021,10 +1081,19 @@
 @media (max-width: 768px) {
   .hero { min-height: 68vh; }
   .heroBtns { flex-direction: column; }
+  .heroBtns :global(.gold-btn),
+  .heroBtns :global(.outline-btn) { width: 100%; min-width: 0; }
   .ratesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .categoriesGrid, .trustGrid, .reviewGrid, .instagramGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .servicesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .customCTA, .finalCTA { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 600px) {
+  .bridalBtns {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+  }
 }
 
 @media (max-width: 480px) {

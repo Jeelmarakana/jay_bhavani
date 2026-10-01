@@ -65,10 +65,10 @@ export default function LoginPage() {
 
   if (!isPageLoaded) {
     return (
-      <div className="page-loader">
-        <div className="loader-content">
-          <div className="loader-spinner"></div>
-          <p className="loader-text">Loading Login...</p>
+      <div className="page-loader" suppressHydrationWarning>
+        <div className="loader-content" suppressHydrationWarning>
+          <div className="loader-spinner" suppressHydrationWarning></div>
+          <p className="loader-text" suppressHydrationWarning>Loading Login...</p>
         </div>
       </div>
     );

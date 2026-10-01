@@ -13,7 +13,6 @@ function ShopContent() {
   // State filters
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isPageLoaded, setIsPageLoaded] = useState(false);
   const [search, setSearch] = useState(searchParams.get('search') || '');
   const [category, setCategory] = useState(searchParams.get('category') || 'all');
   const [metal, setMetal] = useState(searchParams.get('metal') || 'all');
@@ -61,15 +60,6 @@ function ShopContent() {
     setSearch(searchParams.get('search') || '');
   }, [searchParams]);
 
-  // Smooth page loading
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsPageLoaded(true);
-    }, 200);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   // Fetch filtered products
   useEffect(() => {
     const fetchFiltered = async () => {
@@ -116,19 +106,8 @@ function ShopContent() {
     router.push('/shop');
   };
 
-  if (!isPageLoaded) {
-    return (
-      <div className="page-loader">
-        <div className="loader-content">
-          <div className="loader-spinner"></div>
-          <p className="loader-text">Loading Collection...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="container animate-fade-in" style={{ padding: '3rem 2rem 5rem' }}>
+    <div className="container animate-fade-in" style={{ padding: '3rem 2rem 5rem' }} suppressHydrationWarning>
       <div className={styles.shopHeader}>
         <span className={styles.shopSubtitle}>Jay Bhavani Catalog</span>
         <h1 className="serif-title" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Our Collection</h1>
@@ -293,8 +272,8 @@ function ShopContent() {
 export default function Shop() {
   return (
     <Suspense fallback={
-      <div style={{ minHeight: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'var(--bg-primary)', color: 'var(--accent-gold)' }}>
-        <div>Loading Shop...</div>
+      <div suppressHydrationWarning style={{ minHeight: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'var(--bg-primary)', color: 'var(--accent-gold)' }}>
+        <div suppressHydrationWarning>Loading Shop...</div>
       </div>
     }>
       <ShopContent />

@@ -15,7 +15,6 @@ export default function ProductDetail() {
   const [rates, setRates] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isPageLoaded, setIsPageLoaded] = useState(false);
 
   // Inquiry Form state
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
@@ -65,15 +64,6 @@ export default function ProductDetail() {
       }));
     }
   }, [product]);
-
-  // Smooth page loading
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsPageLoaded(true);
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   // Calculate detailed approximate price breakdown
   const calculatePrice = () => {
@@ -168,21 +158,10 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="page-loader">
-        <div className="loader-content">
-          <div className="loader-spinner"></div>
-          <p className="loader-text">Loading Product Details...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isPageLoaded) {
-    return (
-      <div className="page-loader">
-        <div className="loader-content">
-          <div className="loader-spinner"></div>
-          <p className="loader-text">Loading Product Details...</p>
+      <div className="page-loader" suppressHydrationWarning>
+        <div className="loader-content" suppressHydrationWarning>
+          <div className="loader-spinner" suppressHydrationWarning></div>
+          <p className="loader-text" suppressHydrationWarning>Loading Product Details...</p>
         </div>
       </div>
     );
