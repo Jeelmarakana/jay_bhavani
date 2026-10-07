@@ -96,16 +96,6 @@ img {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Image loading states */
-img[loading="lazy"] {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-img[loading="lazy"].loaded {
-  opacity: 1;
-}
-
 /* Image container with skeleton loading */
 .image-container {
   position: relative;
@@ -126,7 +116,6 @@ img[loading="lazy"].loaded {
 .image-container img {
   position: relative;
   z-index: 2;
-  opacity: 0;
   transition: opacity 0.4s ease;
 }
 
@@ -431,6 +420,310 @@ input, select, textarea, button {
 
 [data-3d-reveal].is-visible {
   animation: reveal3d 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.homeContainer .heroSlides,
+.homeContainer .heroSlide {
+  position: absolute;
+  inset: 0;
+}
+
+.homeContainer .heroSlides {
+  z-index: 0;
+  overflow: hidden;
+  background: #1b1510;
+}
+
+.homeContainer .heroSlide {
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(0);
+  will-change: transform, opacity;
+}
+
+.homeContainer .heroSlide.isActive,
+.homeContainer .heroSlide.isLeaving {
+  visibility: visible;
+}
+
+.homeContainer .heroSlide.isActive {
+  z-index: 2;
+  animation: heroSlideEnterFromRight 850ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.homeContainer .heroSlide.isActive.slideFromLeft {
+  animation-name: heroSlideEnterFromLeft;
+}
+
+.homeContainer .heroSlide.isLeaving {
+  z-index: 1;
+  animation: heroSlideExitToLeft 850ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.homeContainer .heroSlide.isLeaving.slideFromLeft {
+  animation-name: heroSlideExitToRight;
+}
+
+@keyframes heroSlideEnterFromRight {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes heroSlideEnterFromLeft {
+  from { opacity: 0; transform: translateX(-100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes heroSlideExitToLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-100%); }
+}
+
+@keyframes heroSlideExitToRight {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(100%); }
+}
+
+.homeContainer .heroSlides::-webkit-scrollbar {
+  display: none;
+}
+
+.homeContainer .heroSlideImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 46%;
+  transform: scale(1.04);
+}
+
+.homeContainer .heroSlide.isActive .heroSlideImage {
+  animation: heroSlideKenBurns 7s ease-out both;
+}
+
+@keyframes heroSlideKenBurns {
+  from { transform: scale(1.04); }
+  to { transform: scale(1.13); }
+}
+
+.homeContainer .heroSliderControls {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  pointer-events: none;
+}
+
+.homeContainer .heroArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 0 0 4px;
+  border: 1px solid rgba(184, 134, 11, 0.5);
+  border-radius: 50%;
+  background: rgba(255, 252, 246, 0.94);
+  color: #6f4e0c;
+  font: inherit;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 5px 18px rgba(42, 31, 14, 0.2);
+  backdrop-filter: blur(8px);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.homeContainer .heroArrow:hover {
+  transform: scale(1.08);
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: #20170a;
+}
+
+.homeContainer .heroSliderDots {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  margin: 1rem auto 0;
+  padding: 0.15rem 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: rgba(44, 34, 19, 0.46);
+  box-shadow: 0 5px 18px rgba(25, 18, 10, 0.16);
+  backdrop-filter: blur(8px);
+  pointer-events: auto;
+}
+
+.homeContainer .heroSliderDot {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.homeContainer .heroSliderDot::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.48);
+  transition: width 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.homeContainer .heroSliderDot.isActive::before {
+  width: 16px;
+  height: 7px;
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+}
+
+.homeContainer .heroArrow:focus-visible,
+.homeContainer .heroSliderDot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .homeContainer .heroSliderControls {
+    align-items: center;
+    padding: 0 0.65rem;
+  }
+
+  .homeContainer .heroArrow {
+    width: 42px;
+    height: 42px;
+    padding-bottom: 3px;
+    font-size: 1.8rem;
+  }
+
+  .homeContainer .heroSliderDots {
+    margin-top: 0.75rem;
+  }
+}
+
+.instagramGrid .instagramCard[galleryReveal] {
+  opacity: 0;
+  clip-path: inset(12% 8% round 24px);
+  filter: blur(8px);
+}
+
+.instagramGrid .instagramCard[galleryReveal].is-visible {
+  animation: galleryImageReveal 0.85s cubic-bezier(0.22, 1, 0.36, 1) var(--gallery-delay, 0ms) both;
+}
+
+@keyframes galleryImageReveal {
+  from { opacity: 0; clip-path: inset(12% 8% round 24px); filter: blur(8px); }
+  to { opacity: 1; clip-path: inset(0); filter: blur(0); }
+}
+
+.instagramGrid .instagramImageFrame {
+  transform-origin: center;
+}
+
+.instagramGrid .instagramCard[galleryReveal].is-visible .instagramImageFrame {
+  animation: galleryFrameReveal 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) var(--gallery-delay, 0ms) both;
+}
+
+.instagramGrid .instagramCard:nth-child(3n + 1) .instagramImageFrame {
+  --gallery-start-x: -24px;
+  --gallery-start-y: 34px;
+  --gallery-start-angle: -2.5deg;
+}
+
+.instagramGrid .instagramCard:nth-child(3n + 2) .instagramImageFrame {
+  --gallery-start-x: 0px;
+  --gallery-start-y: 42px;
+  --gallery-start-angle: 1.5deg;
+}
+
+.instagramGrid .instagramCard:nth-child(3n) .instagramImageFrame {
+  --gallery-start-x: 24px;
+  --gallery-start-y: 34px;
+  --gallery-start-angle: -1.5deg;
+}
+
+@keyframes galleryFrameReveal {
+  from {
+    transform: perspective(900px) translate3d(var(--gallery-start-x), var(--gallery-start-y), 0) rotateZ(var(--gallery-start-angle)) scale(0.88);
+  }
+  to { transform: perspective(900px) translate3d(0, 0, 0) rotateZ(0) scale(1); }
+}
+
+.instagramGrid .instagramCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 245, 215, 0.22) 48%, transparent 66%);
+  transform: translateX(-130%);
+}
+
+.instagramGrid .instagramCard:hover::after,
+.instagramGrid .instagramCard:focus-visible::after {
+  animation: galleryImageSheen 0.9s ease-out;
+}
+
+@keyframes galleryImageSheen {
+  to { transform: translateX(130%); }
+}
+
+.instagramGrid .instagramCard:hover .instagramIcon,
+.instagramGrid .instagramCard:focus-visible .instagramIcon {
+  animation: galleryIconPop 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes galleryIconPop {
+  0% { opacity: 0; transform: translateY(8px) scale(0.7); }
+  70% { transform: translateY(-2px) scale(1.12); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homeContainer .heroSlide.isActive,
+  .homeContainer .heroSlide.isLeaving { animation: none; }
+  .homeContainer .heroSlide.isActive { opacity: 1; transform: none; }
+  .homeContainer .heroSlide.isLeaving { opacity: 0; transform: none; }
+  .heroSlide.isActive .heroSlideImage { animation: none; transform: scale(1.04); }
+  .heroArrow,
+  .heroSliderDot,
+  .heroSliderDot::before { transition: none; }
+
+  .instagramGrid .instagramCard[galleryReveal] {
+    opacity: 1;
+    clip-path: none;
+    filter: none;
+    transition: none;
+  }
+
+  .instagramGrid .instagramCard[galleryReveal].is-visible { animation: none; }
+  .instagramGrid .instagramCard,
+  .instagramGrid .instagramImageFrame,
+  .instagramGrid .instagramImage,
+  .instagramGrid .instagramOverlay { transition: none; }
+  .instagramGrid .instagramCard .instagramImageFrame { animation: none !important; transform: none; }
+  .instagramGrid .instagramCard:hover .instagramImageFrame { animation: none; }
+  .instagramGrid .instagramCard:hover,
+  .instagramGrid .instagramCard:hover .instagramImage { transform: none; }
+  .instagramGrid .instagramCard:hover::after,
+  .instagramGrid .instagramCard:focus-visible::after,
+  .instagramGrid .instagramCard:hover .instagramIcon,
+  .instagramGrid .instagramCard:focus-visible .instagramIcon { animation: none; }
 }
 
 [data-3d-tilt] {

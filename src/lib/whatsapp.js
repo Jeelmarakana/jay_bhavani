@@ -1,4 +1,4 @@
-import { SHOP_WHATSAPP, buildWhatsAppUrl } from './config';
+import { SHOP_WHATSAPP, buildWhatsAppUrl } from './config.js';
 
 export function buildInquiryNotifyMessage(inquiry) {
   const lines = [

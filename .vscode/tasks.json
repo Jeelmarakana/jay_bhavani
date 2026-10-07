@@ -1,0 +1,176 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Check production dependency advisories",
+			"type": "shell",
+			"command": "$env:PATH = 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0;C:\\Windows\\System32;' + $env:PATH; & node C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0\\node_modules\\npm\\bin\\npm-cli.js audit --omit=dev",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Final local service check",
+			"type": "shell",
+			"command": "Get-NetTCPConnection -State Listen -LocalPort 4200,3001 -ErrorAction SilentlyContinue | Select-Object LocalPort,OwningProcess; (Invoke-WebRequest -UseBasicParsing http://localhost:4200/).StatusCode; (Invoke-WebRequest -UseBasicParsing http://localhost:3001/api/products?featured=true).StatusCode",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Start Angular frontend server",
+			"type": "shell",
+			"command": "$env:PATH = 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0;C:\\Windows\\System32;' + $env:PATH; $env:NG_CLI_ANALYTICS = 'false'; & 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0\\node.exe' .\\node_modules\\@angular\\cli\\bin\\ng.js serve --proxy-config proxy.conf.json --port 4200",
+			"isBackground": true,
+			"problemMatcher": [
+				"$tsc-watch"
+			]
+		},
+		{
+			"label": "Verify image loading build",
+			"type": "shell",
+			"command": "$env:PATH = 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0;C:\\Windows\\System32;' + $env:PATH; $env:NG_CLI_ANALYTICS = 'false'; & 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0\\node.exe' .\\node_modules\\@angular\\cli\\bin\\ng.js build",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build favicon update",
+			"type": "shell",
+			"command": "$env:PATH = 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0;C:\\Windows\\System32;' + $env:PATH; $env:NG_CLI_ANALYTICS = 'false'; & 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0\\node.exe' .\\node_modules\\@angular\\cli\\bin\\ng.js build",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Verify favicon output file",
+			"type": "shell",
+			"command": "Get-ChildItem -Path 'D:\\jay_bhavani\\dist\\jay-bhavani\\browser' -Filter 'favicon*' | Select-Object Name,Length,FullName; Get-ChildItem -Path 'D:\\jay_bhavani\\public' -Filter 'favicon*' | Select-Object Name,Length",
+			"problemMatcher": []
+		},
+		{
+			"label": "Check app ports",
+			"type": "shell",
+			"command": "Get-NetTCPConnection -State Listen -LocalPort 4200,3001 -ErrorAction SilentlyContinue | Select-Object LocalPort,OwningProcess; Invoke-WebRequest -UseBasicParsing http://localhost:4200/favicon.svg -ErrorAction SilentlyContinue | Select-Object StatusCode,Headers,Content; Invoke-WebRequest -UseBasicParsing http://localhost:3001/favicon.svg -ErrorAction SilentlyContinue | Select-Object StatusCode,Headers,Content",
+			"problemMatcher": []
+		},
+		{
+			"label": "Test favicon URLs",
+			"type": "shell",
+			"command": "foreach ($url in @('http://localhost:4200/images/products/rings-4k.jpg','http://localhost:4200/favicon.svg','http://localhost:3001/favicon.svg')) { try { $r = Invoke-WebRequest -UseBasicParsing $url; Write-Output \"$url $($r.StatusCode) $($r.Headers['Content-Type'])\" } catch { Write-Output \"$url ERROR $($_.Exception.Message)\" } }",
+			"problemMatcher": []
+		},
+		{
+			"label": "Inspect frontend task process",
+			"type": "shell",
+			"command": "Get-CimInstance Win32_Process | Where-Object { $_.ProcessId -eq 14504 } | Select-Object ProcessId,CommandLine",
+			"problemMatcher": []
+		},
+		{
+			"label": "Restart frontend to load favicon",
+			"type": "shell",
+			"command": "Stop-Process -Id 14504; Start-Sleep -Seconds 1; $env:PATH = 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0;C:\\Windows\\System32;' + $env:PATH; $env:NG_CLI_ANALYTICS = 'false'; & 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0\\node.exe' .\\node_modules\\@angular\\cli\\bin\\ng.js serve --proxy-config proxy.conf.json --port 4200",
+			"isBackground": true,
+			"problemMatcher": [
+				"$tsc-watch"
+			]
+		},
+		{
+			"label": "Build responsive footer fix",
+			"type": "shell",
+			"command": "$env:PATH = 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0;C:\\Windows\\System32;' + $env:PATH; $env:NG_CLI_ANALYTICS = 'false'; & 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0\\node.exe' .\\node_modules\\@angular\\cli\\bin\\ng.js build",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Inspect favicon tools",
+			"type": "shell",
+			"command": "Get-Command python,node -ErrorAction SilentlyContinue | Select-Object Name,Source; & 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0\\node.exe' -e \"for (const p of ['sharp','pngjs','jimp']) { try { console.log(p,require.resolve(p)) } catch {} }\"",
+			"problemMatcher": []
+		},
+		{
+			"label": "Check icon image tooling",
+			"type": "shell",
+			"command": "Get-Command python,magick,convert -ErrorAction SilentlyContinue | Select-Object Name,Source",
+			"problemMatcher": []
+		},
+		{
+			"label": "Check Python icon libraries",
+			"type": "shell",
+			"command": "python -c \"import importlib.util; print('Pillow:', bool(importlib.util.find_spec('PIL'))); print('CairoSVG:', bool(importlib.util.find_spec('cairosvg')))\"",
+			"problemMatcher": []
+		},
+		{
+			"label": "Build branded favicon",
+			"type": "shell",
+			"command": "$env:PATH = 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0;C:\\Windows\\System32;' + $env:PATH; $env:NG_CLI_ANALYTICS = 'false'; & 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0\\node.exe' .\\node_modules\\@angular\\cli\\bin\\ng.js build",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Inspect serving frontend PID",
+			"type": "shell",
+			"command": "Get-NetTCPConnection -State Listen -LocalPort 4200 | Select-Object -First 1 -ExpandProperty OwningProcess",
+			"problemMatcher": []
+		},
+		{
+			"label": "Check compiled favicon copied",
+			"type": "shell",
+			"command": "Get-Item 'D:\\jay_bhavani\\dist\\jay-bhavani\\browser\\jay-bhavani-icon.svg' | Select-Object Name,Length",
+			"problemMatcher": []
+		},
+		{
+			"label": "Restart frontend for new favicon",
+			"type": "shell",
+			"command": "Stop-Process -Id 18748; Start-Sleep -Seconds 1; $env:PATH = 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0;C:\\Windows\\System32;' + $env:PATH; $env:NG_CLI_ANALYTICS = 'false'; & 'C:\\Users\\rahul\\AppData\\Roaming\\nvm\\v22.17.0\\node.exe' .\\node_modules\\@angular\\cli\\bin\\ng.js serve --proxy-config proxy.conf.json --port 4200",
+			"isBackground": true,
+			"problemMatcher": [
+				"$tsc-watch"
+			]
+		},
+		{
+			"label": "Verify favicon HTTP status",
+			"type": "shell",
+			"command": "(Invoke-WebRequest -UseBasicParsing 'http://localhost:4200/jay-bhavani-icon.svg?v=2').StatusCode; (Invoke-WebRequest -UseBasicParsing 'http://localhost:4200/').StatusCode",
+			"problemMatcher": []
+		},
+		{
+			"label": "Verify favicon after update",
+			"type": "shell",
+			"command": "$icon = Invoke-WebRequest -UseBasicParsing 'http://localhost:4200/jay-bhavani-icon.svg?v=2'; $home = Invoke-WebRequest -UseBasicParsing 'http://localhost:4200/'; Write-Output \"Icon: $($icon.StatusCode), $($icon.Headers['Content-Type']), $($icon.Content.Length) characters\"; Write-Output \"Home: $($home.StatusCode)\"; Select-String -Path 'D:\\jay_bhavani\\src\\index.html' -Pattern 'rel=\"icon\"'",
+			"problemMatcher": []
+		},
+		{
+			"label": "git-status",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"D:\\jay_bhavani",
+				"status",
+				"--short"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "git-commit-all",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"D:\\jay_bhavani",
+				"add",
+				"-A"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}

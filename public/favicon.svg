@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <title>Jay Bhavani Ornaments</title>
+  <desc>Gold JB monogram inside an ornate burgundy medallion</desc>
+  <defs>
+    <linearGradient id="gold" x1="18" y1="12" x2="106" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff1bd"/>
+      <stop offset=".42" stop-color="#e6c36d"/>
+      <stop offset="1" stop-color="#b47a27"/>
+    </linearGradient>
+    <radialGradient id="velvet" cx="0" cy="0" r="1" gradientTransform="matrix(0 96 -96 0 64 24)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#492728"/>
+      <stop offset="1" stop-color="#241314"/>
+    </radialGradient>
+  </defs>
+  <rect x="3" y="3" width="122" height="122" rx="29" fill="url(#velvet)"/>
+  <rect x="5.5" y="5.5" width="117" height="117" rx="26.5" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <rect x="11" y="11" width="106" height="106" rx="22" fill="none" stroke="#e6c36d" stroke-opacity=".34"/>
+  <path d="M64 15 70 23 64 31 58 23l6-8Z" fill="url(#gold)"/>
+  <circle cx="64" cy="23" r="2" fill="#fff5d7"/>
+  <path d="M25 65c0-21 17-38 39-38s39 17 39 38-17 38-39 38S25 86 25 65Z" fill="none" stroke="url(#gold)" stroke-opacity=".6" stroke-width="1.5"/>
+  <path d="M31 64c5-13 17-22 33-22s28 9 33 22M31 68c5 13 17 22 33 22s28-9 33-22" fill="none" stroke="#e6c36d" stroke-opacity=".35"/>
+  <text x="64" y="76" fill="url(#gold)" font-family="Georgia, 'Times New Roman', serif" font-size="40" font-weight="bold" letter-spacing="-4" text-anchor="middle">JB</text>
+  <path d="M50 84h28" stroke="url(#gold)" stroke-linecap="round" stroke-width="1.5"/>
+  <circle cx="43" cy="64" r="2" fill="#f5dfa0"/>
+  <circle cx="85" cy="64" r="2" fill="#f5dfa0"/>
+  <text x="64" y="100" fill="#f5dfa0" font-family="Arial, sans-serif" font-size="7" font-weight="bold" letter-spacing="1.35" text-anchor="middle">ORNAMENTS</text>
+</svg>
