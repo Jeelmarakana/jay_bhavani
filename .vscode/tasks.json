@@ -171,6 +171,37 @@
 			"isBackground": false,
 			"problemMatcher": [],
 			"group": "build"
+		},
+		{
+			"label": "git-commit",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"D:\\jay_bhavani",
+				"commit",
+				"-m",
+				"feat: migrate storefront to Angular with Express API"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "git-commit-amend",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"D:\\jay_bhavani",
+				"commit",
+				"--amend",
+				"-m",
+				"feat: migrate storefront to Angular with Express API\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
 		}
 	]
 }
