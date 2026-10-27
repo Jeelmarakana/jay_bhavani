@@ -15,4 +15,3 @@ export const DEFAULT_WHATSAPP_URL = buildWhatsAppUrl(DEFAULT_WHATSAPP_MESSAGE);
 
 export const INSTAGRAM_URL =
   'https://www.instagram.com/jaybhavani_ornaments?stkn=MTR5ajdjMHY5bDIxbA%3D%3D';
-

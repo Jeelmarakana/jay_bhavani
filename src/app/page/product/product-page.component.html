@@ -1,0 +1,163 @@
+<div *ngIf="loading" class="page-loader">
+  <div class="loader-content">
+    <div class="loader-spinner"></div>
+    <p class="loader-text">Loading Product Details...</p>
+  </div>
+</div>
+<div *ngIf="!loading && !product" class="container productError">
+  <h2 class="serif-title">Product not found</h2>
+  <p>{{ errorText }}</p>
+  <a routerLink="/shop" class="gold-btn">Back to Shop Catalog</a>
+</div>
+<ng-container *ngIf="product as item">
+  <div class="container productPage">
+    <nav class="breadcrumbs">
+      <a routerLink="/">Home</a> / <a routerLink="/shop">Shop</a> /
+      <a [routerLink]="['/shop']" [queryParams]="{ category: item.category }">{{
+        item.categoryName
+      }}</a>
+      / {{ item.name }}
+    </nav>
+    <div class="detailLayout">
+      <div class="imageGallery">
+        <div class="mainImageWrapper glassmorphism">
+          <img [src]="item.image" [alt]="item.name" class="mainImage" /><span class="purityBadge"
+            >{{ item.purity }} Purity</span
+          >
+        </div>
+      </div>
+      <div class="infoDetails">
+        <span class="categoryTag">{{ item.categoryName }}</span>
+        <h1 class="productName serif-title">{{ item.name }}</h1>
+        <div class="specificationBox">
+          <h3 class="specTitle">Specifications</h3>
+          <table class="specTable">
+            <tbody>
+              <tr>
+                <td>Product ID</td>
+                <td>
+                  <strong>#{{ item.id }}</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Metal Type</td>
+                <td>{{ item.metal }}</td>
+              </tr>
+              <tr>
+                <td>Gold Purity</td>
+                <td>{{ item.purity }} (Hallmarked)</td>
+              </tr>
+              <tr>
+                <td>Gross Weight</td>
+                <td>
+                  <strong>{{ item.weight }} grams</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Making Charges</td>
+                <td>{{ item.makingCharges }}%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="descriptionSection">
+          <p>{{ item.description }}</p>
+        </div>
+        <div *ngIf="price as breakdown" class="priceBox glassmorphism">
+          <div class="priceHeader">
+            <span class="pricingTitle">Estimated Value Breakdown</span
+            ><span class="liveTag">Live Rates Applied</span>
+          </div>
+          <div class="priceRow">
+            <span>Base Metal Value ({{ item.weight }}g @ ₹{{ breakdown.ratePerGram }}/g)</span
+            ><span>{{ money(breakdown.metalValue) }}</span>
+          </div>
+          <div *ngIf="breakdown.diamondValue > 0" class="priceRow">
+            <span>Diamond Gem Charges</span><span>{{ money(breakdown.diamondValue) }}</span>
+          </div>
+          <div class="priceRow">
+            <span>Making Charges ({{ item.makingCharges }}%)</span
+            ><span>{{ money(breakdown.makingCharges) }}</span>
+          </div>
+          <div class="priceRow">
+            <span>GST (3%)</span><span>{{ money(breakdown.gst) }}</span>
+          </div>
+          <div class="priceRow totalRow">
+            <span>Total Approximate Price</span
+            ><span class="gold-text">{{ money(breakdown.total) }}</span>
+          </div>
+          <p class="priceNotice">
+            *Calculations are approximate. Final pricing depends on the current rate at time of
+            purchase.
+          </p>
+        </div>
+        <div class="detailInquiryForm glassmorphism">
+          <h3 class="serif-title">Send enquiry for this piece</h3>
+          <div
+            *ngIf="statusMessage"
+            class="statusMsg"
+            [class.successMsg]="statusSuccess"
+            [class.errorMsg]="!statusSuccess"
+          >
+            {{ statusMessage }}
+          </div>
+          <form (ngSubmit)="submitInquiry()">
+            <div class="grid-2 inquiryFields">
+              <div class="form-group">
+                <label class="form-label" for="product-name">Name *</label
+                ><input
+                  id="product-name"
+                  class="form-control"
+                  name="name"
+                  [(ngModel)]="form.name"
+                  required
+                  placeholder="Your name"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="product-phone">Phone *</label
+                ><input
+                  id="product-phone"
+                  class="form-control"
+                  name="phone"
+                  type="tel"
+                  [(ngModel)]="form.phone"
+                  required
+                  placeholder="Mobile number"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="product-email">Email</label
+              ><input
+                id="product-email"
+                class="form-control"
+                name="email"
+                type="email"
+                [(ngModel)]="form.email"
+                placeholder="Email address"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="product-message">Inquiry Message *</label
+              ><textarea
+                id="product-message"
+                class="form-control"
+                name="message"
+                rows="3"
+                [(ngModel)]="form.message"
+                required
+              ></textarea>
+            </div>
+            <p class="loginNote">
+              Login is optional and never required for a price quote or showroom visit.
+            </p>
+            <button type="submit" class="outline-btn" [disabled]="submitting">
+              {{ submitting ? 'Sending Request...' : 'Send Enquiry' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

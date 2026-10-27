@@ -15,7 +15,7 @@ const SESSION_KEY = 'jay_bhavani_client_session';
 function readUsers(): StoredUser[] {
   try {
     const stored = localStorage.getItem(USERS_KEY);
-    return stored ? JSON.parse(stored) as StoredUser[] : [];
+    return stored ? (JSON.parse(stored) as StoredUser[]) : [];
   } catch (error) {
     console.error('Unable to read locally stored client accounts.', error);
     return [];
@@ -25,14 +25,18 @@ function readUsers(): StoredUser[] {
 export function getClientSession(): ClientUser | null {
   try {
     const stored = localStorage.getItem(SESSION_KEY);
-    return stored ? JSON.parse(stored) as ClientUser : null;
+    return stored ? (JSON.parse(stored) as ClientUser) : null;
   } catch (error) {
     console.error('Unable to read the client session.', error);
     return null;
   }
 }
 
-export function registerClient(name: string, email: string, password: string): { success: boolean; message: string } {
+export function registerClient(
+  name: string,
+  email: string,
+  password: string,
+): { success: boolean; message: string } {
   if (!name.trim() || !email.trim() || !password.trim()) {
     return { success: false, message: 'Please fill in all fields.' };
   }
@@ -52,12 +56,17 @@ export function registerClient(name: string, email: string, password: string): {
   return { success: true, message: 'Registration successful. You can now log in.' };
 }
 
-export function loginClient(identifier: string, password: string): { success: boolean; message: string } {
+export function loginClient(
+  identifier: string,
+  password: string,
+): { success: boolean; message: string } {
   if (!identifier.trim() || !password.trim()) {
     return { success: false, message: 'Please enter your email and password.' };
   }
   const lookup = identifier.trim().toLowerCase();
-  const user = readUsers().find((item) => item.email === lookup || item.name.toLowerCase() === lookup);
+  const user = readUsers().find(
+    (item) => item.email === lookup || item.name.toLowerCase() === lookup,
+  );
   if (!user || user.password !== password) {
     return { success: false, message: 'Invalid email or password.' };
   }

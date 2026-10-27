@@ -1,0 +1,10 @@
+node_modules/
+.angular/
+.next/
+dist/
+.data/
+coverage/
+src/data/database.json
+package-lock.json
+.env*
+.vscode/tasks.json

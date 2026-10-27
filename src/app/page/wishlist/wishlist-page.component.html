@@ -1,0 +1,43 @@
+<div class="container wishlistPage">
+  <div class="header">
+    <span class="kicker">My Shortlist</span>
+    <h1 class="serif-title">My Wishlist</h1>
+    <p class="desc">
+      Save designs you love and share your shortlist on WhatsApp before your showroom visit. No
+      login required — saved in your browser.
+    </p>
+  </div>
+  <div *ngIf="!items.length" class="empty">
+    <p>Your wishlist is empty. Browse our collection and tap ♡ on any design.</p>
+    <a routerLink="/shop" class="gold-btn">Explore Collection</a>
+  </div>
+  <ng-container *ngIf="items.length">
+    <div class="actions">
+      <p>
+        <strong>{{ items.length }}</strong> design{{ items.length !== 1 ? 's' : '' }} saved
+      </p>
+      <a [href]="shareUrl" target="_blank" rel="noreferrer" class="gold-btn">Share on WhatsApp</a>
+    </div>
+    <div class="grid">
+      <article *ngFor="let item of items" class="card wishlistCard">
+        <a [routerLink]="['/product', item.id]" class="imgLink"
+          ><div class="imgWrap">
+            <img [src]="item.image" [alt]="item.name" class="img" loading="lazy" /></div
+        ></a>
+        <div class="details">
+          <span class="category">{{ item.categoryName }}</span>
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.weight }}g · {{ item.purity }}</p>
+          <a [routerLink]="['/product', item.id]" class="viewLink">View Details →</a>
+          <button type="button" class="outline-btn removeWish" (click)="remove(item.id)">
+            Remove
+          </button>
+        </div>
+      </article>
+    </div>
+    <p class="loginNote">
+      <a routerLink="/auth/login">Login</a> to save your wishlist permanently across devices —
+      optional, never required.
+    </p>
+  </ng-container>
+</div>

@@ -1,0 +1,414 @@
+<div class="homeContainer animate-fade-in">
+  <section
+    class="hero"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Featured jewellery banner"
+  >
+    <swiper-container
+      #heroSwiper
+      class="heroSlides"
+      init="false"
+      slides-per-view="1"
+      speed="700"
+      loop="true"
+      pagination="true"
+      pagination-clickable="true"
+      autoplay-delay="3000"
+      autoplay-disable-on-interaction="false"
+      [attr.autoplay]="autoplayEnabled ? 'true' : null"
+    >
+      <swiper-slide
+        *ngFor="let slide of heroSlides; let index = index"
+        class="heroSlide"
+        role="group"
+        aria-roledescription="slide"
+        [attr.aria-label]="slide.category + ' jewellery'"
+      >
+        <img
+          class="heroSlideImage"
+          [src]="slide.image"
+          [alt]="slide.alt"
+          loading="eager"
+          [attr.fetchpriority]="index === 0 ? 'high' : 'low'"
+        />
+        <div class="heroContent container">
+          <span class="heroSubtitle">{{ slide.eyebrow }}</span>
+          <h1 *ngIf="index === 0; else additionalSlideTitle" class="heroTitle serif-title">
+            {{ slide.title }}
+          </h1>
+          <ng-template #additionalSlideTitle
+            ><h2 class="heroTitle serif-title">{{ slide.title }}</h2></ng-template
+          >
+          <p class="heroText">{{ slide.description }}</p>
+          <div class="heroActions">
+            <div class="heroBtns">
+              <a
+                [routerLink]="['/shop']"
+                [queryParams]="{ category: slide.categorySlug }"
+                class="gold-btn"
+                >Explore {{ slide.category }}</a
+              >
+              <a [href]="consultUrl" class="outline-btn" target="_blank" rel="noreferrer"
+                >WhatsApp Us</a
+              >
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+    <div class="heroSliderControls" aria-label="Hero image controls">
+      <button
+        type="button"
+        class="heroArrow"
+        aria-label="Previous image"
+        (click)="previousHeroSlide()"
+      >
+        ‹
+      </button>
+      <button type="button" class="heroArrow" aria-label="Next image" (click)="nextHeroSlide()">
+        ›
+      </button>
+    </div>
+  </section>
+  <section id="rates-section" class="ratesSection" data-3d-reveal>
+    <div class="container">
+      <div class="ratesCard">
+        <div class="ratesHeader">
+          <span class="pulseDot"></span>
+          <h2 class="serif-title">Today's Gold Rate — Kamrej, Surat</h2>
+        </div>
+        <div class="ratesGrid">
+          <div class="rateBox">
+            <span class="rateLabel">24K Gold / 10g</span
+            ><span class="rateVal">{{ rate(rates?.gold24k) }}</span>
+          </div>
+          <div class="rateBox">
+            <span class="rateLabel">22K Gold / 10g</span
+            ><span class="rateVal">{{ rate(rates?.gold22k) }}</span>
+          </div>
+          <div class="rateBox">
+            <span class="rateLabel">18K Gold / 10g</span
+            ><span class="rateVal">{{ rate(rates?.gold18k) }}</span>
+          </div>
+          <div class="rateBox">
+            <span class="rateLabel">Silver / 100g</span
+            ><span class="rateVal">{{
+              rates ? rate(rates.silver * 10) : 'Rates unavailable'
+            }}</span>
+          </div>
+        </div>
+        <p class="ratesDisclaimer">
+          Updated: {{ updatedLabel }} • Rates are indicative and may vary at store.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section id="shop-by-category" class="section categoriesSection">
+    <div class="container">
+      <div class="sectionHeader">
+        <h2 class="sectionTitle serif-title">Shop by Category</h2>
+        <div class="titleDivider"></div>
+      </div>
+      <div class="categoriesGrid">
+        <a
+          *ngFor="let category of categories"
+          [routerLink]="['/shop']"
+          [queryParams]="{ category: category.slug }"
+          class="categoryCard"
+          [class.categoryCardFallback]="imageFallbacks[category.slug]"
+          data-3d-tilt
+        >
+          <div *ngIf="imageFallbacks[category.slug]" class="categoryFallback">
+            <span class="fallbackIcon">{{ category.fallback }}</span>
+          </div>
+          <img
+            *ngIf="!imageFallbacks[category.slug]"
+            class="categoryImage"
+            [src]="category.image"
+            [alt]="category.name"
+            loading="lazy"
+            (error)="imageFallback($event, category.slug)"
+          />
+          <span class="categoryName serif-title">{{ category.name }}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="section darkBg" data-3d-reveal>
+    <div class="container">
+      <div class="sectionHeader">
+        <h2 class="sectionTitle serif-title">Our Signature Collection</h2>
+        <div class="titleDivider"></div>
+      </div>
+      <div class="grid-4">
+        <article *ngFor="let product of featuredProducts" class="card" data-3d-tilt>
+          <a [routerLink]="['/product', product.id]" class="productLink">
+            <div class="productImgWrapper">
+              <img
+                [src]="product.image"
+                [alt]="product.name"
+                class="productImg"
+                loading="lazy"
+              /><span class="metalTag">{{ product.metal }}</span>
+            </div>
+          </a>
+          <div class="productInfo">
+            <span class="productCategory">{{ product.categoryName }}</span>
+            <h3 class="productName">{{ product.name }}</h3>
+            <div class="productFooter">
+              <span class="productWeight">{{ product.weight }}g | {{ product.purity }}</span
+              ><a [routerLink]="['/product', product.id]" class="viewLink">View Details →</a>
+            </div>
+            <button
+              class="outline-btn wishlistSaveBtn"
+              type="button"
+              [class.isSaved]="isWishlisted(product.id)"
+              [attr.aria-pressed]="isWishlisted(product.id)"
+              [attr.aria-label]="
+                (isWishlisted(product.id) ? 'Remove ' : 'Save ') +
+                product.name +
+                (isWishlisted(product.id) ? ' from' : ' to') +
+                ' wishlist'
+              "
+              (click)="toggleWishlist(product)"
+            >
+              {{ isWishlisted(product.id) ? '♥ Saved to Wishlist' : '♡ Save to Wishlist' }}
+            </button>
+          </div>
+        </article>
+      </div>
+      <p *ngIf="!featuredProducts.length && !loading" class="emptyBox">
+        Explore our complete collection of handcrafted jewellery.
+      </p>
+    </div>
+  </section>
+  <section id="bridal" class="bridalSection">
+    <div class="bridalLayout">
+      <div class="container">
+        <div class="bridalContent">
+          <span class="kicker">Bridal Jewellery</span>
+          <h2 class="serif-title">Bridal Jewellery, Made for Your Big Day</h2>
+          <p>
+            Traditional elegance meets modern craftsmanship. From red-carpet-worthy bridal sets to
+            heirloom-worthy family pieces, every design is crafted with a balance of beauty,
+            comfort, and lasting value.
+          </p>
+          <div class="bridalBtns">
+            <a routerLink="/shop" [queryParams]="{ category: 'bridal-sets' }" class="gold-btn"
+              >Explore Bridal Collection</a
+            >
+            <a [href]="bridalUrl" class="outline-btn" target="_blank" rel="noreferrer"
+              >Book Bridal Consultation</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="sectionHeader">
+        <h2 class="sectionTitle serif-title">What Our Customers Say</h2>
+        <div class="titleDivider"></div>
+      </div>
+      <div class="reviewGrid">
+        <article *ngFor="let review of reviews" class="reviewCard">
+          <div class="reviewStars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>“{{ review.quote }}”</p>
+          <strong>{{ review.name }}</strong>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section instagramSection">
+    <div class="container">
+      <div class="sectionHeader">
+        <h2 class="sectionTitle serif-title">From Our Jewellery Collection</h2>
+        <div class="titleDivider"></div>
+      </div>
+      <div class="instagramGrid">
+        <a
+          *ngFor="let image of gallery; let index = index"
+          [href]="instagramUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="instagramCard"
+          galleryReveal
+          [style.--gallery-delay]="(index % 6) * 75 + 'ms'"
+          aria-label="View design on Instagram"
+        >
+          <span class="instagramImageFrame"
+            ><img
+              [src]="image"
+              alt="Latest jewellery design at Jay Bhavani Ornaments"
+              class="instagramImage"
+              loading="lazy"
+          /></span>
+          <div class="instagramOverlay">
+            <span class="instagramIcon">📸</span><span>View on Instagram</span>
+          </div>
+        </a>
+      </div>
+      <div class="instagramFollow">
+        <a [href]="instagramUrl" target="_blank" rel="noopener noreferrer" class="gold-btn"
+          >Follow @jaybhavani_ornaments on Instagram</a
+        >
+      </div>
+    </div>
+  </section>
+  <section id="about" class="section trustSection">
+    <div class="container">
+      <div class="sectionHeader">
+        <h2 class="sectionTitle serif-title">Why Choose Jay Bhavani Ornaments?</h2>
+        <div class="titleDivider"></div>
+      </div>
+      <div class="trustGrid">
+        <div *ngFor="let point of trustPoints" class="trustCard">
+          <span class="checkmark" aria-hidden="true">✓</span>
+          <h3>{{ point }}</h3>
+        </div>
+      </div>
+      <div class="customCTA">
+        <h2 class="serif-title">Visit Our Boutique in Kamrej, Surat</h2>
+        <p>
+          Discover trusted craftsmanship, transparent pricing and a personal jewellery experience.
+        </p>
+        <a [href]="consultUrl" target="_blank" rel="noreferrer" class="gold-btn"
+          >Talk to Our Team</a
+        >
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="visitCard">
+        <div class="visitContent">
+          <span class="kicker">Visit Our Showroom</span>
+          <h2 class="serif-title">Visit Our Showroom</h2>
+          <p>
+            📍 Jay Bhavani Ornaments, Shop No. 103, Vastu Palace-B, Pasodra Patiya, Kamrej, Surat
+          </p>
+          <p>🕐 Mon–Sat: 11:00 AM – 8:30 PM</p>
+          <div class="heroBtns">
+            <a
+              href="https://maps.google.com/?q=Shop%20No.%20103%2C%20Vastu%20Palace-B%2C%20Pasodra%20Patiya%2C%20Kamrej%2C%20Surat"
+              class="gold-btn"
+              target="_blank"
+              rel="noreferrer"
+              >Get Directions</a
+            ><a [href]="visitUrl" class="outline-btn" target="_blank" rel="noreferrer"
+              >WhatsApp for Visit</a
+            >
+          </div>
+        </div>
+        <div class="mapWrap">
+          <iframe
+            title="Jay Bhavani Ornaments location"
+            src="https://maps.google.com/maps?q=shop%20no.%20103%20vasto%20palace-b%20pasodra%20patiya%20kamrej%20surat&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="finalCTASection">
+    <div class="container">
+      <div class="finalCTA">
+        <h2 class="serif-title">Your perfect ornament is waiting.</h2>
+        <a [href]="consultUrl" class="gold-btn" target="_blank" rel="noreferrer">WhatsApp Us</a>
+      </div>
+    </div>
+  </section>
+  <section class="section" data-3d-reveal>
+    <div class="container">
+      <div class="enquiryGrid">
+        <div class="enquiryInfo">
+          <span class="kicker">Quick Enquiry</span>
+          <h2 class="serif-title">Tell us what you are looking for</h2>
+          <p>
+            Choose a category, share your preferred design type, and our team will guide you with
+            the right options and latest pricing.
+          </p>
+          <p class="optionalText">
+            Login to save your enquiries and wishlist. Login is optional and never required for a
+            quote.
+          </p>
+        </div>
+        <div class="enquiryFormWrap glassmorphism">
+          <div
+            *ngIf="enquiryMessage"
+            class="statusMsg"
+            [class.successMsg]="enquirySuccess"
+            [class.errorMsg]="!enquirySuccess"
+          >
+            {{ enquiryMessage }}
+          </div>
+          <form (ngSubmit)="submitEnquiry()">
+            <div class="grid-2 enquiryFields">
+              <div class="form-group">
+                <label class="form-label" for="home-name">Name *</label
+                ><input
+                  id="home-name"
+                  class="form-control"
+                  name="name"
+                  [(ngModel)]="formData.name"
+                  required
+                  placeholder="Your name"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="home-phone">Mobile / WhatsApp *</label
+                ><input
+                  id="home-phone"
+                  class="form-control"
+                  name="phone"
+                  type="tel"
+                  [(ngModel)]="formData.phone"
+                  required
+                  placeholder="Mobile number"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="home-category">Interested In</label
+              ><select
+                id="home-category"
+                class="form-control"
+                name="interestedIn"
+                [(ngModel)]="formData.interestedIn"
+              >
+                <option *ngFor="let category of categories" [value]="category.name">
+                  {{ category.name }}
+                </option>
+                <option>Custom Design</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="home-message">Message *</label
+              ><textarea
+                id="home-message"
+                class="form-control"
+                name="message"
+                rows="4"
+                [(ngModel)]="formData.message"
+                required
+                placeholder="Tell us your preferred style, metal or occasion"
+              ></textarea>
+            </div>
+            <button type="submit" class="gold-btn enquirySubmit" [disabled]="submitting">
+              {{ submitting ? 'Sending...' : 'Send Enquiry' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div *ngIf="loading" class="page-loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <p class="loader-text">Loading Jay Bhavani Ornaments...</p>
+    </div>
+  </div>
+</div>

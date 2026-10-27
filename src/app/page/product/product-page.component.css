@@ -18,7 +18,9 @@
 }
 
 @keyframes spinnerRotate {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Detail Split Grid */
@@ -192,14 +194,14 @@
 }
 
 .whatsappBtn {
-  background: #25D366 !important;
-  color: #FFFFFF !important;
+  background: #25d366 !important;
+  color: #ffffff !important;
   box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3) !important;
   width: 100%;
 }
 
 .whatsappBtn:hover {
-  background: #20BA5A !important;
+  background: #20ba5a !important;
   box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45) !important;
 }
 
@@ -245,4 +247,37 @@
   .productName {
     font-size: 1.8rem;
   }
+}
+
+.productPage {
+  padding: 1.5rem 2rem 5rem;
+}
+.breadcrumbs {
+  margin-bottom: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.productError {
+  text-align: center;
+  padding: 8rem 2rem;
+}
+.productError p {
+  margin: 1rem 0 2rem;
+}
+.inquiryFields {
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+.detailInquiryForm h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  color: var(--accent-gold);
+}
+.detailInquiryForm button {
+  width: 100%;
+  padding: 0.6rem;
+}
+.detailInquiryForm textarea {
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
 }

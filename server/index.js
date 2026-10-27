@@ -12,7 +12,7 @@ import {
   verifyAdminCredentials,
 } from '../src/lib/admin-auth.js';
 import { addInquiry, getInquiries, getProductById, getProducts } from '../src/lib/db.js';
-import { getOwnerNotifyUrl, pushOwnerWhatsAppNotification } from '../src/lib/whatsapp.js';
+import { pushOwnerWhatsAppNotification } from '../src/lib/whatsapp.js';
 
 const app = express();
 const port = Number(process.env.PORT || 3001);
@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.get('/api/products', async (request, response, next) => {
   try {
     const { search, category, metal, purity, featured } = request.query;
-    const textFilter = (value) => typeof value === 'string' ? value : undefined;
+    const textFilter = (value) => (typeof value === 'string' ? value : undefined);
     const products = await getProducts({
       search: textFilter(search),
       category: textFilter(category),
@@ -72,7 +72,8 @@ app.get('/api/gold-rate', async (_request, response, next) => {
 
 app.post('/api/inquiries', async (request, response, next) => {
   try {
-    const { name, email, phone, productId, productName, interestedIn, message } = request.body ?? {};
+    const { name, email, phone, productId, productName, interestedIn, message } =
+      request.body ?? {};
     if (!name || !phone || !message) {
       response.status(400).json({
         success: false,
@@ -81,30 +82,24 @@ app.post('/api/inquiries', async (request, response, next) => {
       return;
     }
 
-    let inquiry = null;
-    try {
-      inquiry = await addInquiry({ name, email, phone, productId, productName, interestedIn, message });
-    } catch (error) {
-      console.error('Database error for inquiry, continuing with WhatsApp notification:', error);
-    }
+    const inquiry = await addInquiry({
+      name,
+      email,
+      phone,
+      productId,
+      productName,
+      interestedIn,
+      message,
+    });
     if (!inquiry) {
-      console.error('Unable to persist the customer inquiry; continuing with WhatsApp notification.');
-      inquiry = {
-        id: Date.now().toString(),
-        name,
-        email,
-        phone,
-        productId: productId || null,
-        productName: productName || null,
-        interestedIn: interestedIn || '',
-        message,
-        status: 'Pending',
-        createdAt: new Date().toISOString(),
-      };
+      response.status(500).json({
+        success: false,
+        error: 'Unable to save your enquiry. Please try again.',
+      });
+      return;
     }
-    const notifyUrl = getOwnerNotifyUrl(inquiry);
-    await pushOwnerWhatsAppNotification(inquiry);
-    response.status(201).json({ success: true, inquiry, notifyUrl });
+    const notification = await pushOwnerWhatsAppNotification(inquiry);
+    response.status(201).json({ success: true, inquiry, notification });
   } catch (error) {
     next(error);
   }

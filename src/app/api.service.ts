@@ -38,36 +38,65 @@ export interface Inquiry {
   createdAt: string;
 }
 
+export interface WhatsAppNotificationResult {
+  sent: boolean;
+  reason?: 'not_configured' | 'provider_rejected' | 'request_failed' | 'timeout';
+  status?: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   constructor(private readonly http: HttpClient) {}
 
-  products(filters: Record<string, string> = {}): Observable<{ success: boolean; products: Product[] }> {
+  products(
+    filters: Record<string, string> = {},
+  ): Observable<{ success: boolean; products: Product[] }> {
     const params = new URLSearchParams();
     for (const [key, value] of Object.entries(filters)) {
       if (value && value !== 'all') params.set(key, value);
     }
-    return this.http.get<{ success: boolean; products: Product[] }>(`/api/products?${params.toString()}`);
+    return this.http.get<{ success: boolean; products: Product[] }>(
+      `/api/products?${params.toString()}`,
+    );
   }
 
   product(id: string): Observable<{ success: boolean; product?: Product; error?: string }> {
-    return this.http.get<{ success: boolean; product?: Product; error?: string }>(`/api/products/${encodeURIComponent(id)}`);
+    return this.http.get<{ success: boolean; product?: Product; error?: string }>(
+      `/api/products/${encodeURIComponent(id)}`,
+    );
   }
 
   goldRates(): Observable<{ success: boolean; rates: GoldRates }> {
     return this.http.get<{ success: boolean; rates: GoldRates }>('/api/gold-rate');
   }
 
-  submitInquiry(payload: Partial<Inquiry>): Observable<{ success: boolean; error?: string; notifyUrl?: string }> {
-    return this.http.post<{ success: boolean; error?: string; notifyUrl?: string }>('/api/inquiries', payload);
+  submitInquiry(payload: Partial<Inquiry>): Observable<{
+    success: boolean;
+    error?: string;
+    notification?: WhatsAppNotificationResult;
+  }> {
+    return this.http.post<{
+      success: boolean;
+      error?: string;
+      notification?: WhatsAppNotificationResult;
+    }>('/api/inquiries', payload);
   }
 
   adminSession(): Observable<{ authenticated: boolean }> {
-    return this.http.get<{ authenticated: boolean }>('/api/admin/session', { withCredentials: true });
+    return this.http.get<{ authenticated: boolean }>('/api/admin/session', {
+      withCredentials: true,
+    });
   }
 
-  adminLogin(credentials: { username: string; password: string }): Observable<{ success: boolean; message?: string; error?: string }> {
-    return this.http.post<{ success: boolean; message?: string; error?: string }>('/api/admin/session', credentials, { withCredentials: true });
+  adminLogin(credentials: {
+    username: string;
+    password: string;
+  }): Observable<{ success: boolean; message?: string; error?: string }> {
+    return this.http.post<{ success: boolean; message?: string; error?: string }>(
+      '/api/admin/session',
+      credentials,
+      { withCredentials: true },
+    );
   }
 
   adminLogout(): Observable<{ success: boolean }> {
@@ -75,6 +104,9 @@ export class ApiService {
   }
 
   inquiries(): Observable<{ success: boolean; inquiries: Inquiry[]; error?: string }> {
-    return this.http.get<{ success: boolean; inquiries: Inquiry[]; error?: string }>('/api/inquiries', { withCredentials: true });
+    return this.http.get<{ success: boolean; inquiries: Inquiry[]; error?: string }>(
+      '/api/inquiries',
+      { withCredentials: true },
+    );
   }
 }

@@ -1,0 +1,130 @@
+<div class="container animate-fade-in shopPage">
+  <div class="shopHeader">
+    <span class="shopSubtitle">Jay Bhavani Catalog</span>
+    <h1 class="serif-title">Our Collection</h1>
+    <p class="shopDesc">Browse through our authentic 22K Gold and Diamond signature pieces.</p>
+  </div>
+  <section *ngIf="activeCategory" class="categoryHero">
+    <img [src]="activeCategory.image" [alt]="activeCategory.name" class="categoryHeroImage" />
+    <div class="categoryHeroContent">
+      <span class="categoryHeroLabel">Category collection</span>
+      <h2 class="serif-title">{{ activeCategory.name }}</h2>
+      <p>{{ products.length }} designs</p>
+    </div>
+  </section>
+  <div class="shopLayout">
+    <aside class="sidebar glassmorphism">
+      <div class="sidebarHeader">
+        <h3 class="serif-title">Filter By</h3>
+        <button type="button" class="clearBtn" (click)="clearFilters()">Clear All</button>
+      </div>
+      <div class="filterSection">
+        <label class="form-label" for="shop-search">Search Ornaments</label
+        ><input
+          id="shop-search"
+          class="form-control"
+          [(ngModel)]="search"
+          (ngModelChange)="loadProducts()"
+          placeholder="e.g. Kundan, Ring..."
+        />
+      </div>
+      <div class="filterSection">
+        <label class="form-label">Category</label>
+        <div class="radioList">
+          <button
+            *ngFor="let item of categories"
+            type="button"
+            class="filterBtn"
+            [class.filterBtnActive]="category === item.value"
+            (click)="category = item.value; loadProducts()"
+          >
+            {{ item.name }}
+          </button>
+        </div>
+      </div>
+      <div class="filterSection">
+        <label class="form-label" for="shop-metal">Metal Type</label
+        ><select
+          id="shop-metal"
+          class="form-control"
+          [(ngModel)]="metal"
+          (ngModelChange)="loadProducts()"
+        >
+          <option value="all">All Metals</option>
+          <option value="Gold">Gold</option>
+          <option value="Diamond">Diamond</option>
+          <option value="Precious Stones">Precious Stones</option>
+        </select>
+      </div>
+      <div class="filterSection">
+        <label class="form-label" for="shop-sort">Sort By</label
+        ><select
+          id="shop-sort"
+          class="form-control"
+          [(ngModel)]="sortBy"
+          (ngModelChange)="sortProducts()"
+        >
+          <option value="none">Default Sorting</option>
+          <option value="weight-asc">Weight: Low to High</option>
+          <option value="weight-desc">Weight: High to Low</option>
+          <option value="name-asc">Alphabetical: A-Z</option>
+        </select>
+      </div>
+    </aside>
+    <section class="gridSection">
+      <div class="gridHeader">
+        <p class="resultsCount">
+          Showing <strong>{{ products.length }}</strong> items
+        </p>
+      </div>
+      <div *ngIf="loading" class="statusBox">
+        <div class="spinner"></div>
+        <p>Fetching master creations...</p>
+      </div>
+      <div *ngIf="!loading && !products.length" class="emptyBox">
+        <p>No jewellery matches your current selection.</p>
+        <button type="button" class="outline-btn" (click)="clearFilters()">
+          View All Ornaments
+        </button>
+      </div>
+      <div *ngIf="!loading && products.length" class="productsGrid">
+        <article *ngFor="let product of products" class="shopCard card">
+          <a [routerLink]="['/product', product.id]" class="imgLink"
+            ><div class="imgWrapper">
+              <img
+                [src]="product.image"
+                [alt]="product.name"
+                class="productImg"
+                loading="lazy"
+              /><span class="purityTag">{{ product.purity }}</span>
+            </div></a
+          >
+          <div class="details">
+            <span class="categoryLabel">{{ product.categoryName }}</span>
+            <h3 class="name">{{ product.name }}</h3>
+            <p class="specs">{{ product.weight }} grams | {{ product.metal }}</p>
+            <div class="cardFooter">
+              <a [routerLink]="['/product', product.id]" class="gold-btn"
+                >View Details &amp; Enquire</a
+              ><button
+                class="outline-btn"
+                type="button"
+                [class.isSaved]="isWishlisted(product.id)"
+                [attr.aria-pressed]="isWishlisted(product.id)"
+                [attr.aria-label]="
+                  (isWishlisted(product.id) ? 'Remove ' : 'Save ') +
+                  product.name +
+                  (isWishlisted(product.id) ? ' from' : ' to') +
+                  ' wishlist'
+                "
+                (click)="toggleWishlist(product)"
+              >
+                {{ isWishlisted(product.id) ? '♥' : '♡' }}
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { SHOP_WHATSAPP, buildWhatsAppUrl } from './config.js';
+import { SHOP_WHATSAPP } from './config.js';
 
 export function buildInquiryNotifyMessage(inquiry) {
   const lines = [
@@ -17,14 +17,15 @@ export function buildInquiryNotifyMessage(inquiry) {
   return lines.join('\n');
 }
 
-export function getOwnerNotifyUrl(inquiry) {
-  return buildWhatsAppUrl(buildInquiryNotifyMessage(inquiry));
-}
-
 /** Server-side push via CallMeBot when CALLMEBOT_API_KEY is configured */
 export async function pushOwnerWhatsAppNotification(inquiry) {
-  const apiKey = process.env.CALLMEBOT_API_KEY;
-  if (!apiKey) return { sent: false, reason: 'no_api_key' };
+  const apiKey = process.env.CALLMEBOT_API_KEY?.trim();
+  if (!apiKey || apiKey === 'replace_with_your_callmebot_api_key') {
+    console.error(
+      'WhatsApp enquiry notification was not sent: configure a real CALLMEBOT_API_KEY in .env.',
+    );
+    return { sent: false, reason: 'not_configured' };
+  }
 
   const text = buildInquiryNotifyMessage(inquiry);
   const url =
@@ -32,10 +33,22 @@ export async function pushOwnerWhatsAppNotification(inquiry) {
     `&text=${encodeURIComponent(text)}&apikey=${encodeURIComponent(apiKey)}`;
 
   try {
-    const res = await fetch(url, { method: 'GET', cache: 'no-store' });
-    return { sent: res.ok, status: res.status };
+    const res = await fetch(url, {
+      method: 'GET',
+      cache: 'no-store',
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!res.ok) {
+      console.error(`WhatsApp notification provider rejected the request with HTTP ${res.status}.`);
+      return { sent: false, reason: 'provider_rejected', status: res.status };
+    }
+    return { sent: true, status: res.status };
   } catch (error) {
     console.error('CallMeBot notification failed:', error);
-    return { sent: false, reason: 'fetch_error' };
+    return {
+      sent: false,
+      reason:
+        error instanceof Error && error.name === 'TimeoutError' ? 'timeout' : 'request_failed',
+    };
   }
 }

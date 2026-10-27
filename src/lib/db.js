@@ -97,7 +97,7 @@ export async function getProducts(filters = {}) {
     results = results.filter(
       (p) =>
         p.name.toLowerCase().includes(searchLower) ||
-        p.description.toLowerCase().includes(searchLower)
+        p.description.toLowerCase().includes(searchLower),
     );
   }
 

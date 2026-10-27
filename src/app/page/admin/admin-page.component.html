@@ -1,0 +1,152 @@
+<div class="container adminPage">
+  <div *ngIf="authLoading" class="statusBox">
+    <div class="spinner"></div>
+    <p>Checking admin access...</p>
+  </div>
+  <ng-container *ngIf="!authLoading && !isAdmin">
+    <div
+      *ngIf="statusMessage"
+      class="toast"
+      [class.success]="statusSuccess"
+      [class.error]="!statusSuccess"
+    >
+      {{ statusMessage }}
+    </div>
+    <div class="authCard">
+      <span class="adminSubtitle">Restricted Access</span>
+      <h1 class="serif-title">Admin Login</h1>
+      <p class="adminDesc">Use the protected admin account to launch the control dashboard.</p>
+      <form (ngSubmit)="login()" class="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="admin-username">Username</label
+          ><input
+            id="admin-username"
+            class="form-control"
+            name="username"
+            autocomplete="username"
+            [(ngModel)]="credentials.username"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="admin-password">Password</label>
+          <div class="passwordWrap">
+            <input
+              id="admin-password"
+              class="form-control"
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              autocomplete="current-password"
+              [(ngModel)]="credentials.password"
+              required
+            /><button type="button" class="eyeButton" (click)="showPassword = !showPassword">
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="gold-btn adminSubmit" [disabled]="submitting">
+          {{ submitting ? 'Signing in...' : 'Login as Admin' }}
+        </button>
+      </form>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!authLoading && isAdmin">
+    <div class="adminHeader">
+      <div>
+        <span class="adminSubtitle">Jay Bhavani Administration</span>
+        <h1 class="serif-title">Customer Inquiries</h1>
+        <p class="adminDesc">
+          Website enquiries are saved here and trigger a WhatsApp notification flow when submitted.
+        </p>
+      </div>
+      <div class="adminActions">
+        <button type="button" class="outline-btn" (click)="loadInquiries()" [disabled]="loading">
+          {{ loading ? 'Refreshing...' : 'Refresh Enquiries' }}</button
+        ><button type="button" class="outline-btn" (click)="logout()">Logout Admin</button>
+      </div>
+    </div>
+    <div class="controlPanel glassmorphism">
+      <div class="searchControl">
+        <label class="form-label" for="inquiry-search">Search Enquiries</label
+        ><input
+          id="inquiry-search"
+          class="form-control"
+          [(ngModel)]="searchTerm"
+          placeholder="Search by customer name, phone, product ID..."
+        />
+      </div>
+      <div class="statBox">
+        <span class="statLabel">Total Enquiries</span
+        ><span class="statCount">{{ inquiriesList.length }}</span>
+      </div>
+      <div class="statBox">
+        <span class="statLabel">Received Today</span
+        ><span class="statCount">{{ todayInquiries }}</span>
+      </div>
+      <div class="statBox">
+        <span class="statLabel">Pending Follow-up</span
+        ><span class="statCount">{{ pendingInquiries }}</span>
+      </div>
+      <div class="statBox">
+        <span class="statLabel">Matching Search</span
+        ><span class="statCount">{{ filteredInquiries.length }}</span>
+      </div>
+    </div>
+    <div *ngIf="loading" class="statusBox">
+      <div class="spinner"></div>
+      <p>Retrieving secure submissions from database...</p>
+    </div>
+    <div *ngIf="!loading && !filteredInquiries.length" class="emptyBox">
+      <p>No customer inquiries found.</p>
+    </div>
+    <div *ngIf="!loading && filteredInquiries.length" class="inquiriesContainer">
+      <article *ngFor="let inquiry of filteredInquiries" class="inquiryCard glassmorphism">
+        <div class="cardHeader">
+          <div class="customerMeta">
+            <h3 class="customerName">{{ inquiry.name }}</h3>
+            <div class="badgeRow">
+              <span class="badge phoneBadge">📞 {{ inquiry.phone }}</span
+              ><span *ngIf="inquiry.email" class="badge emailBadge">✉️ {{ inquiry.email }}</span>
+            </div>
+          </div>
+          <div class="timeMeta">
+            <span class="dateLabel">{{ inquiry.createdAt | date: 'medium' }}</span
+            ><span class="statusLabel pendingStatus">{{ inquiry.status }}</span>
+          </div>
+        </div>
+        <div class="cardBody">
+          <div *ngIf="inquiry.productId" class="productTagLine">
+            <span>Product Interest: </span
+            ><a [routerLink]="['/product', inquiry.productId]" class="prodLink"
+              >{{ inquiry.productName || 'Product #' + inquiry.productId }} (ID: #{{
+                inquiry.productId
+              }}) →</a
+            >
+          </div>
+          <div class="messageBox">
+            <strong>Inquiry Message:</strong>
+            <p class="messageText">“{{ inquiry.message }}”</p>
+          </div>
+        </div>
+        <div class="cardFooter">
+          <a [href]="'tel:' + inquiry.phone" class="outline-btn">Call Client</a
+          ><a
+            [href]="whatsapp(inquiry.phone)"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="gold-btn"
+            >WhatsApp Follow Up</a
+          >
+        </div>
+      </article>
+    </div>
+    <div
+      *ngIf="statusMessage"
+      class="toast"
+      [class.success]="statusSuccess"
+      [class.error]="!statusSuccess"
+    >
+      {{ statusMessage }}
+    </div>
+  </ng-container>
+</div>

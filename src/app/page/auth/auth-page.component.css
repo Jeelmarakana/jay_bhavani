@@ -21,8 +21,13 @@
 }
 
 @keyframes authBackgroundFloat {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(2%, 2%) rotate(5deg); }
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(2%, 2%) rotate(5deg);
+  }
 }
 
 .toast {
@@ -97,7 +102,12 @@
 }
 
 .authCard h1 {
-  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-hover) 50%, var(--accent-gold-light) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-gold) 0%,
+    var(--accent-gold-hover) 50%,
+    var(--accent-gold-light) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: var(--accent-gold);
@@ -262,26 +272,11 @@
   color: var(--accent-gold-hover);
 }
 
-/* Theme-specific adjustments */
-:host-context([data-theme="dark"]) .authCard {
-  background: rgba(23, 20, 17, 0.95);
-  border-color: rgba(229, 178, 72, 0.3);
+.authCardHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
-
-:host-context([data-theme="dark"]) .authCard input {
-  background-color: rgba(27, 24, 20, 0.9);
-  border-color: rgba(229, 178, 72, 0.3);
-}
-
-:host-context([data-theme="dark"]) .authCard input:focus {
-  background-color: rgba(27, 24, 20, 1);
-  box-shadow: 0 0 0 3px rgba(229, 178, 72, 0.2);
-}
-
-:host-context([data-theme="dark"]) .eyeButton {
-  color: rgba(156, 148, 135, 0.6);
-}
-
-:host-context([data-theme="dark"]) .eyeButton:hover {
-  color: rgba(229, 178, 72, 0.8);
+.authSubmit {
+  width: 100%;
 }

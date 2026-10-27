@@ -6,9 +6,9 @@ export const ADMIN_SESSION_MAX_AGE = 60 * 60 * 8;
 export function hasAdminConfiguration() {
   return Boolean(
     process.env.ADMIN_USERNAME &&
-      process.env.ADMIN_PASSWORD &&
-      process.env.ADMIN_SESSION_SECRET &&
-      Buffer.byteLength(process.env.ADMIN_SESSION_SECRET) >= 32,
+    process.env.ADMIN_PASSWORD &&
+    process.env.ADMIN_SESSION_SECRET &&
+    Buffer.byteLength(process.env.ADMIN_SESSION_SECRET) >= 32,
   );
 }
 
@@ -29,7 +29,10 @@ export function verifyAdminCredentials(username, password) {
 
 export function createAdminSessionToken() {
   const payload = Buffer.from(
-    JSON.stringify({ username: process.env.ADMIN_USERNAME, expiresAt: Date.now() + ADMIN_SESSION_MAX_AGE * 1000 }),
+    JSON.stringify({
+      username: process.env.ADMIN_USERNAME,
+      expiresAt: Date.now() + ADMIN_SESSION_MAX_AGE * 1000,
+    }),
   ).toString('base64url');
   const signature = createHmac('sha256', process.env.ADMIN_SESSION_SECRET)
     .update(payload)

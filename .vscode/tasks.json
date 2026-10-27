@@ -1,53 +1,53 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "Build Angular app",
-      "type": "shell",
-      "command": "${env:WINDIR}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-      "args": [
-        "-NoProfile",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-File",
-        "${workspaceFolder}\\.vscode\\run-npm.ps1",
-        "build"
-      ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "problemMatcher": "$tsc"
-    },
-    {
-      "label": "Run development app (Angular + API)",
-      "type": "shell",
-      "command": "${env:WINDIR}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-      "args": [
-        "-NoProfile",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-File",
-        "${workspaceFolder}\\.vscode\\run-npm.ps1",
-        "dev"
-      ],
-      "isBackground": true,
-      "problemMatcher": []
-    },
-    {
-      "label": "Run production app",
-      "type": "shell",
-      "command": "${env:WINDIR}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-      "args": [
-        "-NoProfile",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-File",
-        "${workspaceFolder}\\.vscode\\run-npm.ps1",
-        "start"
-      ],
-      "isBackground": true,
-      "problemMatcher": []
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Angular app",
+			"type": "shell",
+			"command": "${env:WINDIR}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\.vscode\\run-npm.ps1",
+				"build"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": "$tsc"
+		},
+		{
+			"label": "Run development app (Angular + API)",
+			"type": "shell",
+			"command": "${env:WINDIR}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\.vscode\\run-npm.ps1",
+				"dev"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run production app",
+			"type": "shell",
+			"command": "${env:WINDIR}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\.vscode\\run-npm.ps1",
+				"start"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
 }
