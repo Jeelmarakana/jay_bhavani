@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { register, type SwiperContainer } from 'swiper/element/bundle';
 import { ApiService } from './api.service';
 import { MotionDirective } from './motion.directive';
 import type { GoldRates, Inquiry, Product } from './api.service';
@@ -46,15 +47,16 @@ function errorMessage(error: unknown, fallback: string): string {
 @Component({
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, MotionDirective],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   styleUrls: ['./page.css'],
   template: `
     <div class="homeContainer animate-fade-in">
-      <section class="hero">
-        <div class="heroSlides" aria-hidden="true">
-          <div *ngFor="let slide of heroSlides; let index = index" class="heroSlide" [class.isActive]="currentHeroSlide === index" [class.isLeaving]="previousHeroSlide === index" [class.slideFromLeft]="heroSlideDirection === 'previous'" (animationend)="onHeroSlideAnimationEnd($event, index)">
+      <section class="hero" role="region" aria-roledescription="carousel" aria-label="Featured jewellery banner">
+        <swiper-container #heroSwiper class="heroSlides" init="false" slides-per-view="1" speed="700" loop="true" pagination="true" pagination-clickable="true" autoplay-delay="3000" autoplay-disable-on-interaction="false" [attr.autoplay]="autoplayEnabled ? 'true' : null">
+          <swiper-slide *ngFor="let slide of heroSlides; let index = index" class="heroSlide">
             <img class="heroSlideImage" [src]="slide.image" [alt]="slide.alt" loading="eager" [attr.fetchpriority]="index === 0 ? 'high' : 'low'">
-          </div>
-        </div>
+          </swiper-slide>
+        </swiper-container>
         <div class="heroContent container">
           <span class="heroSubtitle">Digital Showroom + WhatsApp Sales Machine</span>
           <h1 class="heroTitle serif-title">Timeless Gold Elegance, Crafted With Trust.</h1>
@@ -64,14 +66,11 @@ function errorMessage(error: unknown, fallback: string): string {
               <a href="#shop-by-category" class="gold-btn">Explore Collection</a>
               <a [href]="consultUrl" class="outline-btn" target="_blank" rel="noreferrer">WhatsApp Us</a>
             </div>
-            <div class="heroSliderDots" role="group" aria-label="Choose a hero image">
-              <button *ngFor="let slide of heroSlides; let index = index" type="button" class="heroSliderDot" [class.isActive]="currentHeroSlide === index" [attr.aria-label]="'Show image ' + (index + 1) + ' of ' + heroSlides.length" [attr.aria-pressed]="currentHeroSlide === index" (click)="showHeroSlide(index)"></button>
-            </div>
           </div>
         </div>
         <div class="heroSliderControls" aria-label="Hero image controls">
-          <button type="button" class="heroArrow" aria-label="Previous image" (click)="moveHeroSlide(-1)">‹</button>
-          <button type="button" class="heroArrow" aria-label="Next image" (click)="moveHeroSlide(1)">›</button>
+          <button type="button" class="heroArrow" aria-label="Previous image" (click)="previousHeroSlide()">‹</button>
+          <button type="button" class="heroArrow" aria-label="Next image" (click)="nextHeroSlide()">›</button>
         </div>
       </section>
       <section id="rates-section" class="ratesSection" data-3d-reveal>
@@ -172,6 +171,9 @@ function errorMessage(error: unknown, fallback: string): string {
   `,
 })
 export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('heroSwiper') private heroSwiper?: ElementRef<SwiperContainer>;
+
+  readonly autoplayEnabled = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   readonly categories = CATEGORY_LIST;
   readonly instagramUrl = INSTAGRAM_URL;
   readonly heroSlides = [
@@ -207,10 +209,6 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   formData = { name: '', phone: '', interestedIn: 'Rings', message: '' };
   wishlistIds = new Set<string>();
   private rateTimer?: ReturnType<typeof setInterval>;
-  private heroTimer?: ReturnType<typeof setInterval>;
-  currentHeroSlide = 0;
-  previousHeroSlide?: number;
-  heroSlideDirection: 'next' | 'previous' = 'next';
   private readonly syncWishlist = (): void => {
     this.wishlistIds = new Set(getWishlist().map((item) => item.id));
   };
@@ -218,13 +216,14 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private readonly api: ApiService,
     private readonly host: ElementRef<HTMLElement>,
-  ) {}
+  ) {
+    register();
+  }
 
   ngOnInit(): void {
     this.syncWishlist();
     window.addEventListener('wishlist-updated', this.syncWishlist);
     window.addEventListener('storage', this.syncWishlist);
-    this.startHeroAutoplay();
     this.loadRates();
     this.rateTimer = setInterval(() => this.loadRates(), 15000);
     this.api.products({ featured: 'true' }).subscribe({
@@ -234,6 +233,7 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    this.heroSwiper?.nativeElement.initialize();
     this.revealGalleryCardsInView();
   }
 
@@ -248,7 +248,6 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.rateTimer) clearInterval(this.rateTimer);
-    if (this.heroTimer) clearInterval(this.heroTimer);
     window.removeEventListener('wishlist-updated', this.syncWishlist);
     window.removeEventListener('storage', this.syncWishlist);
   }
@@ -269,36 +268,12 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     return value === undefined ? 'Rates unavailable' : `₹${Math.round(value).toLocaleString('en-IN')}`;
   }
 
-  moveHeroSlide(direction: -1 | 1, restartAutoplay = true): void {
-    this.showHeroSlide(this.currentHeroSlide + direction, direction === 1 ? 'next' : 'previous', restartAutoplay);
+  previousHeroSlide(): void {
+    this.heroSwiper?.nativeElement.swiper.slidePrev();
   }
 
-  showHeroSlide(index: number, direction?: 'next' | 'previous', restartAutoplay = true): void {
-    const nextSlide = (index + this.heroSlides.length) % this.heroSlides.length;
-    if (nextSlide !== this.currentHeroSlide) {
-      const forwardDistance = (nextSlide - this.currentHeroSlide + this.heroSlides.length) % this.heroSlides.length;
-      this.heroSlideDirection = direction
-        ?? (forwardDistance <= this.heroSlides.length / 2 ? 'next' : 'previous');
-      this.previousHeroSlide = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ? undefined
-        : this.currentHeroSlide;
-      this.currentHeroSlide = nextSlide;
-    }
-    if (restartAutoplay) this.startHeroAutoplay();
-  }
-
-  onHeroSlideAnimationEnd(event: AnimationEvent, index: number): void {
-    if (event.target !== event.currentTarget || !event.animationName.startsWith('heroSlideExit')) return;
-    if (this.previousHeroSlide === index) this.previousHeroSlide = undefined;
-  }
-
-  private startHeroAutoplay(): void {
-    if (this.heroTimer) clearInterval(this.heroTimer);
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      this.heroTimer = undefined;
-      return;
-    }
-    this.heroTimer = setInterval(() => this.moveHeroSlide(1, false), 2000);
+  nextHeroSlide(): void {
+    this.heroSwiper?.nativeElement.swiper.slideNext();
   }
 
   isWishlisted(productId: string): boolean {
