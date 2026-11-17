@@ -31,5 +31,6 @@ export const routes: Routes = [
   },
   { path: 'wishlist', component: WishlistPageComponent, title: 'Wishlist | Jay Bhavani Ornaments' },
   { path: 'admin', component: AdminPageComponent, title: 'Admin | Jay Bhavani Ornaments' },
+  { path: 'admin/dashboard', component: AdminPageComponent, title: 'Admin Dashboard | Jay Bhavani Ornaments' },
   { path: '**', component: NotFoundPageComponent, title: 'Page not found | Jay Bhavani Ornaments' },
 ];

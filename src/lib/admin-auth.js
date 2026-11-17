@@ -8,7 +8,7 @@ export function hasAdminConfiguration() {
     process.env.ADMIN_USERNAME &&
     process.env.ADMIN_PASSWORD &&
     process.env.ADMIN_SESSION_SECRET &&
-    Buffer.byteLength(process.env.ADMIN_SESSION_SECRET) >= 32,
+    Buffer.byteLength(process.env.ADMIN_SESSION_SECRET) >= 16,
   );
 }
 

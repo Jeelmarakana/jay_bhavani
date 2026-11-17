@@ -157,3 +157,63 @@ export async function getInquiries() {
   const db = await readDb();
   return db.inquiries;
 }
+
+export async function updateInquiryStatus(id, status) {
+  const db = await readDb();
+  const inquiry = db.inquiries.find((i) => i.id === id);
+  if (!inquiry) return null;
+  inquiry.status = status;
+  const success = await writeDb(db);
+  return success ? inquiry : null;
+}
+
+export async function addProduct(productData) {
+  const db = await readDb();
+  const newProduct = {
+    id: Date.now().toString(),
+    name: productData.name,
+    category: productData.category,
+    categoryName: productData.categoryName,
+    metal: productData.metal,
+    purity: productData.purity,
+    weight: Number(productData.weight),
+    makingCharges: Number(productData.makingCharges),
+    description: productData.description,
+    image: productData.image || '/images/products/rings-4k.jpg',
+    featured: productData.featured === true || productData.featured === 'true',
+    occasion: productData.occasion || '',
+  };
+  db.products.unshift(newProduct);
+  const success = await writeDb(db);
+  return success ? newProduct : null;
+}
+
+export async function updateProduct(id, productData) {
+  const db = await readDb();
+  const index = db.products.findIndex((p) => p.id === id);
+  if (index === -1) return null;
+  db.products[index] = {
+    ...db.products[index],
+    name: productData.name ?? db.products[index].name,
+    category: productData.category ?? db.products[index].category,
+    categoryName: productData.categoryName ?? db.products[index].categoryName,
+    metal: productData.metal ?? db.products[index].metal,
+    purity: productData.purity ?? db.products[index].purity,
+    weight: productData.weight !== undefined ? Number(productData.weight) : db.products[index].weight,
+    makingCharges: productData.makingCharges !== undefined ? Number(productData.makingCharges) : db.products[index].makingCharges,
+    description: productData.description ?? db.products[index].description,
+    image: productData.image ?? db.products[index].image,
+    featured: productData.featured !== undefined ? (productData.featured === true || productData.featured === 'true') : db.products[index].featured,
+    occasion: productData.occasion ?? db.products[index].occasion,
+  };
+  const success = await writeDb(db);
+  return success ? db.products[index] : null;
+}
+
+export async function deleteProduct(id) {
+  const db = await readDb();
+  const index = db.products.findIndex((p) => p.id === id);
+  if (index === -1) return false;
+  db.products.splice(index, 1);
+  return await writeDb(db);
+}

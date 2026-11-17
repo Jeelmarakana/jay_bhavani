@@ -1,511 +1,352 @@
-.adminHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 3rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 1.5rem;
+.adminPage {
+  padding: 3rem 2rem 5rem;
+  min-height: 80vh;
 }
 
+/* Toast */
 .toast {
   position: fixed;
   top: calc(var(--header-height) + 1.25rem);
   right: 1.5rem;
-  z-index: 1100;
-  max-width: min(90vw, 360px);
-  padding: 0.85rem 1.2rem;
-  border-radius: 12px;
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.05),
-    0 3px 10px rgba(0, 0, 0, 0.03);
-  font-family: var(--font-sans);
+  z-index: 1200;
+  max-width: min(90vw, 380px);
+  padding: 0.9rem 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   font-size: 0.88rem;
   font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  animation: toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transition: all 0.3s ease;
+  animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-
-.success {
-  background-color: rgba(240, 253, 244, 0.9);
+.toast.success {
+  background: rgba(240, 253, 244, 0.95);
   color: #15803d;
-  border: 1px solid rgba(74, 222, 128, 0.45);
+  border: 1px solid rgba(74, 222, 128, 0.4);
 }
-
-.success svg {
-  color: #16a34a;
-}
-
-.error {
-  background-color: rgba(254, 242, 242, 0.9);
+.toast.error {
+  background: rgba(254, 242, 242, 0.95);
   color: #b91c1c;
-  border: 1px solid rgba(248, 113, 113, 0.45);
+  border: 1px solid rgba(248, 113, 113, 0.4);
 }
-
-.error svg {
-  color: #dc2626;
-}
-
-.toastIcon {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.toastMessage {
-  line-height: 1.4;
-}
-
 @keyframes toastSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+/* Auth Card */
 .authCard {
-  max-width: 460px;
+  max-width: 480px;
   margin: 4rem auto 0;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
   border-radius: 14px;
-  padding: 2.25rem;
-  box-shadow: var(--card-shadow);
+  padding: 2.5rem;
 }
-
-.loginForm {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  margin-top: 1.6rem;
-}
-
-.passwordWrap {
-  position: relative;
-}
-
-.passwordWrap input {
-  padding-right: 3.25rem;
-}
-
+.authCard h1 { font-size: 2rem; margin: 0.6rem 0 0.4rem; }
+.loginForm { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; }
+.passwordWrap { position: relative; }
+.passwordWrap input { padding-right: 3.5rem; }
 .eyeButton {
-  position: absolute;
-  top: 50%;
-  right: 0.75rem;
-  transform: translateY(-50%);
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: var(--text-secondary);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
+  position: absolute; top: 50%; right: 0.75rem; transform: translateY(-50%);
+  border: none; background: transparent; cursor: pointer;
+  color: var(--text-secondary); font-size: 0.73rem; font-weight: 700; text-transform: uppercase;
 }
+.adminSubmit { width: 100%; margin-top: 0.5rem; }
 
-.eyeButton:focus-visible {
-  outline: 2px solid var(--accent-gold);
-  outline-offset: 3px;
-  border-radius: 2px;
+/* Header */
+.adminHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
-
-.success {
-  background: rgba(5, 150, 105, 0.08);
-  color: var(--success);
-  border: 1px solid rgba(5, 150, 105, 0.25);
-}
-
-.error {
-  background: rgba(220, 38, 38, 0.08);
-  color: var(--error);
-  border: 1px solid rgba(220, 38, 38, 0.25);
-}
-
-.credentialsBox {
-  margin-top: 1.5rem;
-  padding: 1rem 1.2rem;
-  border-radius: 8px;
-  background: rgba(226, 173, 27, 0.06);
-  border: 1px solid rgba(226, 173, 27, 0.25);
-}
-
-.credentialsBox strong {
-  display: block;
-  margin-bottom: 0.45rem;
-  color: var(--accent-gold-hover);
-}
-
-.credentialsBox p {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
+.adminHeader h1 { font-size: 2.2rem; margin: 0.4rem 0 0; }
 .adminSubtitle {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--accent-gold);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 600;
   display: block;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.4rem;
 }
+.adminActions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 
-.adminDesc {
+/* Tabs */
+.tabRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.tabBtn {
+  position: relative;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tabBtn.active {
+  color: var(--accent-gold);
+  border-bottom-color: var(--accent-gold);
+}
+.tabBtn:hover { color: var(--text-primary); }
+.tabBadge {
+  background: var(--accent-gold);
+  color: #000;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.5rem;
+  min-width: 20px;
+  text-align: center;
+}
+.tabBadge.neutral {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
 }
 
 /* Control Panel */
 .controlPanel {
   display: flex;
-  align-items: center;
-  gap: 2rem;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-}
-
-.statBox {
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-color);
-  padding: 0.8rem 1.5rem;
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 150px;
-}
-
-.statLabel {
-  font-size: 0.72rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.2rem;
-}
-
-.statCount {
-  font-family: var(--font-serif);
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--accent-gold);
-}
-
-/* Inquiries List */
-.inquiriesContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.inquiryCard {
-  border-radius: 8px;
-  padding: 1.8rem;
-  transition: all 0.3s ease;
-}
-
-.inquiryCard:hover {
-  border-color: var(--accent-gold);
-  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.05);
-}
-
-.cardHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 1rem;
-  margin-bottom: 1.2rem;
-}
-
-.customerMeta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.customerName {
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  letter-spacing: 0.05em;
-}
-
-.badgeRow {
-  display: flex;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-}
-
-.badge {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 4px;
-  background-color: var(--bg-tertiary);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
-}
-
-.timeMeta {
-  display: flex;
-  flex-direction: column;
   align-items: flex-end;
-  gap: 0.4rem;
-}
-
-.dateLabel {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-.statusLabel {
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  padding: 0.2rem 0.6rem;
-  border-radius: 3px;
-  letter-spacing: 0.05em;
-}
-
-.pendingStatus {
-  background-color: rgba(212, 175, 55, 0.1);
-  color: var(--accent-gold);
-  border: 1px solid var(--accent-gold);
-}
-
-/* Card Body */
-.cardBody {
-  margin-bottom: 1.5rem;
-}
-
-.productTagLine {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-  display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
+  padding: 1.2rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
   flex-wrap: wrap;
 }
+.searchControl { flex: 1; min-width: 220px; }
+.statBox {
+  min-width: 120px;
+  flex: 1;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  background: rgba(255,255,255,0.02);
+}
+.statLabel { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+.statCount { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--accent-gold); }
 
-.prodLink {
+/* Inquiries */
+.inquiriesContainer { display: flex; flex-direction: column; gap: 1.2rem; }
+.inquiryCard { border-radius: 10px; padding: 1.6rem; transition: border-color 0.2s; }
+.inquiryCard:hover { border-color: var(--accent-gold); }
+.cardHeader { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.2rem; gap: 1rem; }
+.customerMeta { display: flex; flex-direction: column; gap: 0.4rem; }
+.customerName { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; color: var(--text-primary); }
+.badgeRow { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.badge { font-size: 0.73rem; padding: 0.22rem 0.6rem; border-radius: 4px; background: var(--bg-tertiary); color: var(--text-secondary); border: 1px solid var(--border-color); }
+.timeMeta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; flex-shrink: 0; }
+.dateLabel { font-size: 0.78rem; color: var(--text-muted); }
+.statusLabel { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 3px; letter-spacing: 0.05em; }
+.pendingStatus { background: rgba(212, 175, 55, 0.12); color: var(--accent-gold); border: 1px solid var(--accent-gold); }
+.resolvedStatus { background: rgba(5, 150, 105, 0.1); color: #059669; border: 1px solid rgba(5, 150, 105, 0.4); }
+.cardBody { margin-bottom: 1.2rem; }
+.productTagLine { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0.8rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.prodLink { color: var(--accent-gold); font-weight: 500; text-decoration: underline; }
+.messageBox { background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 0.9rem 1.1rem; border-radius: 6px; }
+.messageBox strong { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.35rem; letter-spacing: 0.05em; }
+.messageText { color: var(--text-primary); font-size: 0.93rem; line-height: 1.6; white-space: pre-wrap; }
+.cardFooter { display: flex; justify-content: flex-end; gap: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; flex-wrap: wrap; }
+.resolveBtn { color: #059669; border-color: rgba(5, 150, 105, 0.4); }
+
+/* Products Toolbar */
+.productsToolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.productsToolbar .searchControl { flex: 1; min-width: 220px; }
+
+/* Products Grid */
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.2rem;
+}
+.productAdminCard {
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s;
+}
+.productAdminCard:hover { border-color: var(--accent-gold); }
+.productAdminImg {
+  position: relative;
+  height: 180px;
+  background: var(--bg-tertiary);
+  overflow: hidden;
+}
+.productAdminImg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.featuredBadge {
+  position: absolute; top: 0.6rem; left: 0.6rem;
+  background: var(--accent-gold); color: #000;
+  font-size: 0.7rem; font-weight: 700;
+  padding: 0.2rem 0.6rem; border-radius: 4px;
+}
+.productAdminBody { padding: 1rem; flex: 1; }
+.productAdminName { font-family: var(--font-serif); font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+.productAdminMeta { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.6rem; }
+.productAdminDesc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.productAdminId { font-size: 0.73rem; color: var(--text-muted); margin-top: 0.5rem; }
+.productAdminActions { padding: 0.75rem 1rem; border-top: 1px solid var(--border-color); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.viewBtn { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
+.deleteBtn {
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 6px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.deleteBtn:hover { background: rgba(220, 38, 38, 0.15); }
+
+/* Modal */
+.modalOverlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+.modalCard {
+  width: 100%; max-width: 680px;
+  max-height: 90vh; overflow-y: auto;
+  border-radius: 14px; padding: 2rem;
+}
+.modalHeader {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;
+}
+.modalHeader h2 { font-size: 1.5rem; margin: 0; }
+.closeBtn {
+  background: transparent; border: none; cursor: pointer;
+  font-size: 1.2rem; color: var(--text-secondary); padding: 0.25rem 0.5rem;
+  border-radius: 4px; transition: color 0.2s;
+}
+.closeBtn:hover { color: var(--text-primary); }
+.productForm { display: flex; flex-direction: column; gap: 1rem; }
+.formRow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.formHint { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem; display: block; }
+.imagePreview {
+  width: 100%; max-height: 200px; overflow: hidden;
+  border-radius: 8px; border: 1px solid var(--border-color);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-tertiary);
+}
+.imagePreview img { max-width: 100%; max-height: 200px; object-fit: contain; }
+.featuredGroup { display: flex; align-items: flex-end; padding-bottom: 0.6rem; }
+.checkLabel { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-weight: 500; font-size: 0.9rem; }
+.checkLabel input[type="checkbox"] { width: 17px; height: 17px; cursor: pointer; accent-color: var(--accent-gold); }
+.formActions { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+
+/* Confirm modal */
+.confirmCard {
+  max-width: 380px; width: 100%;
+  border-radius: 12px; padding: 2rem;
+  text-align: center;
+}
+.confirmCard h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.confirmCard p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.92rem; }
+.confirmCard .formActions { justify-content: center; border-top: none; margin-top: 0; padding-top: 0; }
+
+/* Loaders */
+.statusBox { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; color: var(--text-secondary); }
+.spinner { width: 34px; height: 34px; border: 3px solid rgba(212, 175, 55, 0.15); border-top-color: var(--accent-gold); border-radius: 50%; animation: spin 0.9s linear infinite; margin-bottom: 1rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.emptyBox { display: flex; align-items: center; justify-content: center; min-height: 220px; color: var(--text-secondary); border: 1px dashed var(--border-color); border-radius: 10px; }
+.adminDesc { color: var(--text-secondary); font-size: 0.95rem; margin: 0; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .adminPage { padding: 2rem 1rem 4rem; }
+  .adminHeader { flex-direction: column; align-items: flex-start; }
+  .controlPanel { flex-direction: column; align-items: stretch; }
+  .statBox { align-items: flex-start; flex-direction: row; justify-content: space-between; }
+  .cardHeader { flex-direction: column; }
+  .timeMeta { align-items: flex-start; }
+  .formRow { grid-template-columns: 1fr; }
+  .productsGrid { grid-template-columns: 1fr; }
+  .modalCard { padding: 1.2rem; }
+}
+
+/* Product Image Upload & Presets */
+.imageSectionGroup { display: flex; flex-direction: column; gap: 0.6rem; }
+.uploadControlWrap { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.fileUploadBtn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.6rem 1.1rem;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px dashed var(--accent-gold);
+  border-radius: 6px;
   color: var(--accent-gold);
-  font-weight: 500;
+  font-weight: 600; font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.fileUploadBtn:hover { background: rgba(212, 175, 55, 0.22); transform: translateY(-1px); }
+.uploadOrText { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); }
+.imageInputControl { flex: 1; min-width: 200px; }
+.presetSection { margin-top: 0.4rem; }
+.presetTitle { font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem; }
+.presetRow { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.presetPill {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.presetPill:hover, .presetPillActive {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+.imagePreviewWrapper {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+}
+.removeImageBtn {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 0.78rem;
+  cursor: pointer;
+  padding: 0.2rem 0;
   text-decoration: underline;
 }
-
-.prodLink:hover {
-  filter: brightness(1.1);
+.prodTagPrefix { color: var(--text-muted); font-size: 0.85rem; }
+.prodLink {
+  color: var(--accent-gold);
+  text-decoration: none;
+  font-size: 0.88rem;
 }
-
-.messageBox {
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  padding: 1rem 1.2rem;
-  border-radius: 6px;
-}
-
-.messageBox strong {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: 0.4rem;
-  letter-spacing: 0.05em;
-}
-
-.messageText {
-  color: var(--text-primary);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
-
-/* Card Footer Actions */
-.cardFooter {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 1.2rem;
-}
-
-/* Loaders and Empty Box */
-.statusBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 350px;
-  color: var(--text-secondary);
-}
-
-.spinner {
-  width: 35px;
-  height: 35px;
-  border: 3px solid rgba(212, 175, 55, 0.1);
-  border-top-color: var(--accent-gold);
-  border-radius: 50%;
-  animation: spinnerRotate 1s linear infinite;
-  margin-bottom: 1.2rem;
-}
-
-@keyframes spinnerRotate {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.emptyBox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 250px;
-  color: var(--text-secondary);
-  border: 1px dashed var(--border-color);
-  border-radius: 8px;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .authCard {
-    margin-top: 2rem;
-    padding: 1.5rem;
-  }
-  .adminHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-  }
-  .controlPanel {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-  }
-  .statBox {
-    align-items: flex-start;
-  }
-  .cardHeader {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .timeMeta {
-    align-items: flex-start;
-  }
-  .cardFooter {
-    justify-content: stretch;
-  }
-  .cardFooter a {
-    flex: 1;
-    text-align: center;
-  }
-}
-
-.adminPage {
-  padding: 3rem 2rem 5rem;
-}
-.authCard {
-  max-width: 560px;
-  margin: 2rem auto;
-}
-.authCard h1 {
-  font-size: 2.1rem;
-  margin: 0.8rem 0;
-}
-.adminSubmit {
-  width: 100%;
-}
-.adminHeader {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-.adminHeader h1 {
-  font-size: 2.5rem;
-  margin: 0.5rem 0;
-}
-.adminActions {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-.controlPanel {
-  display: flex;
-  gap: 1rem;
-  align-items: end;
-  padding: 1.2rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-}
-.searchControl {
-  flex: 1;
-  min-width: 220px;
-}
-.statBox {
-  flex: 1;
-  min-width: 130px;
-}
-.statCount {
-  font-size: 1.5rem;
-}
-.inquiriesContainer {
-  display: grid;
-  gap: 1rem;
-}
-.cardHeader {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.cardBody {
-  padding: 1.2rem 0;
-}
-.cardFooter {
-  display: flex;
-  gap: 0.8rem;
-}
-.messageText {
-  white-space: pre-wrap;
-}
-.toast {
-  position: fixed;
-  top: 6rem;
-  right: 1.5rem;
-  background: var(--bg-secondary);
-  padding: 1rem;
-  border: 1px solid var(--border-color);
-  z-index: 1200;
-}
-.toast.error {
-  color: var(--error);
-}
-.toast.success {
-  color: var(--success);
-}
-@media (max-width: 700px) {
-  .adminHeader,
-  .controlPanel,
-  .cardHeader {
-    align-items: stretch;
-    flex-direction: column;
-  }
-  .adminActions {
-    width: 100%;
-  }
-  .adminActions button {
-    flex: 1;
-  }
-  .adminPage {
-    padding: 2rem 1rem;
-  }
-}
+.prodLink:hover { text-decoration: underline; }

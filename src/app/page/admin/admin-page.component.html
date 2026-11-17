@@ -1,25 +1,26 @@
-<div class="container adminPage">
+<div class="adminPage container">
+
+  <!-- Toast notification -->
+  <div *ngIf="statusMessage" class="toast" [class.success]="statusSuccess" [class.error]="!statusSuccess">
+    {{ statusMessage }}
+  </div>
+
+  <!-- Auth loading -->
   <div *ngIf="authLoading" class="statusBox">
     <div class="spinner"></div>
     <p>Checking admin access...</p>
   </div>
+
+  <!-- Login Form -->
   <ng-container *ngIf="!authLoading && !isAdmin">
-    <div
-      *ngIf="statusMessage"
-      class="toast"
-      [class.success]="statusSuccess"
-      [class.error]="!statusSuccess"
-    >
-      {{ statusMessage }}
-    </div>
-    <div class="authCard">
+    <div class="authCard glassmorphism">
       <span class="adminSubtitle">Restricted Access</span>
       <h1 class="serif-title">Admin Login</h1>
       <p class="adminDesc">Use the protected admin account to launch the control dashboard.</p>
       <form (ngSubmit)="login()" class="loginForm">
         <div class="form-group">
-          <label class="form-label" for="admin-username">Username</label
-          ><input
+          <label class="form-label" for="admin-username">Username</label>
+          <input
             id="admin-username"
             class="form-control"
             name="username"
@@ -39,7 +40,8 @@
               autocomplete="current-password"
               [(ngModel)]="credentials.password"
               required
-            /><button type="button" class="eyeButton" (click)="showPassword = !showPassword">
+            />
+            <button type="button" class="eyeButton" (click)="showPassword = !showPassword">
               {{ showPassword ? 'Hide' : 'Show' }}
             </button>
           </div>
@@ -50,103 +52,303 @@
       </form>
     </div>
   </ng-container>
+
+  <!-- Dashboard -->
   <ng-container *ngIf="!authLoading && isAdmin">
+
+    <!-- Header -->
     <div class="adminHeader">
       <div>
         <span class="adminSubtitle">Jay Bhavani Administration</span>
-        <h1 class="serif-title">Customer Inquiries</h1>
-        <p class="adminDesc">
-          Website enquiries are saved here and trigger a WhatsApp notification flow when submitted.
-        </p>
+        <h1 class="serif-title">Admin Dashboard</h1>
       </div>
       <div class="adminActions">
-        <button type="button" class="outline-btn" (click)="loadInquiries()" [disabled]="loading">
-          {{ loading ? 'Refreshing...' : 'Refresh Enquiries' }}</button
-        ><button type="button" class="outline-btn" (click)="logout()">Logout Admin</button>
+        <button type="button" class="outline-btn" (click)="loadInquiries(); loadProducts();" [disabled]="loading">
+          Refresh
+        </button>
+        <button type="button" class="outline-btn" (click)="logout()">Logout</button>
       </div>
     </div>
-    <div class="controlPanel glassmorphism">
-      <div class="searchControl">
-        <label class="form-label" for="inquiry-search">Search Enquiries</label
-        ><input
-          id="inquiry-search"
-          class="form-control"
-          [(ngModel)]="searchTerm"
-          placeholder="Search by customer name, phone, product ID..."
-        />
-      </div>
-      <div class="statBox">
-        <span class="statLabel">Total Enquiries</span
-        ><span class="statCount">{{ inquiriesList.length }}</span>
-      </div>
-      <div class="statBox">
-        <span class="statLabel">Received Today</span
-        ><span class="statCount">{{ todayInquiries }}</span>
-      </div>
-      <div class="statBox">
-        <span class="statLabel">Pending Follow-up</span
-        ><span class="statCount">{{ pendingInquiries }}</span>
-      </div>
-      <div class="statBox">
-        <span class="statLabel">Matching Search</span
-        ><span class="statCount">{{ filteredInquiries.length }}</span>
-      </div>
+
+    <!-- Tabs -->
+    <div class="tabRow">
+      <button class="tabBtn" [class.active]="activeTab === 'inquiries'" (click)="setTab('inquiries')">
+        Customer Enquiries
+        <span class="tabBadge" *ngIf="pendingInquiries > 0">{{ pendingInquiries }}</span>
+      </button>
+      <button class="tabBtn" [class.active]="activeTab === 'products'" (click)="setTab('products')">
+        Products
+        <span class="tabBadge neutral">{{ productsList.length }}</span>
+      </button>
     </div>
-    <div *ngIf="loading" class="statusBox">
-      <div class="spinner"></div>
-      <p>Retrieving secure submissions from database...</p>
-    </div>
-    <div *ngIf="!loading && !filteredInquiries.length" class="emptyBox">
-      <p>No customer inquiries found.</p>
-    </div>
-    <div *ngIf="!loading && filteredInquiries.length" class="inquiriesContainer">
-      <article *ngFor="let inquiry of filteredInquiries" class="inquiryCard glassmorphism">
-        <div class="cardHeader">
-          <div class="customerMeta">
-            <h3 class="customerName">{{ inquiry.name }}</h3>
-            <div class="badgeRow">
-              <span class="badge phoneBadge">📞 {{ inquiry.phone }}</span
-              ><span *ngIf="inquiry.email" class="badge emailBadge">✉️ {{ inquiry.email }}</span>
+
+    <!-- ============ INQUIRIES TAB ============ -->
+    <div *ngIf="activeTab === 'inquiries'">
+      <div class="controlPanel glassmorphism">
+        <div class="searchControl">
+          <label class="form-label" for="inquiry-search">Search Enquiries</label>
+          <input
+            id="inquiry-search"
+            class="form-control"
+            [(ngModel)]="searchTerm"
+            placeholder="Search by name, phone, product..."
+          />
+        </div>
+        <div class="statBox">
+          <span class="statLabel">Total</span>
+          <span class="statCount">{{ inquiriesList.length }}</span>
+        </div>
+        <div class="statBox">
+          <span class="statLabel">Today</span>
+          <span class="statCount">{{ todayInquiries }}</span>
+        </div>
+        <div class="statBox">
+          <span class="statLabel">Pending</span>
+          <span class="statCount">{{ pendingInquiries }}</span>
+        </div>
+        <div class="statBox">
+          <span class="statLabel">Found</span>
+          <span class="statCount">{{ filteredInquiries.length }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="loading" class="statusBox">
+        <div class="spinner"></div>
+        <p>Loading enquiries...</p>
+      </div>
+
+      <div *ngIf="!loading && !filteredInquiries.length" class="emptyBox">
+        <p>No customer enquiries found.</p>
+      </div>
+
+      <div *ngIf="!loading && filteredInquiries.length" class="inquiriesContainer">
+        <article *ngFor="let inquiry of filteredInquiries" class="inquiryCard glassmorphism">
+          <div class="cardHeader">
+            <div class="customerMeta">
+              <h3 class="customerName">{{ inquiry.name }}</h3>
+              <div class="badgeRow">
+                <span class="badge phoneBadge">📞 {{ inquiry.phone }}</span>
+                <span *ngIf="inquiry.email" class="badge emailBadge">✉️ {{ inquiry.email }}</span>
+                <span *ngIf="inquiry.interestedIn" class="badge">🏷️ {{ inquiry.interestedIn }}</span>
+              </div>
+            </div>
+            <div class="timeMeta">
+              <span class="dateLabel">{{ inquiry.createdAt | date: 'dd MMM yyyy, h:mm a' }}</span>
+              <span class="statusLabel" [class.pendingStatus]="inquiry.status === 'Pending'" [class.resolvedStatus]="inquiry.status === 'Resolved'">
+                {{ inquiry.status }}
+              </span>
             </div>
           </div>
-          <div class="timeMeta">
-            <span class="dateLabel">{{ inquiry.createdAt | date: 'medium' }}</span
-            ><span class="statusLabel pendingStatus">{{ inquiry.status }}</span>
+          <div class="cardBody">
+            <div *ngIf="inquiry.productId" class="productTagLine">
+              <span class="prodTagPrefix">Product Enquiry: </span>
+              <a [routerLink]="['/product', inquiry.productId]" class="prodLink" target="_blank">
+                <strong>{{ inquiry.productName || 'Product #' + inquiry.productId }}</strong> (ID: #{{ inquiry.productId }}) ↗
+              </a>
+            </div>
+            <div class="messageBox">
+              <strong>Customer Message:</strong>
+              <p class="messageText">"{{ inquiry.message }}"</p>
+            </div>
           </div>
-        </div>
-        <div class="cardBody">
-          <div *ngIf="inquiry.productId" class="productTagLine">
-            <span>Product Interest: </span
-            ><a [routerLink]="['/product', inquiry.productId]" class="prodLink"
-              >{{ inquiry.productName || 'Product #' + inquiry.productId }} (ID: #{{
-                inquiry.productId
-              }}) →</a
+          <div class="cardFooter">
+            <a [href]="'tel:' + inquiry.phone" class="outline-btn">📞 Call</a>
+            <a [href]="whatsapp(inquiry.phone)" target="_blank" rel="noopener noreferrer" class="gold-btn">WhatsApp</a>
+            <button
+              *ngIf="inquiry.status === 'Pending'"
+              type="button"
+              class="outline-btn resolveBtn"
+              (click)="markStatus(inquiry, 'Resolved')"
             >
+              ✓ Mark Resolved
+            </button>
+            <button
+              *ngIf="inquiry.status !== 'Pending'"
+              type="button"
+              class="outline-btn"
+              (click)="markStatus(inquiry, 'Pending')"
+            >
+              ↩ Reopen
+            </button>
           </div>
-          <div class="messageBox">
-            <strong>Inquiry Message:</strong>
-            <p class="messageText">“{{ inquiry.message }}”</p>
+        </article>
+      </div>
+    </div>
+
+    <!-- ============ PRODUCTS TAB ============ -->
+    <div *ngIf="activeTab === 'products'">
+
+      <!-- Product Form Modal -->
+      <div *ngIf="showProductForm" class="modalOverlay" (click)="cancelProductForm()">
+        <div class="modalCard glassmorphism" (click)="$event.stopPropagation()">
+          <div class="modalHeader">
+            <h2 class="serif-title">{{ editingProductId ? 'Edit Product' : 'Add New Product' }}</h2>
+            <button type="button" class="closeBtn" (click)="cancelProductForm()">✕</button>
+          </div>
+
+          <form (ngSubmit)="submitProduct()" class="productForm">
+            <div class="formRow">
+              <div class="form-group">
+                <label class="form-label">Product Name *</label>
+                <input class="form-control" [(ngModel)]="productForm.name" name="pname" placeholder="e.g. Gold Jhumka Earrings" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Category *</label>
+                <select class="form-control" [(ngModel)]="productForm.category" name="category" (change)="onCategoryChange()" required>
+                  <option *ngFor="let cat of categories" [value]="cat.slug">{{ cat.name }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="formRow">
+              <div class="form-group">
+                <label class="form-label">Metal *</label>
+                <select class="form-control" [(ngModel)]="productForm.metal" name="metal" required>
+                  <option *ngFor="let m of metalOptions" [value]="m">{{ m }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Purity *</label>
+                <select class="form-control" [(ngModel)]="productForm.purity" name="purity" required>
+                  <option *ngFor="let p of purityOptions" [value]="p">{{ p }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="formRow">
+              <div class="form-group">
+                <label class="form-label">Weight (grams) *</label>
+                <input class="form-control" type="number" step="0.1" min="0.1" [(ngModel)]="productForm.weight" name="weight" placeholder="e.g. 12.5" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Making Charges (%)</label>
+                <input class="form-control" type="number" step="0.5" min="0" [(ngModel)]="productForm.makingCharges" name="making" placeholder="e.g. 12" />
+              </div>
+            </div>
+
+            <!-- Product Image Section -->
+            <div class="form-group imageSectionGroup">
+              <label class="form-label">Product Image</label>
+              <div class="uploadControlWrap">
+                <label class="fileUploadBtn">
+                  <span>{{ uploadingImage ? '⏳ Uploading...' : '📁 Choose Image from Computer' }}</span>
+                  <input type="file" accept="image/*" (change)="onFileSelected($event)" [disabled]="uploadingImage" hidden />
+                </label>
+                <span class="uploadOrText">OR</span>
+                <input
+                  class="form-control imageInputControl"
+                  [(ngModel)]="productForm.image"
+                  name="image"
+                  placeholder="Paste URL (e.g. https://... or /images/products/...)"
+                />
+              </div>
+
+              <div class="presetSection">
+                <span class="presetTitle">Or pick from sample images:</span>
+                <div class="presetRow">
+                  <button
+                    type="button"
+                    *ngFor="let sample of sampleImages"
+                    class="presetPill"
+                    [class.presetPillActive]="productForm.image === sample.url"
+                    (click)="setSampleImage(sample.url)"
+                  >
+                    {{ sample.label }}
+                  </button>
+                </div>
+              </div>
+
+              <div *ngIf="productForm.image" class="imagePreviewWrapper">
+                <div class="imagePreview">
+                  <img [src]="productForm.image" alt="Product preview" (error)="clearImage()" />
+                </div>
+                <button type="button" class="removeImageBtn" (click)="clearImage()">✕ Remove Image</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Description *</label>
+              <textarea class="form-control" rows="3" [(ngModel)]="productForm.description" name="desc" placeholder="Describe the product..." required></textarea>
+            </div>
+
+            <div class="formRow">
+              <div class="form-group">
+                <label class="form-label">Occasion (optional)</label>
+                <input class="form-control" [(ngModel)]="productForm.occasion" name="occasion" placeholder="e.g. Bridal, Daily Wear" />
+              </div>
+              <div class="form-group featuredGroup">
+                <label class="checkLabel">
+                  <input type="checkbox" [(ngModel)]="productForm.featured" name="featured" />
+                  <span>Featured on Homepage</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="formActions">
+              <button type="button" class="outline-btn" (click)="cancelProductForm()">Cancel</button>
+              <button type="submit" class="gold-btn" [disabled]="productSubmitting || uploadingImage">
+                {{ productSubmitting ? 'Saving...' : (editingProductId ? 'Update Product' : 'Add Product') }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Delete Confirm Modal -->
+      <div *ngIf="deleteConfirmId" class="modalOverlay" (click)="cancelDelete()">
+        <div class="confirmCard glassmorphism" (click)="$event.stopPropagation()">
+          <h3>Delete Product?</h3>
+          <p>This action cannot be undone. The product will be permanently removed.</p>
+          <div class="formActions">
+            <button type="button" class="outline-btn" (click)="cancelDelete()">Cancel</button>
+            <button type="button" class="deleteBtn" (click)="deleteProduct(deleteConfirmId!)">Delete</button>
           </div>
         </div>
-        <div class="cardFooter">
-          <a [href]="'tel:' + inquiry.phone" class="outline-btn">Call Client</a
-          ><a
-            [href]="whatsapp(inquiry.phone)"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="gold-btn"
-            >WhatsApp Follow Up</a
-          >
+      </div>
+
+      <!-- Products toolbar -->
+      <div class="productsToolbar">
+        <div class="searchControl">
+          <input class="form-control" [(ngModel)]="productSearch" placeholder="Search products by name, category, metal..." />
         </div>
-      </article>
+        <button type="button" class="gold-btn" (click)="openAddProduct()">+ Add Product</button>
+      </div>
+
+      <div *ngIf="productsLoading" class="statusBox">
+        <div class="spinner"></div>
+        <p>Loading products...</p>
+      </div>
+
+      <div *ngIf="!productsLoading && !filteredProducts.length" class="emptyBox">
+        <p>No products found. Click "Add Product" to create one.</p>
+      </div>
+
+      <div *ngIf="!productsLoading && filteredProducts.length" class="productsGrid">
+        <div *ngFor="let product of filteredProducts" class="productAdminCard glassmorphism">
+          <div class="productAdminImg">
+            <img [src]="product.image" [alt]="product.name" (error)="$any($event.target).style.display='none'" />
+            <span class="featuredBadge" *ngIf="product.featured">★ Featured</span>
+          </div>
+          <div class="productAdminBody">
+            <h4 class="productAdminName">{{ product.name }}</h4>
+            <div class="productAdminMeta">
+              <span class="badge">{{ product.categoryName }}</span>
+              <span class="badge">{{ product.metal }}</span>
+              <span class="badge">{{ product.purity }}</span>
+              <span class="badge">{{ product.weight }}g</span>
+              <span class="badge">{{ product.makingCharges }}% making</span>
+            </div>
+            <p class="productAdminDesc">{{ product.description }}</p>
+            <div class="productAdminId">ID: #{{ product.id }}</div>
+          </div>
+          <div class="productAdminActions">
+            <a [routerLink]="['/product', product.id]" target="_blank" class="outline-btn viewBtn">View ↗</a>
+            <button type="button" class="outline-btn" (click)="openEditProduct(product)">Edit</button>
+            <button type="button" class="deleteBtn" (click)="confirmDelete(product.id)">Delete</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div
-      *ngIf="statusMessage"
-      class="toast"
-      [class.success]="statusSuccess"
-      [class.error]="!statusSuccess"
-    >
-      {{ statusMessage }}
-    </div>
+
   </ng-container>
 </div>
